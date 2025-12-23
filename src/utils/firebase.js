@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB5nD0udLNpcqe-1lrkDpETWsaBflyVEFk",
-  authDomain: "eagerly-a4770.firebaseapp.com",
-  projectId: "eagerly-a4770",
-  storageBucket: "eagerly-a4770.firebasestorage.app",
-  messagingSenderId: "398479337005",
-  appId: "1:398479337005:web:931d88cf5181c6bca2baa4",
-  measurementId: "G-ZHZ5M9Q2N7",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
