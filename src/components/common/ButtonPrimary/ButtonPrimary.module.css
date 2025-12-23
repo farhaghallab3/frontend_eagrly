@@ -1,0 +1,37 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+/* 🔹 Filled Button */
+.filled {
+  background-image: linear-gradient(to right, #64ffda, #00c2ff);
+  color: #0b132b;
+  border: none;
+}
+
+.filled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(100, 255, 218, 0.25);
+}
+
+/* 🔹 Outline Button */
+.outline {
+  background-color: transparent;
+  color: #64ffda;
+  border: 2px solid #64ffda;
+}
+
+.outline:hover {
+  background-color: #64ffda;
+  color: #0b132b;
+  transform: translateY(-2px);
+}

@@ -1,0 +1,31 @@
+.label {
+  color: white;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  height: 50px;
+  background-color: #224949;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 16px;
+}
+
+.input:focus {
+  outline: 2px solid #0df2f2;
+}
+
+.errorBorder {
+  border: 1px solid #ff6b6b;
+}
+
+.errorText {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-top: 4px;
+}
