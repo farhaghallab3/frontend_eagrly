@@ -110,8 +110,15 @@ const ChatList = ({ chats, onSelectChat }) => {
         }
 
         .chat-list-item:hover {
-          background: rgba(100, 255, 218, 0.1);
+          background: rgba(100, 255, 218, 0.1) !important;
           transform: translateX(5px);
+          color: #64ffda !important;
+        }
+
+        .chat-list-item:hover .chat-user-name,
+        .chat-list-item:hover .chat-product-title,
+        .chat-list-item:hover .chat-timestamp {
+          color: #64ffda !important;
         }
 
         .chat-list-item.active {

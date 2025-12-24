@@ -95,7 +95,7 @@
   background-clip: text;
 }
 
-.section > p {
+.section>p {
   color: #8892b0;
   text-align: center;
   max-width: 600px;
@@ -233,8 +233,9 @@
 .teamGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+  gap: 3rem;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
 .teamCard {
@@ -355,6 +356,7 @@
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+
   .section .row,
   .teamGrid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -388,7 +390,7 @@
     font-size: 2rem;
   }
 
-  .section > p {
+  .section>p {
     font-size: 1rem;
   }
 

@@ -3,13 +3,14 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
-  border: 2px solid #e9ecef;
-  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  background-color: rgba(15, 26, 36, 0.95);
   border-radius: 1.2rem;
   padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(10px);
+  cursor: pointer;
 }
 
 .card:hover {
@@ -29,34 +30,34 @@
 }
 
 .title {
-  color: #2c3e50;
+  color: #ffffff;
   font-weight: 600;
   font-size: 1.15rem;
   line-height: 1.4;
-  margin-bottom: 0;
+  margin-bottom: 0.5rem;
 }
 
 .desc {
-  color: #607d8b;
+  color: #8892b0;
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
 .btn {
-  background: linear-gradient(135deg, #2196f3 0%, #21cbf3 100%);
+  background: linear-gradient(135deg, #64ffda 0%, #00c2ff 100%);
   border: none;
-  color: white;
+  color: #0a192f;
   border-radius: 0.8rem;
   padding: 0.75rem 1.5rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+  box-shadow: 0 2px 4px rgba(100, 255, 218, 0.2);
 }
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+  box-shadow: 0 4px 12px rgba(100, 255, 218, 0.3);
 }
 
 .btn:active {

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Button, InputGroup, Form, Modal, Overlay } from "react-bootstrap";
+import { Button, Form, Modal, Overlay } from "react-bootstrap";
 import LocationMap from "./LocationModal";
 import { MdMic, MdAttachFile, MdSend, MdCamera, MdLocationOn, MdClose } from "react-icons/md";
 
@@ -9,7 +9,6 @@ const MessageInput = ({ input, setInput, handleSend }) => {
   const [isRecording, setIsRecording] = useState(false);
   const attachButtonRef = useRef(null);
 
-  // Open camera directly
   const handleCameraClick = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -19,7 +18,6 @@ const MessageInput = ({ input, setInput, handleSend }) => {
     setShowOptions(false);
   };
 
-  // Open location modal
   const handleLocationClick = () => {
     setShowMap(true);
     setShowOptions(false);
@@ -39,101 +37,84 @@ const MessageInput = ({ input, setInput, handleSend }) => {
 
   const toggleRecording = () => {
     setIsRecording(!isRecording);
-    // Here you would implement actual voice recording logic
   };
 
   return (
-    <>
-      <div className="modern-message-input">
-        <div className="input-container">
-          {/* Voice Message Button */}
+    <div className="modern-message-input">
+      <div className="input-container">
+        <Button
+          className={`voice-btn ${isRecording ? 'recording' : ''}`}
+          onClick={toggleRecording}
+          variant="link"
+        >
+          <MdMic size={20} />
+        </Button>
+
+        <div className="input-wrapper">
+          <Form.Control
+            as="textarea"
+            rows={1}
+            placeholder="Type a message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className="message-textarea"
+          />
+
           <Button
-            className={`voice-btn ${isRecording ? 'recording' : ''}`}
-            onClick={toggleRecording}
+            ref={attachButtonRef}
+            className="attach-btn"
+            onClick={() => setShowOptions(!showOptions)}
             variant="link"
           >
-            <MdMic size={20} />
-          </Button>
-
-          {/* Main Input Area */}
-          <div className="input-wrapper">
-            <Form.Control
-              as="textarea"
-              rows={1}
-              placeholder="Type a message..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              className="message-textarea"
-            />
-
-            {/* Attach Button */}
-            <Button
-              ref={attachButtonRef}
-              className="attach-btn"
-              onClick={() => setShowOptions(!showOptions)}
-              variant="link"
-            >
-              <MdAttachFile size={20} />
-            </Button>
-          </div>
-
-          {/* Send Button */}
-          <Button
-            className={`send-btn ${input.trim() ? 'active' : ''}`}
-            onClick={handleSend}
-            disabled={!input.trim()}
-            variant="link"
-          >
-            <MdSend size={20} />
+            <MdAttachFile size={20} />
           </Button>
         </div>
 
-        {/* Attachment Options Overlay */}
-        <Overlay
-          show={showOptions}
-          target={attachButtonRef.current}
-          placement="top"
-          rootClose
-          onHide={() => setShowOptions(false)}
+        <Button
+          className={`send-btn ${input.trim() ? 'active' : ''}`}
+          onClick={handleSend}
+          disabled={!input.trim()}
+          variant="link"
         >
-          <div className="attachment-menu">
-            <div className="menu-header">
-              <span>Share</span>
-              <Button
-                variant="link"
-                size="sm"
-                onClick={() => setShowOptions(false)}
-                className="close-menu-btn"
-              >
-                <MdClose size={16} />
-              </Button>
-            </div>
-
-            <div className="menu-options">
-              <Button
-                className="menu-option"
-                onClick={handleCameraClick}
-                variant="link"
-              >
-                <MdCamera size={24} />
-                <span>Camera</span>
-              </Button>
-
-              <Button
-                className="menu-option"
-                onClick={handleLocationClick}
-                variant="link"
-              >
-                <MdLocationOn size={24} />
-                <span>Location</span>
-              </Button>
-            </div>
-          </div>
-        </Overlay>
+          <MdSend size={20} />
+        </Button>
       </div>
 
-      {/* Location Modal */}
+      <Overlay
+        show={showOptions}
+        target={attachButtonRef.current}
+        placement="top"
+        rootClose
+        onHide={() => setShowOptions(false)}
+      >
+        <div className="attachment-menu">
+          <div className="menu-header">
+            <span>Share</span>
+            <Button
+              variant="link"
+              size="sm"
+              onClick={() => setShowOptions(false)}
+              className="close-menu-btn"
+            >
+              <MdClose size={16} />
+            </Button>
+          </div>
+
+          <div className="menu-options">
+            <Button className="menu-option" onClick={handleCameraClick} variant="link">
+              <MdCamera size={24} />
+              <span>Camera</span>
+            </Button>
+
+            <Button className="menu-option" onClick={handleLocationClick} variant="link">
+              <MdLocationOn size={24} />
+              <span>Location</span>
+            </Button>
+          </div>
+        </div>
+      </Overlay>
+
       <Modal show={showMap} onHide={() => setShowMap(false)} centered size="lg">
         <Modal.Body style={{ backgroundColor: "#0F1A24", color: "#fff" }}>
           <LocationMap onSendLocation={handleSendLocation} />
@@ -183,30 +164,27 @@ const MessageInput = ({ input, setInput, handleSend }) => {
         }
 
         @keyframes pulse {
-          0%, 100% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.1);
-          }
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.1); }
         }
 
         .input-wrapper {
           flex: 1;
           display: flex;
           align-items: flex-end;
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(100, 255, 218, 0.2);
           border-radius: 22px;
           padding: 4px;
           transition: all 0.3s ease;
           position: relative;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .input-wrapper:focus-within {
           border-color: #64ffda;
-          background: rgba(100, 255, 218, 0.05);
-          box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+          background: rgba(100, 255, 218, 0.08);
+          box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.15);
         }
 
         .message-textarea {
@@ -353,7 +331,6 @@ const MessageInput = ({ input, setInput, handleSend }) => {
           font-size: 0.9rem;
         }
 
-        /* Scrollbar for textarea */
         .message-textarea::-webkit-scrollbar {
           width: 4px;
         }
@@ -368,31 +345,14 @@ const MessageInput = ({ input, setInput, handleSend }) => {
         }
 
         @media (max-width: 768px) {
-          .modern-message-input {
-            padding: 12px 16px;
-          }
-
-          .input-container {
-            gap: 8px;
-          }
-
-          .voice-btn, .send-btn {
-            width: 40px;
-            height: 40px;
-          }
-
-          .attach-btn {
-            width: 32px;
-            height: 32px;
-          }
-
-          .message-textarea {
-            font-size: 0.9rem;
-            padding: 6px 10px;
-          }
+          .modern-message-input { padding: 12px 16px; }
+          .input-container { gap: 8px; }
+          .voice-btn, .send-btn { width: 40px; height: 40px; }
+          .attach-btn { width: 32px; height: 32px; }
+          .message-textarea { font-size: 0.9rem; padding: 6px 10px; }
         }
       `}</style>
-    </>
+    </div>
   );
 };
 

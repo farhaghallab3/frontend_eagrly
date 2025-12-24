@@ -25,7 +25,9 @@ export default function ProductDetails() {
 
         try {
             const chat = await findOrCreateChat(product.id, product.seller.id, user.id);
-            navigate(`/chat/${chat.id}`);
+            if (chat && chat.id) {
+                navigate(`/chat/${chat.id}`);
+            }
         } catch (error) {
             console.error("Error contacting seller:", error);
         }

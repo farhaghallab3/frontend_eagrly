@@ -114,10 +114,10 @@ const AboutUs = () => {
             <Container className={styles.section}>
                 <h2>Meet the Team</h2>
                 <p>
-                    The brilliant minds behind Remote+, dedicated to pushing the boundaries
+                    The brilliant minds behind Eagerly, dedicated to pushing the boundaries
                     of remote work technology.
                 </p>
-                <Row className={styles.teamGrid}>
+                <div className={styles.teamGrid}>
                     {[
                         {
                             name: "Alex Johnson",
@@ -135,15 +135,13 @@ const AboutUs = () => {
                             img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAIB6jJWEDNPM1GCRLfSjTWMEetPmDXhACRz8NXzzE7Mfvm_4PdbXCULTj1kaFKNapFIbC16kWlgetjtMHqSBaX7-NVyaWiIpfKa8tNJeqWbIXHLLkbEBN8bDjkqlIjB3tmPICEhrIso34XDTVwR2bI0t1XOM9buwOMeEF3U3vTPNz_W10_vZ2TpNPokr6mFdwKtEf2CaCJZg49G5W2Vxm9Q9idif0pTf9-TG8yN_7APDgCnJJU2E8OwqRpm8dtTm6U-Toy5zM1L9qO",
                         },
                     ].map((member, idx) => (
-                        <Col key={idx} md={4}>
-                            <div className={styles.teamCard}>
-                                <img src={member.img} alt={member.name} />
-                                <h4>{member.name}</h4>
-                                <p>{member.role}</p>
-                            </div>
-                        </Col>
+                        <div key={idx} className={styles.teamCard}>
+                            <img src={member.img} alt={member.name} />
+                            <h4>{member.name}</h4>
+                            <p>{member.role}</p>
+                        </div>
                     ))}
-                </Row>
+                </div>
             </Container>
 
             {/* Values */}

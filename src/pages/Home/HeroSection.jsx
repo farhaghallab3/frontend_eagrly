@@ -110,8 +110,7 @@ export default function HeroSection() {
                             >
                                 <div className="hero-header">
                                     <h1 className="hero-title">
-                                        {slide.title}
-                                        <span className="hero-title-highlight">{slide.highlight}</span>
+                                        {slide.title} <span className="hero-title-highlight">{slide.highlight}</span>
                                         <br />
                                         <span className="hero-subtitle">{slide.subtitle}</span>
                                     </h1>

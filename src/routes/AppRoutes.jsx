@@ -12,6 +12,13 @@ import NotFound from "@pages/NotFound";
 import MyAds from "@pages/MyAds/MyAds";
 import ProductDetails from "@pages/ProductDetails/ProductDetails";
 import ProfilePage from "@pages/Profile/ProfilePage";
+import CheckoutPage from "@pages/Checkout/CheckoutPage";
+import PaymentStatusPage from "@pages/Payment/PaymentStatusPage";
+import HelpCenter from "@pages/Support/HelpCenter";
+import ContactUs from "@pages/Support/ContactUs";
+import FAQ from "@pages/Support/FAQ";
+import PrivacyPolicy from "@pages/Support/PrivacyPolicy";
+import TermsOfService from "@pages/Support/TermsOfService";
 
 export default function AppRoutes() {
     return (
@@ -28,6 +35,15 @@ export default function AppRoutes() {
                     <Route path="/chat" element={<ChatApp />} />
                     <Route path="/chat/:chatId" element={<ChatApp />} />
                     <Route path="/product/:id" element={<ProductDetails />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route path="/payment-status" element={<PaymentStatusPage />} />
+                    <Route path="/help" element={<HelpCenter />} />
+                    <Route path="/contact" element={<ContactUs />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/privacy" element={<PrivacyPolicy />} />
+                    <Route path="/terms" element={<TermsOfService />} />
+                    <Route path="/report" element={<ContactUs />} />
+                    <Route path="/my-ads" element={<MyAds />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
 

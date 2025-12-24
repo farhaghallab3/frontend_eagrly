@@ -60,12 +60,16 @@
 }
 
 @keyframes heroFloat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) scale(1) rotate(0deg);
   }
+
   33% {
     transform: translateY(-20px) scale(1.1) rotate(120deg);
   }
+
   66% {
     transform: translateY(15px) scale(0.9) rotate(240deg);
   }
@@ -98,9 +102,12 @@
 }
 
 @keyframes badgePulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
@@ -170,10 +177,11 @@
 
 .contentGrid {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 40px;
-  max-width: 1400px;
+  max-width: 1300px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* Sidebar */
@@ -181,6 +189,7 @@
   position: sticky;
   top: 100px;
   height: fit-content;
+  z-index: 10;
 }
 
 .sidebarCard {
@@ -218,8 +227,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Error State */

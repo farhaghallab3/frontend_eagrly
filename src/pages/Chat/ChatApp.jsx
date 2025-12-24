@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "@components/ecommerce/Chat/Header";
@@ -6,7 +6,7 @@ import ChatMessages from "@components/ecommerce/Chat/ChatMessage";
 import MessageInput from "@components/ecommerce/Chat/MessageInput";
 import ChatList from "@components/ecommerce/Chat/ChatList";
 import { getChat, sendMessage } from "../../services/chatService";
-import { sendChatMessage, setSelectedChat } from "../../store/slices/chatSlice";
+import { sendChatMessage, setSelectedChat, fetchChats } from "../../store/slices/chatSlice";
 import { useAuth } from "../../hooks/useAuth";
 import { Spinner, Alert, Button } from "react-bootstrap";
 import { MdMessage } from "react-icons/md";
@@ -24,12 +24,16 @@ const ChatApp = () => {
   const { user } = useAuth();
 
   useEffect(() => {
+    dispatch(fetchChats());
+  }, [dispatch]);
+
+  useEffect(() => {
     const fetchChat = async () => {
       if (selectedChatId) {
         try {
           const chatData = await getChat(selectedChatId);
           setChat(chatData);
-          setMessages(chatData.messages);
+          setMessages(chatData.messages || []);
         } catch (error) {
           console.error("Failed to fetch chat:", error);
           setSendError("Failed to fetch chat. Please try again later.");
@@ -41,8 +45,11 @@ const ChatApp = () => {
   }, [selectedChatId]);
 
   useEffect(() => {
-    if (chatId && chatId !== selectedChatId) {
-      dispatch(setSelectedChat(chatId));
+    if (chatId) {
+      const numericChatId = isNaN(chatId) ? chatId : Number(chatId);
+      if (numericChatId !== selectedChatId) {
+        dispatch(setSelectedChat(numericChatId));
+      }
     }
   }, [chatId, selectedChatId, dispatch]);
 
@@ -63,12 +70,24 @@ const ChatApp = () => {
     }
   };
 
-  const formattedMessages = messages.map((msg) => ({
-    sender: msg.sender === user?.id ? "You" : "Other",
-    text: msg.text,
-    time: new Date(msg.timestamp).toLocaleTimeString(),
-    type: msg.sender === user?.id ? "sent" : "received",
-  }));
+  const formattedMessages = useMemo(() => {
+    return messages.map((msg) => {
+      let timeStr = "Just now";
+      if (msg.timestamp) {
+        const date = new Date(msg.timestamp);
+        if (!isNaN(date.getTime())) {
+          timeStr = date.toISOString(); // Pass ISO string to child for consistent parsing
+        }
+      }
+
+      return {
+        sender: msg.sender === user?.id ? "You" : "Other",
+        text: msg.text,
+        time: timeStr,
+        type: msg.sender === user?.id ? "sent" : "received",
+      };
+    });
+  }, [messages, user?.id]);
 
   if (loading) {
     return (
@@ -117,9 +136,7 @@ const ChatApp = () => {
         {selectedChatId ? (
           <div className={styles.chatConversation}>
             <Header chat={chat} />
-            <div className={styles.messagesContainer}>
-              <ChatMessages messages={formattedMessages} />
-            </div>
+            <ChatMessages messages={formattedMessages} />
             {sendError && (
               <div className={styles.errorAlertChat}>
                 <Alert variant="danger" className="mb-0">

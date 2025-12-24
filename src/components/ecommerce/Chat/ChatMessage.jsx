@@ -15,7 +15,9 @@ const ChatMessages = ({ messages }) => {
   }, [messages]);
 
   const formatTime = (timeString) => {
+    if (!timeString || timeString === "Just now") return "Just now";
     const date = new Date(timeString);
+    if (isNaN(date.getTime())) return "Just now";
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 

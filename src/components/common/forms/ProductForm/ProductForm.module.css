@@ -1,16 +1,15 @@
 /* Product Form Container */
 .formContainer {
   width: 100%;
-  max-width: 600px;
   margin: 0 auto;
 }
 
 /* Form Title */
 .formTitle {
-  font-size: 1.75rem;
+  font-size: 2.25rem;
   font-weight: 800;
-  text-align: center;
-  margin-bottom: 2rem;
+  text-align: left;
+  margin-bottom: 2.5rem;
   background: linear-gradient(135deg, #ffffff 0%, #64ffda 50%, #00c2ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -22,62 +21,67 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2.5rem;
 }
 
 /* Form Groups */
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 label {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #ffffff;
+  color: #64ffda;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 label::after {
-  content: '*';
-  color: #ef4444;
-  font-weight: bold;
+  content: none;
+  /* Removed default star */
 }
 
 /* Inputs */
 .input,
 .textarea,
 .select {
-  padding: 14px 16px;
-  border: 2px solid rgba(100, 255, 218, 0.2);
-  border-radius: 12px;
-  font-size: 0.95rem;
-  background: rgba(10, 25, 47, 0.5);
+  padding: 16px 20px;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 16px;
+  font-size: 1rem;
+  background: rgba(10, 25, 47, 0.4);
   backdrop-filter: blur(10px);
   color: #ffffff;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .input::placeholder,
 .textarea::placeholder {
-  color: #8892b0;
+  color: rgba(136, 146, 176, 0.5);
 }
 
 .input:focus,
 .textarea:focus,
 .select:focus {
-  border-color: #64ffda;
-  background: rgba(10, 25, 47, 0.8);
-  box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+  border-color: rgba(100, 255, 218, 0.6);
+  background: rgba(10, 25, 47, 0.6);
+  box-shadow:
+    0 0 0 4px rgba(100, 255, 218, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
 }
 
 .textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 120px;
 }
 
 /* Category Input with Datalist */
@@ -94,10 +98,14 @@ label::after {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #fca5a5;
+  color: #ff4d4d;
   font-size: 0.85rem;
   font-weight: 500;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
+  padding: 8px 12px;
+  background: rgba(255, 77, 77, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #ff4d4d;
 }
 
 .error::before {
@@ -108,30 +116,33 @@ label::after {
 /* Image Upload */
 .imageUpload {
   position: relative;
-  border: 2px dashed rgba(100, 255, 218, 0.3);
-  border-radius: 12px;
-  padding: 2rem;
+  border: 2px dashed rgba(100, 255, 218, 0.2);
+  border-radius: 20px;
+  padding: 3rem 2rem;
   text-align: center;
-  background: rgba(10, 25, 47, 0.3);
-  transition: all 0.3s ease;
+  background: rgba(10, 25, 47, 0.2);
+  transition: all 0.4s ease;
   cursor: pointer;
 }
 
 .imageUpload:hover {
   border-color: #64ffda;
-  background: rgba(10, 25, 47, 0.5);
+  background: rgba(100, 255, 218, 0.05);
+  transform: scale(1.01);
 }
 
 .uploadIcon {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #64ffda;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   display: block;
+  opacity: 0.8;
 }
 
 .uploadText {
   color: #ffffff;
   font-weight: 600;
+  font-size: 1.1rem;
   margin-bottom: 0.5rem;
 }
 
@@ -148,81 +159,90 @@ label::after {
 }
 
 /* Image Preview */
+.imagePreview {
+  margin-top: 1.5rem;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
 .previewImage {
-  max-width: 100%;
-  height: 200px;
+  width: 100%;
+  height: 250px;
   object-fit: cover;
-  border-radius: 12px;
-  margin-top: 1rem;
-  border: 2px solid rgba(100, 255, 218, 0.3);
+  display: block;
 }
 
 /* Actions */
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(100, 255, 218, 0.2);
+  gap: 1.25rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(100, 255, 218, 0.1);
 }
 
 .cancelBtn,
 .saveBtn {
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.95rem;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0.75rem;
 }
 
 .cancelBtn {
-  background: rgba(108, 117, 125, 0.8);
+  background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
-  border: 2px solid rgba(108, 117, 125, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cancelBtn:hover {
-  background: rgba(108, 117, 125, 1);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(108, 117, 125, 0.3);
 }
 
 .saveBtn {
   background: linear-gradient(135deg, #64ffda 0%, #00c2ff 100%);
   color: #0a192f;
-  box-shadow: 0 4px 16px rgba(100, 255, 218, 0.3);
+  box-shadow: 0 10px 20px -10px rgba(100, 255, 218, 0.5);
 }
 
 .saveBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(100, 255, 218, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px -10px rgba(100, 255, 218, 0.6);
 }
 
 /* Progress Indicator */
 .progressIndicator {
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
 }
 
 .progressStep {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(100, 255, 218, 0.2);
-  transition: all 0.3s ease;
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(100, 255, 218, 0.1);
+  transition: all 0.4s ease;
 }
 
 .progressStep.active {
   background: #64ffda;
-  box-shadow: 0 0 12px rgba(100, 255, 218, 0.5);
+  box-shadow: 0 0 15px rgba(100, 255, 218, 0.4);
+  width: 60px;
 }
 
 .progressStep.completed {
@@ -234,25 +254,31 @@ label::after {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sectionHeader {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .sectionIcon {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: #64ffda;
+  opacity: 0.9;
 }
 
 .sectionTitle {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #64ffda;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
   margin: 0;
+  letter-spacing: 0.5px;
 }
 
 /* Responsive Design */
@@ -262,11 +288,12 @@ label::after {
   }
 
   .formTitle {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    text-align: center;
   }
 
   .actions {
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 0.75rem;
   }
 
@@ -282,6 +309,14 @@ label::after {
 
   .uploadIcon {
     font-size: 1.5rem;
+  }
+
+  .progressIndicator {
+    justify-content: center;
+  }
+
+  .formSections {
+    padding: 16px;
   }
 }
 

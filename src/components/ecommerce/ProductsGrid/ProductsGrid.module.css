@@ -80,7 +80,7 @@
 /* Grid Container */
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 32px;
 }
 
@@ -166,11 +166,9 @@
 .imageOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(100, 255, 218, 0.1) 0%,
-    rgba(0, 194, 255, 0.2) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(100, 255, 218, 0.1) 0%,
+      rgba(0, 194, 255, 0.2) 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
   display: flex;

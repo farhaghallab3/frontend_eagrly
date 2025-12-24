@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // API endpoints
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
 // Register thunk
 export const registerUser = createAsyncThunk(
@@ -12,7 +12,7 @@ export const registerUser = createAsyncThunk(
             const response = await axios.post(`${API_URL}/users/`, userData);
             return response.data;
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data || error.message);
         }
     }
 );
@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk(
             const response = await axios.post(`${API_URL}/token/`, userData);
             return response.data;
         } catch (error) {
-            return rejectWithValue(error);
+            return rejectWithValue(error.response?.data || error.message);
         }
     }
 );
@@ -60,7 +60,7 @@ const authSlice = createSlice({
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload.response.data || "Register failed";
+                state.error = action.payload || "Register failed";
             })
             .addCase(loginUser.pending, (state) => {
                 state.loading = true;
@@ -75,7 +75,7 @@ const authSlice = createSlice({
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload.response.data || "Login failed";
+                state.error = action.payload || "Login failed";
             });
     },
 });

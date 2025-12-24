@@ -1,6 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // import navigate
-import styles from "../FeaturedProducts/FeaturedProducts.module.css";
+import { useNavigate } from "react-router-dom";
+import styles from "./ProductCard.module.css";
 import ButtonPrimary from "@components/common/ButtonPrimary/ButtonPrimary";
 
 export default function ProductCard({ product }) {
@@ -8,27 +8,33 @@ export default function ProductCard({ product }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        // If product has seller, it's a product; else it's a category
         if (product.seller) {
-            navigate(`/product/${id || product._id}`); // navigate to product details page
+            navigate(`/product/${id || product._id}`);
         } else {
-            navigate(`/categories/${id || product._id}/products`); // navigate to category products page
+            navigate(`/categories/${id || product._id}/products`);
         }
     };
 
     return (
-        <div className={`${styles.card} d-flex flex-column justify-content-between p-3`}>
+        <div
+            className={`${styles.card} d-flex flex-column justify-content-between p-3`}
+            onClick={handleClick}
+            style={{ cursor: 'pointer' }}
+        >
             <div>
                 <div
                     className={styles.image}
                     style={{ backgroundImage: `url(${image})` }}
                 ></div>
                 <div className="mt-3">
-                    <p className="text-white fw-bold">{title}{name}</p>
-                    <p className="text-secondary small">{description}</p>
+                    <p className={styles.title}>{title}{name}</p>
+                    <p className={styles.desc}>{description}</p>
                 </div>
             </div>
-            <ButtonPrimary text={buttonText} onClick={handleClick} />
+            <ButtonPrimary text={buttonText} onClick={(e) => {
+                e.stopPropagation();
+                handleClick();
+            }} />
         </div>
     );
 }

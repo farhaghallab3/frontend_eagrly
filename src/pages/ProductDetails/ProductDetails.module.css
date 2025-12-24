@@ -63,28 +63,26 @@
 }
 
 .productRow {
-  align-items: flex-start;
-  gap: 40px;
-  flex-wrap: nowrap;
-}
-
-/* .detailsColumn {
-  
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-  
-} */
-
-/* Ensure the image column stays sticky on desktop while scrolling text */
-@media (max-width: 768px) {
-.productRow {
   align-items: flex-start;
   gap: 40px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
-  .imageColumn, .detailsColumn {
-    max-width: 100%;
+
+.imageColumn,
+.detailsColumn {
+  flex: 1;
+  min-width: 300px;
+}
+
+@media (max-width: 768px) {
+  .productRow {
+    gap: 20px;
+  }
+
+  .imageColumn,
+  .detailsColumn {
+    min-width: 100%;
   }
 }
 

@@ -62,12 +62,16 @@
 }
 
 @keyframes heroFloat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) scale(1) rotate(0deg);
   }
+
   33% {
     transform: translateY(-20px) scale(1.1) rotate(120deg);
   }
+
   66% {
     transform: translateY(15px) scale(0.9) rotate(240deg);
   }
@@ -274,8 +278,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Error State */
@@ -563,13 +572,34 @@
   background: rgba(15, 26, 36, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(100, 255, 218, 0.2);
-  border-radius: 20px;
-  max-width: 600px;
+  border-radius: 24px;
+  max-width: 700px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
   z-index: 10000;
+  padding: 40px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal::-webkit-scrollbar-track {
+  background: rgba(10, 25, 47, 0.3);
+  border-radius: 10px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background: rgba(100, 255, 218, 0.2);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.modal::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 255, 218, 0.4);
 }
 
 /* Delete Modal */
@@ -721,7 +751,7 @@
   .cardActions {
     flex-direction: column;
     gap: 8px;
-    
+
   }
 
   .editButton,

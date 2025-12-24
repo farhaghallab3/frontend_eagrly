@@ -79,6 +79,7 @@ const Reviews = () => {
                         modules={[Navigation, Autoplay, Pagination]}
                         spaceBetween={30}
                         slidesPerView={1}
+                        loop={true}
                         autoplay={{
                             delay: 4000,
                             disableOnInteraction: false,
@@ -138,13 +139,13 @@ const Reviews = () => {
                     <div className={styles.navigationContainer}>
                         <button className={`${styles.navBtn} reviews-prev`}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </button>
                         <div className={styles.swiperPagination}></div>
                         <button className={`${styles.navBtn} reviews-next`}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </button>
                     </div>

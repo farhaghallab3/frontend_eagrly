@@ -21,7 +21,7 @@ const ProductsPage = () => {
     category: categoryFromUrl || "",
     university: "",
     faculty: "",
-    priceRange: [0, 5000],
+    priceRange: [0, 100000],
     inStock: false,
     features: []
   });
@@ -58,17 +58,17 @@ const ProductsPage = () => {
   const filteredProducts = Array.isArray(products) ? products.filter(product => {
     if (!product) return false;
 
-    const prodCategory = String(product.category?.name || product.category || '').trim();
+    const prodCategory = String(product.category_name || product.category?.name || product.category || '').trim();
     const prodUniversity = String(product.university || '').trim();
     const prodFaculty = String(product.faculty || '').trim();
     const prodPrice = Number(product.price || 0);
     const prodStatus = String(product.status || '').trim();
 
-    if (filters.category && prodCategory !== String(filters.category || '').trim()) return false;
-    if (filters.university && prodUniversity !== String(filters.university || '').trim()) return false;
-    if (filters.faculty && prodFaculty !== String(filters.faculty || '').trim()) return false;
+    if (filters.category && prodCategory.toLowerCase() !== String(filters.category || '').trim().toLowerCase()) return false;
+    if (filters.university && prodUniversity.toLowerCase() !== String(filters.university || '').trim().toLowerCase()) return false;
+    if (filters.faculty && prodFaculty.toLowerCase() !== String(filters.faculty || '').trim().toLowerCase()) return false;
     if (prodPrice < filters.priceRange[0] || prodPrice > filters.priceRange[1]) return false;
-    if (filters.inStock && prodStatus.toLowerCase() !== 'available') return false;
+    if (filters.inStock && prodStatus.toLowerCase() !== 'active' && prodStatus.toLowerCase() !== 'available') return false;
 
     return true;
   }) : [];
@@ -77,7 +77,7 @@ const ProductsPage = () => {
     category: "",
     university: "",
     faculty: "",
-    priceRange: [0, 5000],
+    priceRange: [0, 100000],
     inStock: false,
     features: []
   });
@@ -198,6 +198,7 @@ const ProductsPage = () => {
                     allProductsCount={products.length}
                     filters={filters}
                     onFilterChange={setFilters}
+                    categoryName={categories.find(c => c.id === Number(filters.category))?.name}
                   />
                 </>
               )}

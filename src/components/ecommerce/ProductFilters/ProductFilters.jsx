@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Card, Form, Button } from "react-bootstrap";
-import { FaFilter, FaTimes, FaSlidersH } from "react-icons/fa";
+import { FaSlidersH } from "react-icons/fa";
 import styles from "./ProductFilters.module.css";
 
 const ProductFilters = ({ filters, onFilterChange, products, onClearFilters, showCategoryFilter = true, categories = [] }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
-  // Get unique values for filters from products
   const getUniqueValues = (field) => {
     if (!Array.isArray(products)) return [];
     return [...new Set(products
@@ -19,8 +17,6 @@ const ProductFilters = ({ filters, onFilterChange, products, onClearFilters, sho
   };
 
   const universities = getUniqueValues('university');
-  const faculties = getUniqueValues('faculty');
-  const features = ["Wireless", "4K Resolution", "Noise Cancelling"];
 
   const handleFilterChange = (filterType, value) => {
     onFilterChange(prev => ({
@@ -29,172 +25,75 @@ const ProductFilters = ({ filters, onFilterChange, products, onClearFilters, sho
     }));
   };
 
-  const handleFeatureToggle = (feature) => {
-    onFilterChange(prev => ({
-      ...prev,
-      features: prev.features.includes(feature)
-        ? prev.features.filter(f => f !== feature)
-        : [...prev.features, feature]
-    }));
-  };
-
-  const activeFiltersCount = [
-    filters.category,
-    filters.university,
-    filters.faculty,
-    filters.inStock,
-    ...filters.features
-  ].filter(Boolean).length;
-
   return (
     <div className={styles.filtersContainer}>
-      {/* Filter Header */}
       <div className={styles.filtersHeader}>
         <div className={styles.headerContent}>
           <FaSlidersH className={styles.headerIcon} />
           <span className={styles.headerTitle}>Filters</span>
-          {activeFiltersCount > 0 && (
-            <span className={styles.activeCount}>{activeFiltersCount}</span>
-          )}
         </div>
-        <div className={styles.headerActions}>
-          <button
-            className={styles.clearButton}
-            onClick={onClearFilters}
-          >
-            Clear All
-          </button>
-          <button
-            className={styles.toggleButton}
-            onClick={() => setIsExpanded(!isExpanded)}
-          >
-            <FaFilter className={styles.toggleIcon} />
-          </button>
-        </div>
+        <button className={styles.clearButton} onClick={onClearFilters}>Clear All</button>
       </div>
 
-      {/* Filter Content */}
-      <div className={`${styles.filtersContent} ${isExpanded ? styles.expanded : styles.collapsed}`}>
-        {/* Category Filter */}
+      <div className={styles.filtersContent} style={{ display: 'block', opacity: 1, visibility: 'visible', maxHeight: 'none' }}>
         {showCategoryFilter && (
           <div className={styles.filterGroup}>
             <label className={styles.filterLabel}>Category</label>
             <div className={styles.selectWrapper}>
-              <Form.Select
+              <select
                 value={filters.category}
                 onChange={(e) => handleFilterChange('category', e.target.value)}
                 className={styles.customSelect}
+                style={{ background: '#0a192f', color: 'white', border: '2px solid rgba(100, 255, 218, 0.2)', borderRadius: '12px', padding: '12px 16px', width: '100%' }}
               >
                 <option value="">All Categories</option>
-                {categories.map((category, index) => (
-                  <option key={index} value={category.name}>
-                    {category.name || 'Uncategorized'}
+                {Array.isArray(categories) && categories.map((cat, idx) => (
+                  <option key={idx} value={cat.name || cat}>
+                    {cat.name || cat || 'Uncategorized'}
                   </option>
                 ))}
-              </Form.Select>
+              </select>
             </div>
           </div>
         )}
 
-        {/* University Filter */}
         <div className={styles.filterGroup}>
           <label className={styles.filterLabel}>University</label>
           <div className={styles.selectWrapper}>
-            <Form.Select
+            <select
               value={filters.university}
               onChange={(e) => handleFilterChange('university', e.target.value)}
               className={styles.customSelect}
+              style={{ background: '#0a192f', color: 'white', border: '2px solid rgba(100, 255, 218, 0.2)', borderRadius: '12px', padding: '12px 16px', width: '100%' }}
             >
               <option value="">All Universities</option>
-              {universities.map((university, index) => (
-                <option key={index} value={university}>
-                  {university}
+              {universities.map((uni, idx) => (
+                <option key={idx} value={uni}>
+                  {uni}
                 </option>
               ))}
-            </Form.Select>
+            </select>
           </div>
         </div>
 
-        {/* Faculty Filter */}
-        <div className={styles.filterGroup}>
-          <label className={styles.filterLabel}>Faculty</label>
-          <div className={styles.selectWrapper}>
-            <Form.Select
-              value={filters.faculty}
-              onChange={(e) => handleFilterChange('faculty', e.target.value)}
-              className={styles.customSelect}
-            >
-              <option value="">All Faculties</option>
-              {faculties.map((faculty, index) => (
-                <option key={index} value={faculty}>
-                  {faculty}
-                </option>
-              ))}
-            </Form.Select>
-          </div>
-        </div>
-
-        {/* Price Range Filter */}
         <div className={styles.filterGroup}>
           <label className={styles.filterLabel}>Price Range</label>
           <div className={styles.priceRange}>
-            <div className={styles.rangeSlider}>
-              <Form.Range
-                min={0}
-                max={5000}
-                value={filters.priceRange[1]}
-                onChange={(e) => handleFilterChange('priceRange', [0, parseInt(e.target.value)])}
-                className={styles.rangeInput}
-              />
+            <input
+              type="range"
+              min={0}
+              max={100000}
+              step={1000}
+              value={filters.priceRange[1]}
+              onChange={(e) => handleFilterChange('priceRange', [0, parseInt(e.target.value)])}
+              style={{ width: '100%' }}
+            />
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '5px', color: '#64ffda', fontWeight: 'bold' }}>
+              <span>$0</span>
+              <span>${filters.priceRange[1]}</span>
             </div>
-            <div className={styles.priceDisplay}>
-              <span className={styles.priceMin}>$0</span>
-              <span className={styles.priceMax}>${filters.priceRange[1]}</span>
-            </div>
           </div>
         </div>
-
-        {/* Availability Filter */}
-        <div className={styles.filterGroup}>
-          <label className={styles.filterLabel}>Availability</label>
-          <div className={styles.checkboxWrapper}>
-            <label className={styles.checkboxLabel}>
-              <input
-                type="checkbox"
-                checked={filters.inStock}
-                onChange={(e) => handleFilterChange('inStock', e.target.checked)}
-                className={styles.checkboxInput}
-              />
-              <span className={styles.checkboxMark}></span>
-              <span className={styles.checkboxText}>In Stock Only</span>
-            </label>
-          </div>
-        </div>
-
-        {/* Features Filter */}
-        <div className={styles.filterGroup}>
-          <label className={styles.filterLabel}>Features</label>
-          <div className={styles.featuresList}>
-            {features.map((feature, i) => (
-              <label key={i} className={styles.checkboxLabel}>
-                <input
-                  type="checkbox"
-                  checked={filters.features.includes(feature)}
-                  onChange={() => handleFeatureToggle(feature)}
-                  className={styles.checkboxInput}
-                />
-                <span className={styles.checkboxMark}></span>
-                <span className={styles.checkboxText}>{feature}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {/* Apply Button */}
-        <button className={styles.applyButton}>
-          <FaFilter className={styles.applyIcon} />
-          Apply Filters
-        </button>
       </div>
     </div>
   );
