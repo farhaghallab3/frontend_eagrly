@@ -131,15 +131,7 @@ export default function MyAds() {
                             </div>
                         </div>
 
-                        <div className={styles.statCard}>
-                            <div className={styles.statIcon}>
-                                <FaStar />
-                            </div>
-                            <div className={styles.statContent}>
-                                <span className={styles.statNumber}>4.8</span>
-                                <span className={styles.statLabel}>Average Rating</span>
-                            </div>
-                        </div>
+                        {/* Rating Removed */}
                     </div>
                 </Container>
             </section>

@@ -13,4 +13,25 @@ export const packageService = {
       return [];
     }
   },
+  subscribe: async (id) => {
+    try {
+      const res = await axiosInstance.post(`${API_URL}${id}/subscribe/`);
+      return res.data;
+    } catch (error) {
+      console.error("Error subscribing:", error);
+      throw error;
+    }
+  },
+  verifyPayment: async (queryParams) => {
+    try {
+      // payments is a ViewSet under /api/payments/ but we added it to router as 'payments'
+      // Wait, the router registers 'payments' -> PaymentViewSet
+      // So the url is /payments/callback/
+      const res = await axiosInstance.get(`/payments/callback/?${queryParams}`);
+      return res.data;
+    } catch (error) {
+      console.error("Error verifying payment:", error);
+      throw error;
+    }
+  }
 };

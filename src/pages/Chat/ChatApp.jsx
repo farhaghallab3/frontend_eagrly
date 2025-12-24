@@ -6,7 +6,7 @@ import ChatMessages from "@components/ecommerce/Chat/ChatMessage";
 import MessageInput from "@components/ecommerce/Chat/MessageInput";
 import ChatList from "@components/ecommerce/Chat/ChatList";
 import { getChat, sendMessage } from "../../services/chatService";
-import { sendChatMessage, setSelectedChat, fetchChats } from "../../store/slices/chatSlice";
+import { setSelectedChat, fetchChats } from "../../store/slices/chatSlice";
 import { useAuth } from "../../hooks/useAuth";
 import { Spinner, Alert, Button } from "react-bootstrap";
 import { MdMessage } from "react-icons/md";

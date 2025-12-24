@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import styles from "./Support.module.css";
 
-const PrivacyPolicy = () => {
+const PrivacyPage = () => {
     return (
         <div className={styles.supportPage}>
             <section className={styles.hero}>
@@ -16,7 +16,7 @@ const PrivacyPolicy = () => {
 
             <Container className={styles.section}>
                 <div className={styles.legalContent}>
-                    <p>At Eagrely, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information.</p>
+                    <p>At Eagerly, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information.</p>
 
                     <h2>1. Information We Collect</h2>
                     <p>We collect information you provide directly to us when you create an account, list a product, or communicate with other users.</p>
@@ -39,11 +39,11 @@ const PrivacyPolicy = () => {
                     <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
 
                     <h2>6. Contact Us</h2>
-                    <p>If you have any questions about this Privacy Policy, please contact us at privacy@eagrely.com.</p>
+                    <p>If you have any questions about this Privacy Policy, please contact us at privacy@eagerly.com.</p>
                 </div>
             </Container>
         </div>
     );
 };
 
-export default PrivacyPolicy;
+export default PrivacyPage;

@@ -25,11 +25,7 @@ export default function FeaturedProducts({ title = "Featured Products", products
 
     return (
         <section className={styles.featuredSection}>
-            <div className={styles.sectionBackground}>
-                <div className={styles.bgGlow1}></div>
-                <div className={styles.bgGlow2}></div>
-                <div className={styles.bgGlow3}></div>
-            </div>
+            {/* Background elements moved to Home wrapper */}
 
             <div className="container">
                 <div className={styles.sectionHeader}>
@@ -92,7 +88,7 @@ export default function FeaturedProducts({ title = "Featured Products", products
                                     >
                                         View Details
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                     </button>
                                 </div>
@@ -108,7 +104,7 @@ export default function FeaturedProducts({ title = "Featured Products", products
                         <button className={styles.viewAllBtn} onClick={handleViewAllProducts}>
                             <span>View All Products</span>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </button>
                     </div>

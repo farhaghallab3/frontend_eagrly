@@ -157,12 +157,7 @@ export default function HeroSection() {
                                 <div className="stat-label">Active Sellers</div>
                             </div>
                         </div>
-                        <div className="stat-item">
-                            <div className="stat-content">
-                                <div className="stat-number">4.8</div>
-                                <div className="stat-label">Average Rating</div>
-                            </div>
-                        </div>
+                        {/* Rating Removed */}
                         <div className="stat-item">
                             <div className="stat-content">
                                 <div className="stat-number">50K+</div>

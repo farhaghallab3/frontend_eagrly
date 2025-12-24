@@ -6,6 +6,7 @@ import { useProduct } from "../../../../hooks/useProducts";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaUpload, FaImage, FaTimes, FaCheck, FaExclamationTriangle } from "react-icons/fa";
+import SubscriptionModal from "../../../ecommerce/SubscriptionPlans/SubscriptionModal";
 
 export default function ProductForm({ product, onClose, onSuccess }) {
     const navigate = useNavigate();
@@ -13,6 +14,8 @@ export default function ProductForm({ product, onClose, onSuccess }) {
     const { categories } = useCategories();
     const { addProduct, editProduct } = useProduct();
     const [preview, setPreview] = useState(product?.image || "");
+
+    const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
 
     const {
         register,
@@ -79,15 +82,8 @@ export default function ProductForm({ product, onClose, onSuccess }) {
             if (onSuccess) onSuccess(); // تحديث عند النجاح
         } catch (error) {
             if (error.response?.data?.code === 'ad_limit_exceeded') {
-                toast.error('You cannot add products until you pay for a package.');
-                navigate('/');
-                // Scroll to plans section after navigation
-                setTimeout(() => {
-                    const plansElement = document.getElementById('plans');
-                    if (plansElement) {
-                        plansElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }, 100);
+                // toast.error('You cannot add products until you pay for a package.');
+                setShowSubscriptionModal(true);
             } else {
                 // Handle other validation errors
                 console.error("Error saving product:", error);
@@ -171,7 +167,7 @@ export default function ProductForm({ product, onClose, onSuccess }) {
 
                     {/* Category - REQUIRED */}
                     <div className={styles.formGroup}>
-                        <label>Category <span style={{color: '#ef4444', fontSize: '1.2em'}}>*</span></label>
+                        <label>Category <span style={{ color: '#ef4444', fontSize: '1.2em' }}>*</span></label>
                         <select
                             {...register("category", {
                                 required: "Please select a category",
@@ -289,6 +285,10 @@ export default function ProductForm({ product, onClose, onSuccess }) {
                     </button>
                 </div>
             </form>
+            <SubscriptionModal
+                show={showSubscriptionModal}
+                onClose={() => setShowSubscriptionModal(false)}
+            />
         </div>
     );
 }

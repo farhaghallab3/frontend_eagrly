@@ -9,6 +9,7 @@ import ButtonPrimary from "@components/common/ButtonPrimary/ButtonPrimary";
 
 import { useAuth } from "../../hooks/useAuth";
 import { findOrCreateChat } from "../../services/chatService";
+import { toast } from "react-toastify";
 
 export default function ProductDetails() {
     const { id } = useParams();
@@ -23,13 +24,33 @@ export default function ProductDetails() {
             return;
         }
 
+        if (!product?.seller?.id) {
+            console.error("Seller information missing", product);
+            toast.error("Cannot contact seller: Owner information is unavailable.");
+            return;
+        }
+
         try {
+            console.log("Initiating chat with:", {
+                productId: product.id,
+                sellerId: product.seller.id,
+                buyerId: user.id
+            });
+
             const chat = await findOrCreateChat(product.id, product.seller.id, user.id);
+            console.log("Chat response:", chat);
+
             if (chat && chat.id) {
                 navigate(`/chat/${chat.id}`);
+            } else {
+                console.error("Chat created but returned no ID:", chat);
+                toast.error("Error: Could not retrieve chat details.");
             }
         } catch (error) {
             console.error("Error contacting seller:", error);
+            // Check if error has a message from backend
+            const msg = error.response?.data?.error || "Failed to start chat with seller.";
+            toast.error(msg);
         }
     };
     useEffect(() => {
@@ -129,14 +150,7 @@ export default function ProductDetails() {
                                 </div>
                                 <h1 className={styles.productTitle}>{product.title}</h1>
                                 <div className={styles.productMeta}>
-                                    <div className={styles.rating}>
-                                        <div className={styles.stars}>
-                                            {ratingStars}
-                                        </div>
-                                        <span className={styles.ratingText}>
-                                            {product.rating || 4.5} ({product.reviewsCount || 128} reviews)
-                                        </span>
-                                    </div>
+                                    {/* Rating Removed */}
                                 </div>
                             </div>
 
@@ -220,7 +234,7 @@ export default function ProductDetails() {
 
                                 <div className={styles.sellerItem}>
                                     <FaPhone className={styles.detailIcon} />
-                                    <span>{product.seller?.phone || 'Contact for details'}</span>
+                                    <span>Contact for details</span>
                                 </div>
 
                                 <div className={styles.sellerItem}>
@@ -234,64 +248,13 @@ export default function ProductDetails() {
                                 </div>
                             </div>
 
-                            <div className={styles.sellerStats}>
-                                <div className={styles.stat}>
-                                    <span className={styles.statNumber}>4.8</span>
-                                    <span className={styles.statLabel}>Seller Rating</span>
-                                </div>
-                                <div className={styles.stat}>
-                                    <span className={styles.statNumber}>24</span>
-                                    <span className={styles.statLabel}>Items Sold</span>
-                                </div>
-                                <div className={styles.stat}>
-                                    <span className={styles.statNumber}>98%</span>
-                                    <span className={styles.statLabel}>Response Rate</span>
-                                </div>
-                            </div>
+                            {/* Seller Stats Removed */}
                         </div>
                     </div>
                 </Container>
             </section>
 
-            {/* Reviews Section */}
-            <section className={styles.reviewsSection}>
-                <Container>
-                    <div className={styles.reviewsCard}>
-                        <div className={styles.reviewsHeader}>
-                            <h3>Customer Reviews & Ratings</h3>
-                            <div className={styles.overallRating}>
-                                <div className={styles.ratingScore}>
-                                    <span className={styles.scoreNumber}>{product.rating || 4.5}</span>
-                                    <div className={styles.scoreStars}>
-                                        {ratingStars}
-                                    </div>
-                                </div>
-                                <div className={styles.ratingSummary}>
-                                    <span className={styles.reviewCount}>
-                                        Based on {product.reviewsCount || 128} reviews
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className={styles.ratingBreakdown}>
-                            {reviewBars.map((bar) => (
-                                <div className={styles.ratingBar} key={bar.rate}>
-                                    <div className={styles.barLabel}>
-                                        <span>{bar.rate} stars</span>
-                                    </div>
-                                    <div className={styles.barContainer}>
-                                        <ProgressBar now={bar.percent} className={styles.progressBar} />
-                                    </div>
-                                    <div className={styles.barPercent}>
-                                        <span>{bar.percent}%</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </Container>
-            </section>
+            {/* Section Removed */}
         </div>
     );
 }

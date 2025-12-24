@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
-import { MdSchool, MdMenu, MdShoppingCart, MdPerson, MdNotifications, MdChat } from "react-icons/md";
+import { MdSchool, MdMenu, MdShoppingCart, MdPerson, MdNotifications, MdChat, MdLightMode, MdDarkMode } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../../hooks/useAuth";
+import { useTheme } from "../../../../context/ThemeContext";
 import { fetchChats } from "../../../../store/slices/chatSlice";
 import { fetchMyProducts } from "../../../../store/slices/productSlice";
 import { fetchUnreadCount } from "../../../../store/slices/notificationSlice";
@@ -13,6 +14,7 @@ import styles from "./Header.module.css";
 
 export default function Header({ links }) {
     const { user, logoutUser, token } = useAuth();
+    const { theme, toggleTheme } = useTheme();
     const dispatch = useDispatch();
     const { unreadCount } = useSelector((state) => state.chat);
     const { unreadCount: notificationCount } = useSelector((state) => state.notifications);
@@ -53,7 +55,7 @@ export default function Header({ links }) {
                 <Navbar.Brand as={Link} to="/" className={styles.brand}>
                     <div className={styles.logoWrapper}>
                         <MdSchool size={32} className={styles.logoIcon} />
-                        <span className={styles.brandText}>Eagrely</span>
+                        <span className={styles.brandText}>Eagerly</span>
                     </div>
                 </Navbar.Brand>
 
@@ -76,6 +78,14 @@ export default function Header({ links }) {
                     </Nav>
 
                     <div className={styles.navActions}>
+                        <button
+                            className={styles.themeToggle}
+                            onClick={toggleTheme}
+                            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                        >
+                            {theme === 'dark' ? <MdLightMode size={20} /> : <MdDarkMode size={20} />}
+                        </button>
+
                         {token ? (
                             <div className={styles.authenticatedActions}>
                                 <Nav.Link as={Link} to="/dashboard" className={styles.iconLink}>
@@ -128,7 +138,7 @@ export default function Header({ links }) {
                                 <div className={styles.userMenu}>
                                     <div className={styles.userInfo}>
                                         <MdPerson size={20} className={styles.userIcon} />
-                                        <span className={styles.userName}>{user?.first_name || "User"}</span>
+                                        <span className={styles.userName}>{user?.username || user?.first_name || "User"}</span>
                                     </div>
                                     <div className={styles.userDropdown}>
                                         <Link to="/dashboard/profile" className={styles.dropdownItem}>

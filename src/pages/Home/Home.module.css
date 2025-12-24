@@ -1,0 +1,71 @@
+.contentWrapper {
+    position: relative;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(100, 255, 218, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 194, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(100, 255, 218, 0.03) 0%, transparent 50%),
+        linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+    overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+.backgroundContainer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bgGlow1,
+.bgGlow2,
+.bgGlow3 {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.4;
+    animation: bgFloat 15s ease-in-out infinite;
+}
+
+.bgGlow1 {
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+.bgGlow2 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(45deg, var(--accent-secondary), var(--accent-primary));
+    top: 40%;
+    right: -100px;
+    animation-delay: 5s;
+}
+
+.bgGlow3 {
+    width: 450px;
+    height: 450px;
+    background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+    bottom: -100px;
+    left: 30%;
+    animation-delay: 10s;
+}
+
+@keyframes bgFloat {
+
+    0%,
+    100% {
+        transform: translateY(0px) scale(1) rotate(0deg);
+    }
+
+    33% {
+        transform: translateY(-50px) scale(1.1) rotate(120deg);
+    }
+
+    66% {
+        transform: translateY(30px) scale(0.9) rotate(240deg);
+    }
+}

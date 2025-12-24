@@ -130,10 +130,7 @@ export default function UserProfile() {
                             <span className={styles.statNumber}>0</span>
                             <span className={styles.statLabel}>Items Sold</span>
                         </div>
-                        <div className={styles.statItem}>
-                            <span className={styles.statNumber}>4.8</span>
-                            <span className={styles.statLabel}>Rating</span>
-                        </div>
+                        {/* Rating Removed */}
                     </div>
                 </div>
             </section>
@@ -173,6 +170,14 @@ export default function UserProfile() {
                                 <div className={styles.infoSection}>
                                     <h4 className={styles.sectionTitle}>Basic Information</h4>
                                     <div className={styles.infoGrid}>
+                                        <div className={styles.infoField}>
+                                            <label className={styles.fieldLabel}>
+                                                <FaUser className={styles.fieldIcon} />
+                                                Username
+                                            </label>
+                                            <span className={styles.fieldValue}>{user.username || 'Not provided'}</span>
+                                        </div>
+
                                         <div className={styles.infoField}>
                                             <label className={styles.fieldLabel}>
                                                 <FaIdCard className={styles.fieldIcon} />
@@ -284,38 +289,45 @@ export default function UserProfile() {
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* Account Status - Moved from Sidebar */}
+                                <div className={styles.infoSection}>
+                                    <h4 className={styles.sectionTitle}>Account Status</h4>
+                                    <div className={styles.infoGrid}>
+                                        <div className={styles.infoField}>
+                                            <label className={styles.fieldLabel}>
+                                                <FaCalendarAlt className={styles.fieldIcon} />
+                                                Member Since
+                                            </label>
+                                            <span className={styles.fieldValue}>
+                                                {new Date().toLocaleDateString()}
+                                            </span>
+                                        </div>
+
+                                        <div className={styles.infoField}>
+                                            <label className={styles.fieldLabel}>
+                                                <FaUser className={styles.fieldIcon} />
+                                                Account Type
+                                            </label>
+                                            <span className={styles.fieldValue}>Student</span>
+                                        </div>
+
+                                        <div className={styles.infoField}>
+                                            <label className={styles.fieldLabel}>
+                                                <FaIdCard className={styles.fieldIcon} />
+                                                Verification
+                                            </label>
+                                            <span className={styles.fieldValue} style={{ color: '#64ffda' }}>
+                                                ✓ Verified
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    {/* Sidebar */}
-                    <div className={styles.sidebar}>
-                        {/* Account Status */}
-                        <div className={styles.sidebarPanel}>
-                            <h4 className={styles.sidebarTitle}>Account Status</h4>
-                            <div className={styles.statusItem}>
-                                <span className={styles.statusLabel}>Member since:</span>
-                                <span className={styles.statusValue}>
-                                    <FaCalendarAlt className={styles.statusIcon} />
-                                    {new Date().toLocaleDateString()}
-                                </span>
-                            </div>
-                            <div className={styles.statusItem}>
-                                <span className={styles.statusLabel}>Account type:</span>
-                                <span className={styles.statusValue}>Student</span>
-                            </div>
-                            <div className={styles.statusItem}>
-                                <span className={styles.statusLabel}>Verification:</span>
-                                <span className={`${styles.statusValue} ${styles.verified}`}>
-                                    ✓ Verified
-                                </span>
-                            </div>
-                        </div>
-
-
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 }

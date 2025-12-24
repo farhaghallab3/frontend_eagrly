@@ -3,6 +3,7 @@ import HeroSection from './HeroSection';
 import FeaturedProducts from '@components/ecommerce/FeaturedProducts/FeaturedProducts';
 import CategoriesSection from '@components/ecommerce/Categories/CategoriesSection';
 import Reviews from '@components/ecommerce/ReviewsSection/Reviews';
+import styles from './Home.module.css';
 
 import { useProduct } from './../../hooks/useProducts';
 import { useCategories } from './../../hooks/useCategories';
@@ -22,10 +23,17 @@ export default function Home() {
     return (
         <>
             <HeroSection />
-            <FeaturedProducts title="Featured Products" products={products} />
-            <CategoriesSection categories={categories} />
-            <Reviews />
-            <SubscriptionPlans />
+
+            <div className={styles.contentWrapper}>
+                <div className={styles.backgroundContainer}>
+                    <div className={styles.bgGlow1}></div>
+                    <div className={styles.bgGlow2}></div>
+                    <div className={styles.bgGlow3}></div>
+                </div>
+                <FeaturedProducts title="Featured Products" products={products} />
+                <CategoriesSection categories={categories} />
+                <SubscriptionPlans />
+            </div>
             <ChatbotWidget />
 
         </>

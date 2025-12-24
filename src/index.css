@@ -1,19 +1,52 @@
-
-
 @import "leaflet/dist/leaflet.css";
 @import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
+:root {
+  /* Dark Theme (Default) */
+  --bg-primary: #0a0f1a;
+  --bg-secondary: #0f1627;
+  --bg-card: rgba(15, 26, 36, 0.95);
+  --text-primary: #ffffff;
+  --text-secondary: #8892b0;
+  --accent-primary: #64ffda;
+  --accent-secondary: #00c2ff;
+  --border-color: rgba(100, 255, 218, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --glass-bg: rgba(15, 26, 36, 0.7);
+  --gradient-overlay: linear-gradient(135deg, rgba(10, 15, 26, 0.9) 0%, rgba(15, 22, 39, 0.95) 100%);
+}
+
+[data-theme='light'] {
+  /* Light Theme - Harmonized */
+  --bg-primary: #f0f4f8;
+  /* Slate-ish white */
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --text-primary: #1a202c;
+  /* Dark slate */
+  --text-secondary: #4a5568;
+  /* Gray slate */
+  --accent-primary: #00b4d8;
+  /* Slightly darker teal/blue for contrast */
+  --accent-secondary: #0077b6;
+  --border-color: rgba(0, 180, 216, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --gradient-overlay: linear-gradient(135deg, rgba(240, 244, 248, 0.9) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
 body {
-  background-color: #0a0f1a;
-  color: #ffffff;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .background-container {

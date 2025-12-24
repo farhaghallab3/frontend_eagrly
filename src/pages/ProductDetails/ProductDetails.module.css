@@ -1,14 +1,14 @@
 /* Product Details Page */
 .productPage {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0f1a 0%, #0f1627 50%, #0a0f1a 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+  color: var(--text-primary);
 }
 
 /* Breadcrumb Navigation */
 .breadcrumbContainer {
   padding: 20px 0;
-  border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .breadcrumb {
@@ -24,8 +24,8 @@
   align-items: center;
   gap: 8px;
   background: rgba(100, 255, 218, 0.1);
-  border: 1px solid rgba(100, 255, 218, 0.3);
-  color: #64ffda;
+  border: 1px solid var(--border-color);
+  color: var(--accent-primary);
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -42,24 +42,25 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #8892b0;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .breadcrumbSeparator {
-  color: #64ffda;
+  color: var(--accent-primary);
   font-size: 0.8rem;
 }
 
 .breadcrumbCurrent {
-  color: #64ffda;
+  color: var(--accent-primary);
   font-weight: 600;
 }
 
 /* Main Product Section */
 .productSection {
   padding: 60px 0;
-  background: linear-gradient(135deg, #0f1627 0%, #0a0f1a 100%);
+  position: relative;
+  z-index: 1;
 }
 
 .productRow {
@@ -105,15 +106,15 @@
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 20px;
-  border: 2px solid rgba(100, 255, 218, 0.2);
+  border: 2px solid var(--border-color);
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .mainProductImage:hover {
-  border-color: #64ffda;
-  box-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 30px var(--shadow-color);
 }
 
 .imageOverlay {
@@ -128,11 +129,11 @@
 .imageActionBtn {
   width: 40px;
   height: 40px;
-  background: rgba(10, 25, 47, 0.8);
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(100, 255, 218, 0.3);
+  border: 1px solid var(--border-color);
   border-radius: 50%;
-  color: #64ffda;
+  color: var(--accent-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,7 +142,7 @@
 }
 
 .imageActionBtn:hover {
-  background: rgba(100, 255, 218, 0.2);
+  background: var(--border-color);
   transform: scale(1.1);
 }
 
@@ -156,13 +157,13 @@
   background-size: cover;
   background-position: center;
   border-radius: 12px;
-  border: 2px solid rgba(100, 255, 218, 0.2);
+  border: 2px solid var(--border-color);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .productThumbnail:hover {
-  border-color: #64ffda;
+  border-color: var(--accent-primary);
   transform: scale(1.05);
 }
 
@@ -180,7 +181,7 @@
   align-items: center;
   gap: 6px;
   background: rgba(100, 255, 218, 0.1);
-  color: #64ffda;
+  color: var(--accent-primary);
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -195,7 +196,7 @@
   font-weight: 800;
   margin: 0;
   line-height: 1.2;
-  background: linear-gradient(135deg, #ffffff 0%, #64ffda 50%, #00c2ff 100%);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -224,21 +225,21 @@
 }
 
 .ratingText {
-  color: #8892b0;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 /* Product Description */
 .productDescription {
-  background: rgba(15, 26, 36, 0.5);
+  background: var(--bg-card);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(100, 255, 218, 0.2);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 24px;
 }
 
 .productDescription h3 {
-  color: #64ffda;
+  color: var(--accent-primary);
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 12px;
@@ -246,22 +247,22 @@
 }
 
 .productDescription p {
-  color: #ffffff;
+  color: var(--text-primary);
   line-height: 1.6;
   margin: 0;
 }
 
 /* Product Specifications */
 .productSpecs {
-  background: rgba(15, 26, 36, 0.5);
+  background: var(--bg-card);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(100, 255, 218, 0.2);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 24px;
 }
 
 .productSpecs h3 {
-  color: #64ffda;
+  color: var(--accent-primary);
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 20px;
@@ -281,11 +282,11 @@
   padding: 16px;
   background: rgba(10, 25, 47, 0.3);
   border-radius: 12px;
-  border: 1px solid rgba(100, 255, 218, 0.1);
+  border: 1px solid var(--border-color);
 }
 
 .specIcon {
-  color: #64ffda;
+  color: var(--accent-primary);
   font-size: 1.25rem;
   flex-shrink: 0;
 }
@@ -298,7 +299,7 @@
 
 .specLabel {
   font-size: 0.8rem;
-  color: #8892b0;
+  color: var(--text-secondary);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -306,7 +307,7 @@
 
 .specValue {
   font-size: 0.95rem;
-  color: #ffffff;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
@@ -315,9 +316,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(15, 26, 36, 0.8);
+  background: var(--bg-card);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(100, 255, 218, 0.3);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 24px;
 }
@@ -331,26 +332,27 @@
 .price {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #64ffda;
+  color: var(--accent-primary);
   line-height: 1;
 }
 
 .priceSubtext {
   font-size: 0.85rem;
-  color: #8892b0;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 /* Seller Information Section */
 .sellerSection {
   padding: 60px 0;
-  background: linear-gradient(135deg, #0a0f1a 0%, #0f1627 100%);
+  position: relative;
+  z-index: 1;
 }
 
 .sellerCard {
-  background: rgba(15, 26, 36, 0.95);
+  background: var(--bg-card);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(100, 255, 218, 0.2);
+  border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 32px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -362,16 +364,16 @@
   gap: 12px;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .sellerIcon {
-  color: #64ffda;
+  color: var(--accent-primary);
   font-size: 1.5rem;
 }
 
 .sellerHeader h3 {
-  color: #64ffda;
+  color: var(--accent-primary);
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
@@ -396,17 +398,17 @@
   padding: 12px 16px;
   background: rgba(10, 25, 47, 0.3);
   border-radius: 12px;
-  border: 1px solid rgba(100, 255, 218, 0.1);
+  border: 1px solid var(--border-color);
 }
 
 .detailIcon {
-  color: #64ffda;
+  color: var(--accent-primary);
   font-size: 1rem;
   flex-shrink: 0;
 }
 
 .sellerItem span {
-  color: #ffffff;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
@@ -419,22 +421,22 @@
 .stat {
   text-align: center;
   padding: 16px;
-  background: rgba(10, 25, 47, 0.5);
+  background: var(--bg-card);
   border-radius: 12px;
-  border: 1px solid rgba(100, 255, 218, 0.2);
+  border: 1px solid var(--border-color);
 }
 
 .statNumber {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #64ffda;
+  color: var(--accent-primary);
   display: block;
   line-height: 1;
 }
 
 .statLabel {
   font-size: 0.8rem;
-  color: #8892b0;
+  color: var(--text-secondary);
   font-weight: 500;
   margin-top: 4px;
 }
@@ -442,13 +444,13 @@
 /* Reviews Section */
 .reviewsSection {
   padding: 60px 0;
-  background: linear-gradient(135deg, #0f1627 0%, #0a0f1a 100%);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
 }
 
 .reviewsCard {
-  background: rgba(15, 26, 36, 0.95);
+  background: var(--bg-card);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(100, 255, 218, 0.2);
+  border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 32px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -460,11 +462,11 @@
   align-items: center;
   margin-bottom: 32px;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .reviewsHeader h3 {
-  color: #64ffda;
+  color: var(--accent-primary);
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
@@ -483,7 +485,7 @@
 .scoreNumber {
   font-size: 3rem;
   font-weight: 800;
-  color: #64ffda;
+  color: var(--accent-primary);
   line-height: 1;
   display: block;
 }
@@ -502,7 +504,7 @@
 }
 
 .reviewCount {
-  color: #8892b0;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   font-weight: 500;
 }
@@ -523,7 +525,7 @@
 .barLabel {
   min-width: 80px;
   font-size: 0.9rem;
-  color: #8892b0;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
@@ -537,7 +539,7 @@
 
 .progressBar {
   height: 100%;
-  background: linear-gradient(90deg, #64ffda 0%, #00c2ff 100%);
+  background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
   border-radius: 4px;
 }
 
@@ -545,7 +547,7 @@
   min-width: 50px;
   text-align: right;
   font-size: 0.9rem;
-  color: #64ffda;
+  color: var(--accent-primary);
   font-weight: 600;
 }
 
@@ -578,7 +580,7 @@
 
   .productRow {
     gap: 20px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
 
   .productTitle {

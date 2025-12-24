@@ -5,7 +5,7 @@ import styles from "./Support.module.css";
 
 const HelpCenter = () => {
     const categories = [
-        { icon: <MdLibraryBooks />, title: "Getting Started", desc: "Learn the basics of using Eagrely." },
+        { icon: <MdLibraryBooks />, title: "Getting Started", desc: "Learn the basics of using Eagerly." },
         { icon: <MdSecurity />, title: "Account & Security", desc: "Manage your profile and keep your account safe." },
         { icon: <MdPayment />, title: "Payments & Billing", desc: "Understand how payments and payouts work." },
         { icon: <MdLocalShipping />, title: "Buying & Selling", desc: "Tips for successful transactions on our platform." },

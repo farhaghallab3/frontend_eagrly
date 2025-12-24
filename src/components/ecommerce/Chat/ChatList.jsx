@@ -81,57 +81,45 @@ const ChatList = ({ chats, onSelectChat }) => {
           padding: 20px;
         }
 
-        .empty-chats-content {
-          text-align: center;
-          color: rgba(255, 255, 255, 0.6);
-        }
-
-        .empty-icon {
-          font-size: 3rem;
-          margin-bottom: 15px;
-          opacity: 0.5;
-        }
-
-        .chat-list-group {
+        /* Stronger selector to override Bootstrap */
+        .modern-chat-list .list-group-item {
+          background-color: transparent !important; /* Fixes white background issue */
           border: none;
-        }
-
-        .chat-list-item {
-          background: transparent;
-          border: none;
-          border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+          border-bottom: 1px solid var(--border-color);
           padding: 15px 20px;
           transition: all 0.3s ease;
           cursor: pointer;
           display: flex;
           align-items: center;
           gap: 15px;
-          color: rgba(255, 255, 255, 0.8);
+          color: var(--text-secondary);
         }
 
-        .chat-list-item:hover {
-          background: rgba(100, 255, 218, 0.1) !important;
+        .modern-chat-list .list-group-item:hover {
+          background-color: rgba(100, 255, 218, 0.1) !important;
           transform: translateX(5px);
-          color: #64ffda !important;
+          color: var(--accent-primary) !important;
         }
 
-        .chat-list-item:hover .chat-user-name,
-        .chat-list-item:hover .chat-product-title,
-        .chat-list-item:hover .chat-timestamp {
-          color: #64ffda !important;
+        .modern-chat-list .list-group-item:hover .chat-user-name,
+        .modern-chat-list .list-group-item:hover .chat-product-title,
+        .modern-chat-list .list-group-item:hover .chat-timestamp {
+          color: var(--accent-primary) !important;
         }
 
-        .chat-list-item.active {
-          background: rgba(100, 255, 218, 0.15);
-          border-left: 3px solid #64ffda;
+        .modern-chat-list .list-group-item.active {
+          background-color: rgba(100, 255, 218, 0.15) !important;
+          border-left: 3px solid var(--accent-primary);
           transform: translateX(5px);
+          color: var(--text-primary) !important;
+          z-index: 1;
         }
 
-        .chat-list-item.unread {
-          background: rgba(239, 68, 68, 0.05);
+        .modern-chat-list .list-group-item.unread {
+          background-color: rgba(239, 68, 68, 0.05) !important;
         }
 
-        .chat-list-item:last-child {
+        .modern-chat-list .list-group-item:last-child {
           border-bottom: none;
         }
 
@@ -145,7 +133,7 @@ const ChatList = ({ chats, onSelectChat }) => {
           height: 50px;
           border-radius: 50%;
           object-fit: cover;
-          border: 2px solid rgba(100, 255, 218, 0.3);
+          border: 2px solid var(--border-color);
         }
 
         .online-indicator {
@@ -155,7 +143,7 @@ const ChatList = ({ chats, onSelectChat }) => {
           width: 12px;
           height: 12px;
           background: #10b981;
-          border: 2px solid rgba(15, 26, 36, 0.95);
+          border: 2px solid var(--bg-card);
           border-radius: 50%;
         }
 
@@ -173,13 +161,14 @@ const ChatList = ({ chats, onSelectChat }) => {
 
         .chat-user-name {
           font-weight: 600;
-          color: #ffffff;
+          color: var(--text-primary);
           font-size: 1rem;
         }
 
         .chat-timestamp {
           font-size: 0.75rem;
-          color: rgba(255, 255, 255, 0.5);
+          color: var(--text-secondary);
+          opacity: 0.7;
         }
 
         .chat-item-body {
@@ -190,7 +179,7 @@ const ChatList = ({ chats, onSelectChat }) => {
 
         .chat-product-title {
           font-size: 0.85rem;
-          color: rgba(255, 255, 255, 0.6);
+          color: var(--text-secondary);
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -208,8 +197,14 @@ const ChatList = ({ chats, onSelectChat }) => {
           text-align: center;
         }
 
+        /* Empty state text color */
+        .empty-chats-content {
+           text-align: center;
+           color: var(--text-secondary);
+        }
+
         @media (max-width: 768px) {
-          .chat-list-item {
+          .modern-chat-list .list-group-item {
             padding: 12px 15px;
           }
 

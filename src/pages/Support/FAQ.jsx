@@ -5,8 +5,8 @@ import styles from "./Support.module.css";
 const FAQ = () => {
     const faqs = [
         {
-            q: "What is Eagrely?",
-            a: "Eagrely is a modern marketplace designed to connect buyers and sellers within university communities and beyond. We focus on providing a secure and seamless shopping experience."
+            q: "What is Eagerly?",
+            a: "Eagerly is a modern marketplace designed to connect buyers and sellers within university communities and beyond. We focus on providing a secure and seamless shopping experience."
         },
         {
             q: "How do I create an account?",
@@ -14,7 +14,7 @@ const FAQ = () => {
         },
         {
             q: "Is it free to list products?",
-            a: "Yes, listing products on Eagrely is currently free for all users. We may introduce premium listing features in the future."
+            a: "Yes, listing products on Eagerly is currently free for all users. We may introduce premium listing features in the future."
         },
         {
             q: "How do I contact a seller?",

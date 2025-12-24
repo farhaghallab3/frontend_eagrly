@@ -4,11 +4,6 @@ import Footer from "@components/common/layout/Footer/Footer";
 import { Outlet, useNavigate } from "react-router-dom";
 import ChatbotWidget from "@components/ecommerce/chatbot/ChatbotWidget";
 
-const dashboardLinks = [
-    { label: "My Ads", path: "/dashboard" },
-    { label: "Profile", path: "/dashboard/profile" },
-];
-
 export default function UserLayout() {
     const navigate = useNavigate();
 
@@ -21,7 +16,7 @@ export default function UserLayout() {
 
     return (
         <>
-            <Header links={dashboardLinks} />
+            <Header />
             <main style={{
                 marginTop: "80px",
                 padding: "0",

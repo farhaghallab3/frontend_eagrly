@@ -16,7 +16,7 @@ const TermsOfService = () => {
 
             <Container className={styles.section}>
                 <div className={styles.legalContent}>
-                    <p>Welcome to Eagrely. By using our platform, you agree to comply with and be bound by the following terms and conditions.</p>
+                    <p>Welcome to Eagerly. By using our platform, you agree to comply with and be bound by the following terms and conditions.</p>
 
                     <h2>1. Acceptance of Terms</h2>
                     <p>By accessing or using Eagrely, you agree to be bound by these Terms of Service and all applicable laws and regulations.</p>

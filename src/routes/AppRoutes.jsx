@@ -17,8 +17,9 @@ import PaymentStatusPage from "@pages/Payment/PaymentStatusPage";
 import HelpCenter from "@pages/Support/HelpCenter";
 import ContactUs from "@pages/Support/ContactUs";
 import FAQ from "@pages/Support/FAQ";
-import PrivacyPolicy from "@pages/Support/PrivacyPolicy";
+import PrivacyPage from "@pages/Support/PrivacyPage";
 import TermsOfService from "@pages/Support/TermsOfService";
+import Packages from "@pages/Packages/Packages";
 
 export default function AppRoutes() {
     return (
@@ -37,10 +38,11 @@ export default function AppRoutes() {
                     <Route path="/product/:id" element={<ProductDetails />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
                     <Route path="/payment-status" element={<PaymentStatusPage />} />
+                    <Route path="/packages" element={<Packages />} />
                     <Route path="/help" element={<HelpCenter />} />
                     <Route path="/contact" element={<ContactUs />} />
                     <Route path="/faq" element={<FAQ />} />
-                    <Route path="/privacy" element={<PrivacyPolicy />} />
+                    <Route path="/privacy" element={<PrivacyPage />} />
                     <Route path="/terms" element={<TermsOfService />} />
                     <Route path="/report" element={<ContactUs />} />
                     <Route path="/my-ads" element={<MyAds />} />

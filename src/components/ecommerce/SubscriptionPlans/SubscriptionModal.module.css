@@ -1,0 +1,53 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1050;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modalContent {
+    background-color: transparent;
+    border-radius: 12px;
+    width: 70%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    /* Remove padding to let SubscriptionPlans control its own spacing/bg */
+    padding: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.closeButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 0, 0, 0.8);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1060;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.closeButton:hover {
+    background: rgba(255, 0, 0, 1);
+}
+
+.modalBody {
+    /* Ensure the plans look good within the modal */
+    width: 100%;
+}

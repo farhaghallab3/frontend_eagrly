@@ -120,10 +120,7 @@ const ProductsPage = () => {
               </span>
               <span className={styles.statLabel}>Categories</span>
             </div>
-            <div className={styles.statItem}>
-              <span className={styles.statNumber}>4.8</span>
-              <span className={styles.statLabel}>Avg Rating</span>
-            </div>
+            {/* Avg Rating Removed */}
           </div>
         </Container>
       </section>
