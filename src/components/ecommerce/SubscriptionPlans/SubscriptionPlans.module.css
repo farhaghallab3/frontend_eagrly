@@ -26,7 +26,9 @@
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 20px !important;
   display: grid;
-  overflow-x: auto;
+  display: grid;
+  overflow-visible: visible;
+  /* Changed from auto to visible to allow badges to overflow */
   /* Just in case on vary small screens */
 }
 
