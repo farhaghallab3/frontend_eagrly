@@ -88,14 +88,13 @@ export default function SubscriptionPlans({ isModal }) {
                 </div>
 
                 <div className={`${styles.plansGrid} ${isModal ? styles.modalGrid : ''}`}>
-                    {packages.map((pkg, index) => {
+                    {packages.map((pkg) => {
                         const isPopular = pkg.popular;
-                        const isEnterprise = index === packages.length - 1; // Last plan as enterprise
 
                         return (
                             <div
                                 key={pkg.id}
-                                className={`${styles.planCard} ${isPopular ? styles.planCardPopular : ""} ${isEnterprise ? styles.planCardEnterprise : ""}`}
+                                className={`${styles.planCard} ${isPopular ? styles.planCardPopular : ""}`}
                             >
                                 {isPopular && (
                                     <div className={styles.popularBadge}>
@@ -104,18 +103,9 @@ export default function SubscriptionPlans({ isModal }) {
                                     </div>
                                 )}
 
-                                {isEnterprise && (
-                                    <div className={styles.enterpriseBadge}>
-                                        <MdVerified className={styles.badgeVerified} />
-                                        <span>Enterprise</span>
-                                    </div>
-                                )}
-
                                 <div className={styles.planHeader}>
                                     <div className={styles.planIcon}>
-                                        {isEnterprise ? (
-                                            <MdVerified size={32} />
-                                        ) : isPopular ? (
+                                        {isPopular ? (
                                             <AiOutlineCrown size={32} />
                                         ) : (
                                             <MdBolt size={32} />
@@ -167,24 +157,12 @@ export default function SubscriptionPlans({ isModal }) {
                                             <span>Advanced analytics</span>
                                         </li>
                                     )}
-                                    {isEnterprise && (
-                                        <>
-                                            <li className={styles.featureItem}>
-                                                <AiOutlineCheckCircle className={styles.featureIcon} />
-                                                <span>Dedicated account manager</span>
-                                            </li>
-                                            <li className={styles.featureItem}>
-                                                <AiOutlineCheckCircle className={styles.featureIcon} />
-                                                <span>Custom integrations</span>
-                                            </li>
-                                        </>
-                                    )}
                                 </ul>
 
                                 <Button
-                                    className={`${styles.chooseButton} ${isPopular ? styles.chooseButtonPopular : ""} ${isEnterprise ? styles.chooseButtonEnterprise : ""}`}
+                                    className={`${styles.chooseButton} ${isPopular ? styles.chooseButtonPopular : ""}`}
                                     size="lg"
-                                    onClick={() => !isEnterprise && handleSubscribe(pkg.id)}
+                                    onClick={() => handleSubscribe(pkg.id)}
                                     disabled={!!subscribingId}
                                 >
                                     {subscribingId === pkg.id ? (
@@ -194,12 +172,10 @@ export default function SubscriptionPlans({ isModal }) {
                                         </>
                                     ) : (
                                         <>
-                                            {isEnterprise ? "Contact Sales" : "Choose Plan"}
-                                            {!isEnterprise && (
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="ms-2">
-                                                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                </svg>
-                                            )}
+                                            Choose Plan
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="ms-2">
+                                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
                                         </>
                                     )}
                                 </Button>
@@ -208,20 +184,7 @@ export default function SubscriptionPlans({ isModal }) {
                     })}
                 </div>
 
-                <div className={styles.guaranteeSection}>
-                    <div className={styles.guaranteeItem}>
-                        <MdVerified className={styles.guaranteeIcon} />
-                        <span>30-day money-back guarantee</span>
-                    </div>
-                    <div className={styles.guaranteeItem}>
-                        <AiOutlineCheckCircle className={styles.guaranteeIcon} />
-                        <span>Cancel anytime</span>
-                    </div>
-                    <div className={styles.guaranteeItem}>
-                        <AiOutlineCrown className={styles.guaranteeIcon} />
-                        <span>Premium support</span>
-                    </div>
-                </div>
+
             </Container>
         </section>
     );

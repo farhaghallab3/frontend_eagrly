@@ -20,6 +20,7 @@ import FAQ from "@pages/Support/FAQ";
 import PrivacyPage from "@pages/Support/PrivacyPage";
 import TermsOfService from "@pages/Support/TermsOfService";
 import Packages from "@pages/Packages/Packages";
+import Wishlist from "@pages/Wishlist/Wishlist";
 
 export default function AppRoutes() {
     return (
@@ -36,6 +37,7 @@ export default function AppRoutes() {
                     <Route path="/chat" element={<ChatApp />} />
                     <Route path="/chat/:chatId" element={<ChatApp />} />
                     <Route path="/product/:id" element={<ProductDetails />} />
+                    <Route path="/wishlist" element={<Wishlist />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
                     <Route path="/payment-status" element={<PaymentStatusPage />} />
                     <Route path="/packages" element={<Packages />} />

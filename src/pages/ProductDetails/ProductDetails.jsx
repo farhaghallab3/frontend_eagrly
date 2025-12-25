@@ -10,6 +10,8 @@ import ButtonPrimary from "@components/common/ButtonPrimary/ButtonPrimary";
 import { useAuth } from "../../hooks/useAuth";
 import { findOrCreateChat } from "../../services/chatService";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleWishlist } from "../../store/slices/wishlistSlice";
 
 export default function ProductDetails() {
     const { id } = useParams();
@@ -17,6 +19,19 @@ export default function ProductDetails() {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const { user } = useAuth();
+    const dispatch = useDispatch();
+    const wishlistState = useSelector((state) => state.wishlist);
+    const wishlistItems = wishlistState?.items?.results || [];
+
+    const isInWishlist = wishlistItems.some(item => item.product_id === parseInt(id));
+
+    const handleWishlistToggle = () => {
+        if (!user) {
+            navigate("/login");
+            return;
+        }
+        dispatch(toggleWishlist(parseInt(id)));
+    };
 
     const handleContactSeller = async () => {
         if (!user) {
@@ -77,13 +92,13 @@ export default function ProductDetails() {
     for (let i = 0; i < fullStars; i++) ratingStars.push(<BsStarFill key={i} className={styles.star} />);
     if (halfStar) ratingStars.push(<BsStarHalf key="half" className={styles.star} />);
 
-    const reviewBars = [
-        { rate: 5, percent: 72 },
-        { rate: 4, percent: 18 },
-        { rate: 3, percent: 5 },
-        { rate: 2, percent: 3 },
-        { rate: 1, percent: 2 },
-    ];
+    // const reviewBars = [
+    //     { rate: 5, percent: 72 },
+    //     { rate: 4, percent: 18 },
+    //     { rate: 3, percent: 5 },
+    //     { rate: 2, percent: 3 },
+    //     { rate: 1, percent: 2 },
+    // ];
 
     return (
         <div className={styles.productPage}>
@@ -97,7 +112,7 @@ export default function ProductDetails() {
                     <div className={styles.breadcrumbPath}>
                         <span>Marketplace</span>
                         <BsArrowRight className={styles.breadcrumbSeparator} />
-                        <span>{product.category_name}</span>
+                        <span>{product.category_name || 'Category'}</span>
                         <BsArrowRight className={styles.breadcrumbSeparator} />
                         <span className={styles.breadcrumbCurrent}>{product.title}</span>
                     </div>
@@ -109,7 +124,7 @@ export default function ProductDetails() {
                 <Container>
                     <Row className={styles.productRow}>
                         {/* Left: Product Images */}
-                        <Col xs={6} className={styles.imageColumn}>
+                        <Col xs={12} md={6} className={styles.imageColumn}>
                             <div className={styles.imageGallery}>
                                 <div
                                     className={styles.mainProductImage}
@@ -118,7 +133,11 @@ export default function ProductDetails() {
                                     }}
                                 >
                                     <div className={styles.imageOverlay}>
-                                        <button className={styles.imageActionBtn}>
+                                        <button
+                                            className={`${styles.imageActionBtn} ${isInWishlist ? styles.wishlistActive : ''}`}
+                                            onClick={handleWishlistToggle}
+                                            title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+                                        >
                                             <FaHeart />
                                         </button>
                                         <button className={styles.imageActionBtn}>
@@ -142,7 +161,7 @@ export default function ProductDetails() {
                         </Col>
 
                         {/* Right: Product Details */}
-                        <Col xs={6} className={styles.detailsColumn}>
+                        <Col xs={12} md={6} className={styles.detailsColumn}>
                             <div className={styles.productHeader}>
                                 <div className={styles.categoryBadge}>
                                     <FaTag />
@@ -234,7 +253,7 @@ export default function ProductDetails() {
 
                                 <div className={styles.sellerItem}>
                                     <FaPhone className={styles.detailIcon} />
-                                    <span>Contact for details</span>
+                                    <span>{product.seller?.phone || 'Phone not provided'}</span>
                                 </div>
 
                                 <div className={styles.sellerItem}>

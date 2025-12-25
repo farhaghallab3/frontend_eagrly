@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
-import { MdSchool, MdMenu, MdShoppingCart, MdPerson, MdNotifications, MdChat, MdLightMode, MdDarkMode } from "react-icons/md";
+import { MdSchool, MdMenu, MdShoppingCart, MdPerson, MdNotifications, MdChat, MdLightMode, MdDarkMode, MdFavorite } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -8,6 +8,7 @@ import { useTheme } from "../../../../context/ThemeContext";
 import { fetchChats } from "../../../../store/slices/chatSlice";
 import { fetchMyProducts } from "../../../../store/slices/productSlice";
 import { fetchUnreadCount } from "../../../../store/slices/notificationSlice";
+import { fetchWishlist } from "../../../../store/slices/wishlistSlice";
 import ChatDropdown from "../ChatDropdown";
 import NotificationsDropdown from "../NotificationsDropdown";
 import styles from "./Header.module.css";
@@ -18,6 +19,8 @@ export default function Header({ links }) {
     const dispatch = useDispatch();
     const { unreadCount } = useSelector((state) => state.chat);
     const { unreadCount: notificationCount } = useSelector((state) => state.notifications);
+    const wishlistState = useSelector((state) => state.wishlist);
+    const safeWishlistItems = wishlistState?.items?.results || [];
 
     // Remove test code - using real notificationCount now
     const [showChatDropdown, setShowChatDropdown] = useState(false);
@@ -32,20 +35,14 @@ export default function Header({ links }) {
 
     useEffect(() => {
         if (token) {
-            console.log("Header: Initial fetch - chats, products, notifications");
+            console.log("Header: Initial fetch - chats, products, notifications, wishlist");
             dispatch(fetchChats());
             dispatch(fetchMyProducts());
             dispatch(fetchUnreadCount());
+            dispatch(fetchWishlist());
 
-            // Poll for new messages, product updates, and notifications every 30 seconds
-            const interval = setInterval(() => {
-                console.log("Header: Polling for updates...");
-                dispatch(fetchChats());
-                dispatch(fetchMyProducts());
-                dispatch(fetchUnreadCount());
-            }, 30000);
+            // Polling interval removed as per user request
 
-            return () => clearInterval(interval);
         }
     }, [token, dispatch]);
 
@@ -88,16 +85,12 @@ export default function Header({ links }) {
 
                         {token ? (
                             <div className={styles.authenticatedActions}>
-                                <Nav.Link as={Link} to="/dashboard" className={styles.iconLink}>
-                                    <MdShoppingCart size={20} />
-                                    <span>My Ads</span>
-                                </Nav.Link>
 
                                 {/* Notifications */}
                                 <div className={styles.notificationsButtonContainer}>
                                     <button
                                         ref={notificationsButtonRef}
-                                        className={styles.iconButton}
+                                        className={`${styles.iconLink} ${styles.notificationsIcon}`}
                                         title="Notifications"
                                         onClick={() => setShowNotificationsDropdown(!showNotificationsDropdown)}
                                     >
@@ -118,7 +111,7 @@ export default function Header({ links }) {
                                 {/* Chat */}
                                 <div className={styles.chatButtonContainer}>
                                     <button
-                                        className={styles.iconButton}
+                                        className={`${styles.iconLink} ${styles.chatIcon}`}
                                         title="Messages"
                                         onClick={() => setShowChatDropdown(!showChatDropdown)}
                                     >
@@ -135,12 +128,25 @@ export default function Header({ links }) {
                                     />
                                 </div>
 
+                                {/* Wishlist */}
+                                <Nav.Link as={Link} to="/wishlist" className={`${styles.iconLink} ${styles.wishlistIcon}`}>
+                                    <MdFavorite size={20} />
+                                    {safeWishlistItems.length > 0 && (
+                                        <span className={styles.notificationBadge}>
+                                            {safeWishlistItems.length > 99 ? '99+' : safeWishlistItems.length}
+                                        </span>
+                                    )}
+                                </Nav.Link>
+
                                 <div className={styles.userMenu}>
                                     <div className={styles.userInfo}>
                                         <MdPerson size={20} className={styles.userIcon} />
                                         <span className={styles.userName}>{user?.username || user?.first_name || "User"}</span>
                                     </div>
                                     <div className={styles.userDropdown}>
+                                        <Link to="/my-ads" className={styles.dropdownItem}>
+                                            My Ads
+                                        </Link>
                                         <Link to="/dashboard/profile" className={styles.dropdownItem}>
                                             Profile
                                         </Link>

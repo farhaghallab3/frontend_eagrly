@@ -3,12 +3,14 @@
   min-height: 100vh;
   background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
   color: var(--text-primary);
+  padding-top: 80px;
 }
 
 /* Breadcrumb Navigation */
 .breadcrumbContainer {
   padding: 20px 0;
   border-bottom: 1px solid var(--border-color);
+  display: block !important;
 }
 
 .breadcrumb {
@@ -42,7 +44,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--text-secondary);
+  color: #b5f7f2;
   font-size: 0.9rem;
 }
 
@@ -52,7 +54,7 @@
 }
 
 .breadcrumbCurrent {
-  color: var(--accent-primary);
+  color: #00ffd5;
   font-weight: 600;
 }
 
@@ -144,6 +146,16 @@
 .imageActionBtn:hover {
   background: var(--border-color);
   transform: scale(1.1);
+}
+
+.wishlistActive {
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+.wishlistActive:hover {
+  background: rgba(220, 38, 38, 0.2);
 }
 
 .thumbnailGrid {

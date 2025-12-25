@@ -58,7 +58,18 @@ const ChatMessages = ({ messages }) => {
 
                   <div className={styles.messageContent}>
                     <div className={`${styles.messageBubble} ${isSent ? styles.sentBubble : styles.receivedBubble}`}>
-                      <div className={styles.messageText}>{msg.text}</div>
+                      {msg.text && msg.text.startsWith('data:image/') ? (
+                        <div className={styles.messageImage}>
+                          <Image
+                            src={msg.text}
+                            alt="Shared image"
+                            className={styles.sharedImage}
+                            onClick={() => window.open(msg.text, '_blank')}
+                          />
+                        </div>
+                      ) : (
+                        <div className={styles.messageText}>{msg.text}</div>
+                      )}
 
                       <div className={styles.messageFooter}>
                         <span className={styles.messageTime}>

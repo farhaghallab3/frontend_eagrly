@@ -159,6 +159,28 @@
   font-size: 0.95rem;
 }
 
+/* Message Image */
+.messageImage {
+  max-width: 250px;
+  margin-bottom: 8px;
+}
+
+.sharedImage {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sharedImage:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
 /* Message Footer */
 .messageFooter {
   display: flex;

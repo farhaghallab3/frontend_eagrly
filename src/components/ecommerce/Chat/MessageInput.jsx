@@ -1,11 +1,9 @@
 import React, { useState, useRef } from "react";
-import { Button, Form, Modal, Overlay } from "react-bootstrap";
-import LocationMap from "./LocationModal";
-import { MdMic, MdAttachFile, MdSend, MdCamera, MdLocationOn, MdClose } from "react-icons/md";
+import { Button, Form } from "react-bootstrap";
+import { MdMic, MdAttachFile, MdSend, MdCamera, MdClose, MdPhoto } from "react-icons/md";
 
-const MessageInput = ({ input, setInput, handleSend }) => {
+const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
   const [showOptions, setShowOptions] = useState(false);
-  const [showMap, setShowMap] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const attachButtonRef = useRef(null);
 
@@ -18,14 +16,19 @@ const MessageInput = ({ input, setInput, handleSend }) => {
     setShowOptions(false);
   };
 
-  const handleLocationClick = () => {
-    setShowMap(true);
+  const handlePhotosClick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.multiple = true;
+    input.onchange = (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length > 0 && onPhotosSelect) {
+        onPhotosSelect(files);
+      }
+    };
+    input.click();
     setShowOptions(false);
-  };
-
-  const handleSendLocation = (coords) => {
-    setInput(`My location: https://www.google.com/maps?q=${coords[0]},${coords[1]}`);
-    setShowMap(false);
   };
 
   const handleKeyPress = (e) => {
@@ -81,14 +84,8 @@ const MessageInput = ({ input, setInput, handleSend }) => {
         </Button>
       </div>
 
-      <Overlay
-        show={showOptions}
-        target={attachButtonRef.current}
-        placement="top"
-        rootClose
-        onHide={() => setShowOptions(false)}
-      >
-        <div className="attachment-menu">
+      {showOptions && (
+        <div className="attachment-menu-dropdown">
           <div className="menu-header">
             <span>Share</span>
             <Button
@@ -102,24 +99,18 @@ const MessageInput = ({ input, setInput, handleSend }) => {
           </div>
 
           <div className="menu-options">
-            <Button className="menu-option" onClick={handleCameraClick} variant="link">
+            <button className="menu-option" onClick={handlePhotosClick}>
+              <MdPhoto size={24} />
+              <span>Photos</span>
+            </button>
+
+            <button className="menu-option" onClick={handleCameraClick}>
               <MdCamera size={24} />
               <span>Camera</span>
-            </Button>
-
-            <Button className="menu-option" onClick={handleLocationClick} variant="link">
-              <MdLocationOn size={24} />
-              <span>Location</span>
-            </Button>
+            </button>
           </div>
         </div>
-      </Overlay>
-
-      <Modal show={showMap} onHide={() => setShowMap(false)} centered size="lg">
-        <Modal.Body style={{ backgroundColor: "#0F1A24", color: "#fff" }}>
-          <LocationMap onSendLocation={handleSendLocation} />
-        </Modal.Body>
-      </Modal>
+      )}
 
       <style>{`
         .modern-message-input {
@@ -259,7 +250,10 @@ const MessageInput = ({ input, setInput, handleSend }) => {
           cursor: not-allowed;
         }
 
-        .attachment-menu {
+        .attachment-menu-dropdown {
+          position: absolute;
+          bottom: 100%;
+          right: 0;
           background: rgba(26, 44, 58, 0.95);
           backdrop-filter: blur(20px);
           border: 1px solid rgba(100, 255, 218, 0.2);
@@ -268,6 +262,8 @@ const MessageInput = ({ input, setInput, handleSend }) => {
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
           min-width: 200px;
           animation: menuSlideIn 0.2s ease-out;
+          z-index: 1050;
+          margin-bottom: 8px;
         }
 
         @keyframes menuSlideIn {

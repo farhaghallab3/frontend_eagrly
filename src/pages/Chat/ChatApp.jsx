@@ -4,22 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "@components/ecommerce/Chat/Header";
 import ChatMessages from "@components/ecommerce/Chat/ChatMessage";
 import MessageInput from "@components/ecommerce/Chat/MessageInput";
-import ChatList from "@components/ecommerce/Chat/ChatList";
 import { getChat, sendMessage } from "../../services/chatService";
 import { setSelectedChat, fetchChats } from "../../store/slices/chatSlice";
 import { useAuth } from "../../hooks/useAuth";
-import { Spinner, Alert, Button } from "react-bootstrap";
+import { Spinner, Alert } from "react-bootstrap";
 import { MdMessage } from "react-icons/md";
 import styles from "./ChatApp.module.css";
 
 const ChatApp = () => {
   const dispatch = useDispatch();
-  const { chats, selectedChatId, loading, error } = useSelector((state) => state.chat);
+  const { selectedChatId, loading, error } = useSelector((state) => state.chat);
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [sendError, setSendError] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const { chatId } = useParams();
   const { user } = useAuth();
 
@@ -53,9 +51,7 @@ const ChatApp = () => {
     }
   }, [chatId, selectedChatId, dispatch]);
 
-  const handleSelectChat = (chatId) => {
-    dispatch(setSelectedChat(chatId));
-  };
+
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -67,6 +63,27 @@ const ChatApp = () => {
     } catch (error) {
       console.error("Failed to send message:", error);
       setSendError("Failed to send message. Please try again.");
+    }
+  };
+
+  const handlePhotosSelect = async (files) => {
+    try {
+      setSendError(null);
+      for (const file of files) {
+        // Convert file to base64 for sending
+        const base64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        const newMessage = await sendMessage(selectedChatId, base64, 'image');
+        setMessages(prevMessages => [...prevMessages, newMessage]);
+      }
+    } catch (error) {
+      console.error("Failed to send photos:", error);
+      setSendError("Failed to send photos. Please try again.");
     }
   };
 
@@ -109,28 +126,6 @@ const ChatApp = () => {
 
   return (
     <div className={styles.chatContainer}>
-      {/* Sidebar Toggle Button - Mobile */}
-      <Button
-        className={`${styles.sidebarToggle} d-md-none`}
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        variant="outline-light"
-      >
-        <MdMessage size={20} />
-      </Button>
-
-      {/* Sidebar */}
-      <div className={`${styles.chatSidebar} ${sidebarOpen ? styles.sidebarOpen : ''}`}>
-        <div className={styles.sidebarHeader}>
-          <h4>Messages</h4>
-        </div>
-        <div className={styles.sidebarContent}>
-          <ChatList chats={chats} onSelectChat={(chatId) => {
-            handleSelectChat(chatId);
-            setSidebarOpen(false); // Close sidebar on mobile after selection
-          }} />
-        </div>
-      </div>
-
       {/* Main Chat Area */}
       <div className={styles.chatMain}>
         {selectedChatId ? (
@@ -144,7 +139,12 @@ const ChatApp = () => {
                 </Alert>
               </div>
             )}
-            <MessageInput input={input} setInput={setInput} handleSend={handleSend} />
+            <MessageInput
+              input={input}
+              setInput={setInput}
+              handleSend={handleSend}
+              onPhotosSelect={handlePhotosSelect}
+            />
           </div>
         ) : (
           <div className={styles.emptyState}>
@@ -156,14 +156,6 @@ const ChatApp = () => {
           </div>
         )}
       </div>
-
-      {/* Overlay for mobile */}
-      {sidebarOpen && (
-        <div
-          className={`${styles.sidebarOverlay} d-md-none`}
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
     </div>
   );
 };

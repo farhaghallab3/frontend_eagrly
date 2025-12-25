@@ -36,11 +36,12 @@ export const getChat = async (chatId) => {
   }
 };
 
-export const sendMessage = async (chatId, text) => {
+export const sendMessage = async (chatId, text, messageType = 'text') => {
   try {
     const response = await chatAxiosInstance.post("/messages/", {
       chat: chatId,
       text: text,
+      message_type: messageType,
     });
     return response.data;
   } catch (error) {

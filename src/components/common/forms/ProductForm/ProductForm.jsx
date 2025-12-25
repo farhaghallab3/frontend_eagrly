@@ -63,8 +63,9 @@ export default function ProductForm({ product, onClose, onSuccess }) {
                     formData.append("image", value[0]);
                 }
             } else if (key === "status" && !product) {
-                // For new products, don't send status as it's set automatically in backend
-                return;
+                // For new products, force draft status
+                formData.append("status", "draft");
+                formData.append("is_active", "false");
             } else {
                 formData.append(key, value);
             }
@@ -74,8 +75,10 @@ export default function ProductForm({ product, onClose, onSuccess }) {
             if (product) {
                 // تحديث المنتج (PATCH أفضل لتجنب مسح الحقول غير المرسلة)
                 await editProduct(product.id, formData);
+                toast.success("Product updated successfully!");
             } else {
                 await addProduct(formData);
+                toast.success("Product created! Waiting for admin approval.");
             }
             onClose(); // إغلاق الفورم
             refetchMyProducts(); // تحديث المنتجات
