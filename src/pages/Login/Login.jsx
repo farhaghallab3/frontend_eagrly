@@ -6,6 +6,8 @@ import FormWrapper from "@components/common/forms/FormWrapper/FormWrapper";
 import { FaGoogle, FaFacebookF } from "react-icons/fa";
 import { useAuth } from "../../hooks/useAuth";
 
+import styles from "./Login.module.css";
+
 const Login = () => {
     const { login, loading, error, loginWithGoogle, loginWithFacebook } = useAuth();
 
@@ -94,24 +96,8 @@ const Login = () => {
                     error={errors.password}
                 />
 
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    marginTop: '1rem',
-                    marginBottom: '0.5rem'
-                }}>
-                    <a
-                        href="#"
-                        style={{
-                            color: '#64ffda',
-                            textDecoration: 'none',
-                            fontSize: '0.9rem',
-                            fontWeight: '500',
-                            transition: 'color 0.3s ease'
-                        }}
-                        onMouseEnter={(e) => e.target.style.color = '#00c2ff'}
-                        onMouseLeave={(e) => e.target.style.color = '#64ffda'}
-                    >
+                <div className={styles.forgotPassword}>
+                    <a href="#" className={styles.forgotPasswordLink}>
                         Forgot Password?
                     </a>
                 </div>

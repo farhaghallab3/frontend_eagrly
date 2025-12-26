@@ -1,3 +1,4 @@
+import { useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,12 +7,14 @@ import { toggleWishlist } from "../../../store/slices/wishlistSlice";
 import { useAuth } from "../../../hooks/useAuth";
 import styles from "./ProductCard.module.css";
 import ButtonPrimary from "@components/common/ButtonPrimary/ButtonPrimary";
+import SuccessAnimation from "../../common/feedback/SuccessAnimation";
 
 export default function ProductCard({ product }) {
     const { id, title, description, image, buttonText = "Overview", name } = product;
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { user } = useAuth();
+    const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
 
     const wishlistState = useSelector((state) => state.wishlist);
     const wishlistItems = wishlistState?.items?.results || [];
@@ -25,44 +28,59 @@ export default function ProductCard({ product }) {
         }
     };
 
-    const handleWishlistToggle = (e) => {
+    const handleWishlistToggle = async (e) => {
         e.stopPropagation();
         if (!user) {
             navigate("/login");
             return;
         }
-        dispatch(toggleWishlist(id || product._id));
+
+        // Optimistic update handled by slice, but animation depends on result
+        try {
+            const resultAction = await dispatch(toggleWishlist(id || product._id));
+            if (toggleWishlist.fulfilled.match(resultAction)) {
+                if (resultAction.payload.status === 'added') {
+                    setShowSuccessAnimation(true);
+                    setTimeout(() => setShowSuccessAnimation(false), 2000);
+                }
+            }
+        } catch (error) {
+            console.error("Failed to toggle wishlist", error);
+        }
     };
 
     return (
-        <div
-            className={`${styles.card} d-flex flex-column justify-content-between p-3`}
-            onClick={handleClick}
-            style={{ cursor: 'pointer' }}
-        >
-            <div>
-                <div className={styles.imageContainer}>
-                    <div
-                        className={styles.image}
-                        style={{ backgroundImage: `url(${image})` }}
-                    ></div>
-                    <button
-                        className={`${styles.wishlistButton} ${isInWishlist ? styles.wishlistActive : ''}`}
-                        onClick={handleWishlistToggle}
-                        title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-                    >
-                        <FaHeart />
-                    </button>
+        <>
+            {showSuccessAnimation && <SuccessAnimation message="Added to Wishlist!" />}
+            <div
+                className={`${styles.card} d-flex flex-column justify-content-between p-3`}
+                onClick={handleClick}
+                style={{ cursor: 'pointer' }}
+            >
+                <div>
+                    <div className={styles.imageContainer}>
+                        <div
+                            className={styles.image}
+                            style={{ backgroundImage: `url(${image})` }}
+                        ></div>
+                        <button
+                            className={`${styles.wishlistButton} ${isInWishlist ? styles.wishlistActive : ''}`}
+                            onClick={handleWishlistToggle}
+                            title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+                        >
+                            <FaHeart />
+                        </button>
+                    </div>
+                    <div className="mt-3">
+                        <p className={styles.title}>{title}{name}</p>
+                        <p className={styles.desc}>{description}</p>
+                    </div>
                 </div>
-                <div className="mt-3">
-                    <p className={styles.title}>{title}{name}</p>
-                    <p className={styles.desc}>{description}</p>
-                </div>
+                <ButtonPrimary text={buttonText} onClick={(e) => {
+                    e.stopPropagation();
+                    handleClick();
+                }} />
             </div>
-            <ButtonPrimary text={buttonText} onClick={(e) => {
-                e.stopPropagation();
-                handleClick();
-            }} />
-        </div>
+        </>
     );
 }

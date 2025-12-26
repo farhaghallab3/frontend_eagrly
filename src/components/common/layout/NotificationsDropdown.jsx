@@ -1,16 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Overlay } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import { MdCheckCircle, MdError, MdInfo, MdMessage } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { fetchNotifications, markNotificationRead, markAllNotificationsRead } from "../../../store/slices/notificationSlice";
 import styles from "./Header/Header.module.css";
 
-const NotificationsDropdown = ({ show, onToggle, target }) => {
+const NotificationsDropdown = ({ show, onToggle }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { notifications, loading } = useSelector((state) => state.notifications);
-  const dropdownRef = useRef(null);
 
   useEffect(() => {
     if (show) {
@@ -22,12 +21,10 @@ const NotificationsDropdown = ({ show, onToggle, target }) => {
     if (!notification.is_read) {
       dispatch(markNotificationRead(notification.id));
     }
-    // Here you could navigate to relevant pages based on notification type
-    // For example, if it's a product notification, navigate to product details
     if (notification.product) {
       const productId = typeof notification.product === 'object' ? notification.product.id : notification.product;
       navigate(`/product/${productId}`);
-      onToggle(false); // Close dropdown
+      onToggle(false);
     }
   };
 
@@ -63,95 +60,73 @@ const NotificationsDropdown = ({ show, onToggle, target }) => {
   };
 
   return (
-    <Overlay
-      show={show}
-      target={target}
-      placement="bottom-end"
-      rootClose
-      onHide={onToggle}
-    >
-      {({
-        placement,
-        arrowProps,
-        show: _show,
-        popper,
-        hasDoneInitialMeasure,
-        ...props
-      }) => (
-        <div
-          {...props}
-          className={styles.notificationsDropdown}
-          style={{
-            ...props.style,
-            position: 'absolute',
-          }}
-        >
-          <div className={styles.dropdownHeader}>
-            <h6 className={styles.dropdownTitle}>Notifications</h6>
-            {notifications.length > 0 && (
-              <button
-                className={styles.markAllReadBtn}
-                onClick={handleMarkAllRead}
-              >
-                Mark all read
-              </button>
-            )}
-          </div>
-
-          <div className={styles.dropdownContent}>
-            {loading ? (
-              <div className={styles.loadingState}>
-                <div className={styles.loadingSpinner}></div>
-                <p>Loading notifications...</p>
-              </div>
-            ) : notifications.length === 0 ? (
-              <div className={styles.emptyState}>
-                <MdInfo size={32} className={styles.emptyIcon} />
-                <p>No notifications yet</p>
-              </div>
-            ) : (
-              <div className={styles.notificationsList}>
-                {notifications.slice(0, 10).map((notification) => (
-                  <div
-                    key={notification.id}
-                    className={`${styles.notificationItem} ${!notification.is_read ? styles.unread : ''}`}
-                    onClick={() => handleNotificationClick(notification)}
-                  >
-                    <div className={styles.notificationIcon}>
-                      {getNotificationIcon(notification.notification_type)}
-                    </div>
-
-                    <div className={styles.notificationContent}>
-                      <div className={styles.notificationTitle}>
-                        {notification.title}
-                      </div>
-                      <div className={styles.notificationMessage}>
-                        {notification.message}
-                      </div>
-                      <div className={styles.notificationTime}>
-                        {formatTime(notification.created_at)}
-                      </div>
-                    </div>
-
-                    {!notification.is_read && (
-                      <div className={styles.unreadIndicator}></div>
-                    )}
-                  </div>
-                ))}
-
-                {notifications.length > 10 && (
-                  <div className={styles.viewAllBtn}>
-                    <button onClick={() => {/* Navigate to full notifications page */ }}>
-                      View all notifications
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+    <Dropdown show={show} onToggle={onToggle} align="end">
+      <Dropdown.Menu className={styles.notificationsDropdown}>
+        <div className={styles.dropdownHeader}>
+          <h6 className={styles.dropdownTitle}>Notifications</h6>
+          {notifications.length > 0 && (
+            <button
+              className={styles.markAllReadBtn}
+              onClick={handleMarkAllRead}
+            >
+              Mark all read
+            </button>
+          )}
         </div>
-      )}
-    </Overlay>
+
+        <div className={styles.dropdownContent}>
+          {loading ? (
+            <div className={styles.loadingState}>
+              <div className={styles.loadingSpinner}></div>
+              <p>Loading notifications...</p>
+            </div>
+          ) : notifications.length === 0 ? (
+            <div className={styles.emptyState}>
+              <MdInfo size={32} className={styles.emptyIcon} />
+              <p>No notifications yet</p>
+            </div>
+          ) : (
+            <div className={styles.notificationsList}>
+              {notifications.slice(0, 10).map((notification) => (
+                <div
+                  key={notification.id}
+                  className={`${styles.notificationItem} ${!notification.is_read ? styles.unread : ''}`}
+                  onClick={() => handleNotificationClick(notification)}
+                >
+                  <div className={styles.notificationIcon}>
+                    {getNotificationIcon(notification.notification_type)}
+                  </div>
+
+                  <div className={styles.notificationContent}>
+                    <div className={styles.notificationTitle}>
+                      {notification.title}
+                    </div>
+                    <div className={styles.notificationMessage}>
+                      {notification.message}
+                    </div>
+                    <div className={styles.notificationTime}>
+                      {formatTime(notification.created_at)}
+                    </div>
+                  </div>
+
+                  {!notification.is_read && (
+                    <div className={styles.unreadIndicator}></div>
+                  )}
+                </div>
+              ))}
+
+              {notifications.length > 10 && (
+                <div className={styles.viewAllBtn}>
+                  <button onClick={() => {/* Navigate to full notifications page */ }}>
+                    View all notifications
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
 

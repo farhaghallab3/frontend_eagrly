@@ -41,18 +41,10 @@ export const removeFromWishlist = createAsyncThunk(
 
 export const toggleWishlist = createAsyncThunk(
   'wishlist/toggleWishlist',
-  async (productId, { getState, dispatch, rejectWithValue }) => {
+  async (productId, { rejectWithValue }) => {
     try {
-      const state = getState();
-      const isInWishlist = state.wishlist.items?.results?.some(item => item.product_id === productId) || false;
-
-      if (isInWishlist) {
-        await dispatch(removeFromWishlist(productId));
-      } else {
-        await dispatch(addToWishlist(productId));
-      }
-
-      return productId;
+      const result = await wishlistService.toggleWishlist(productId);
+      return result; // Returns { status: 'added'/'removed', item: object, product_id: id }
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -86,14 +78,32 @@ const wishlistSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      // Toggle Wishlist
+      .addCase(toggleWishlist.fulfilled, (state, action) => {
+        const { status, item, product_id } = action.payload;
+
+        // Ensure state.items structure exists (paginated format from backend)
+        if (!state.items) state.items = { results: [], count: 0 };
+        if (!state.items.results) state.items.results = [];
+
+        if (status === 'added') {
+          // Add to list
+          state.items.results.push(item);
+          state.items.count = (state.items.count || 0) + 1;
+        } else if (status === 'removed') {
+          // Remove from list
+          state.items.results = state.items.results.filter(
+            w => w.product_id !== (product_id || item?.product_id)
+          );
+          state.items.count = Math.max(0, (state.items.count || 1) - 1);
+        }
+      })
       // Add to wishlist - backend returns updated paginated response
       .addCase(addToWishlist.fulfilled, (state, action) => {
-        // The backend should return the updated paginated response
         state.items = action.payload;
       })
       // Remove from wishlist - backend returns updated paginated response
       .addCase(removeFromWishlist.fulfilled, (state, action) => {
-        // The backend should return the updated paginated response
         state.items = action.payload;
       });
   },

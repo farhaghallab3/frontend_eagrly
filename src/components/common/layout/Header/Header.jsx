@@ -104,7 +104,6 @@ export default function Header({ links }) {
                                     <NotificationsDropdown
                                         show={showNotificationsDropdown}
                                         onToggle={setShowNotificationsDropdown}
-                                        target={notificationsButtonRef.current}
                                     />
                                 </div>
 

@@ -132,6 +132,52 @@ export const wishlistService = {
     }
   },
 
+  toggleWishlist: async (productId) => {
+    if (USE_LOCAL_STORAGE_ONLY) {
+      const currentWishlist = getLocalWishlist();
+      const existingIndex = currentWishlist.findIndex(item => item.product_id === productId);
+
+      if (existingIndex >= 0) {
+        // Remove
+        currentWishlist.splice(existingIndex, 1);
+        saveLocalWishlist(currentWishlist);
+        return { status: 'removed', product_id: productId };
+      } else {
+        // Add
+        const newItem = {
+          id: Date.now(),
+          product_id: productId,
+          product_title: `Product ${productId}`,
+          product_price: Math.floor(Math.random() * 100) + 10,
+          product_image: '/placeholder-image.jpg',
+          user: 'current_user'
+        };
+        currentWishlist.push(newItem);
+        saveLocalWishlist(currentWishlist);
+        return { status: 'added', item: newItem };
+      }
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("Authentication required");
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    try {
+      const response = await axiosInstance.post(`${API_URL}toggle/`, { product_id: productId }, config);
+      return response.data;
+    } catch (error) {
+      // Fallback for 404 (if endpoint not deployed yet)
+      if (error.response?.status === 404) {
+        console.warn("Wishlist toggle endpoint not found, simulating toggle");
+        return { status: 'added', item: { id: Date.now(), product_id: productId } }; // Dummy success
+      }
+      throw error;
+    }
+  },
+
   isInWishlist: async (productId) => {
     const wishlist = await wishlistService.getWishlist();
     return wishlist.results?.some(item => item.product_id === productId) || false;

@@ -5,6 +5,7 @@ import FormInput from "@components/common/forms/FormInput/FormInput";
 import FormWrapper from "@components/common/forms/FormWrapper/FormWrapper";
 import { useAuth } from "../../hooks/useAuth";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
+import styles from "./Register.module.css";
 
 const Register = () => {
     const { register: authRegister, loading, error, loginWithGoogle, loginWithFacebook } = useAuth();
@@ -82,13 +83,7 @@ const Register = () => {
 
             {/* Personal Information */}
             <div style={{ marginBottom: '1.5rem' }}>
-                <h3 style={{
-                    color: '#64ffda',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    marginBottom: '1rem',
-                    textAlign: 'center'
-                }}>
+                <h3 className={styles.sectionHeading}>
                     Personal Information
                 </h3>
 
@@ -117,13 +112,7 @@ const Register = () => {
 
             {/* Contact Information */}
             <div style={{ marginBottom: '1.5rem' }}>
-                <h3 style={{
-                    color: '#64ffda',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    marginBottom: '1rem',
-                    textAlign: 'center'
-                }}>
+                <h3 className={styles.sectionHeading}>
                     Contact Information
                 </h3>
 
@@ -146,13 +135,7 @@ const Register = () => {
 
             {/* Academic Information */}
             <div style={{ marginBottom: '1.5rem' }}>
-                <h3 style={{
-                    color: '#64ffda',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    marginBottom: '1rem',
-                    textAlign: 'center'
-                }}>
+                <h3 className={styles.sectionHeading}>
                     Academic Information
                 </h3>
 
@@ -174,13 +157,7 @@ const Register = () => {
 
             {/* Security */}
             <div style={{ marginBottom: '2rem' }}>
-                <h3 style={{
-                    color: '#64ffda',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    marginBottom: '1rem',
-                    textAlign: 'center'
-                }}>
+                <h3 className={styles.sectionHeading}>
                     Security
                 </h3>
 

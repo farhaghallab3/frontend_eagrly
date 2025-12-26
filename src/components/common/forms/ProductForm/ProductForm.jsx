@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaUpload, FaImage, FaTimes, FaCheck, FaExclamationTriangle } from "react-icons/fa";
 import SubscriptionModal from "../../../ecommerce/SubscriptionPlans/SubscriptionModal";
+import SuccessAnimation from "../../feedback/SuccessAnimation";
 
 export default function ProductForm({ product, onClose, onSuccess }) {
     const navigate = useNavigate();
@@ -14,6 +15,8 @@ export default function ProductForm({ product, onClose, onSuccess }) {
     const { categories } = useCategories();
     const { addProduct, editProduct } = useProduct();
     const [preview, setPreview] = useState(product?.image || "");
+    const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("Success!");
 
     const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
 
@@ -75,14 +78,23 @@ export default function ProductForm({ product, onClose, onSuccess }) {
             if (product) {
                 // تحديث المنتج (PATCH أفضل لتجنب مسح الحقول غير المرسلة)
                 await editProduct(product.id, formData);
-                toast.success("Product updated successfully!");
+                setSuccessMessage("Product updated successfully!");
             } else {
                 await addProduct(formData);
-                toast.success("Product created! Waiting for admin approval.");
+                setSuccessMessage("Product created! Waiting for admin approval.");
             }
-            onClose(); // إغلاق الفورم
+            // toast.success("Product updated successfully!"); // Removed in favor of animation
+            setShowSuccessAnimation(true);
+
             refetchMyProducts(); // تحديث المنتجات
-            if (onSuccess) onSuccess(); // تحديث عند النجاح
+
+            // Delay closing to show animation
+            setTimeout(() => {
+                setShowSuccessAnimation(false);
+                if (onClose) onClose(); // إغلاق الفورم
+                if (onSuccess) onSuccess(); // تحديث عند النجاح
+            }, 3000); // 3 seconds display
+
         } catch (error) {
             if (error.response?.data?.code === 'ad_limit_exceeded') {
                 // toast.error('You cannot add products until you pay for a package.');
@@ -90,6 +102,7 @@ export default function ProductForm({ product, onClose, onSuccess }) {
             } else {
                 // Handle other validation errors
                 console.error("Error saving product:", error);
+                toast.error("Failed to save product. Please try again.");
             }
         }
     };
@@ -107,6 +120,7 @@ export default function ProductForm({ product, onClose, onSuccess }) {
 
     return (
         <div className={styles.formContainer}>
+            {showSuccessAnimation && <SuccessAnimation message={successMessage} />}
             <h1 className={styles.formTitle}>
                 {product ? "Edit Product" : "Add New Product"}
             </h1>
