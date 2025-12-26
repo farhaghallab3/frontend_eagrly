@@ -121,16 +121,6 @@ export default function MyAds() {
                             </div>
                         </div>
 
-                        <div className={styles.statCard}>
-                            <div className={styles.statIcon}>
-                                <FaChartLine />
-                            </div>
-                            <div className={styles.statContent}>
-                                <span className={styles.statNumber}>0</span>
-                                <span className={styles.statLabel}>Views This Month</span>
-                            </div>
-                        </div>
-
                         {/* Rating Removed */}
                     </div>
                 </Container>

@@ -1,10 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
-import { MdMic, MdAttachFile, MdSend, MdCamera, MdClose, MdPhoto } from "react-icons/md";
+import { MdAttachFile, MdSend, MdCamera, MdClose, MdPhoto } from "react-icons/md";
 
 const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
   const [showOptions, setShowOptions] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
   const attachButtonRef = useRef(null);
 
   const handleCameraClick = () => {
@@ -38,21 +37,9 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
     }
   };
 
-  const toggleRecording = () => {
-    setIsRecording(!isRecording);
-  };
-
   return (
     <div className="modern-message-input">
       <div className="input-container">
-        <Button
-          className={`voice-btn ${isRecording ? 'recording' : ''}`}
-          onClick={toggleRecording}
-          variant="link"
-        >
-          <MdMic size={20} />
-        </Button>
-
         <div className="input-wrapper">
           <Form.Control
             as="textarea"
@@ -128,36 +115,7 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
           max-width: 100%;
         }
 
-        .voice-btn {
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: rgba(255, 255, 255, 0.7);
-          transition: all 0.3s ease;
-          border: none;
-          background: transparent;
-          flex-shrink: 0;
-        }
 
-        .voice-btn:hover {
-          color: #64ffda;
-          background: rgba(100, 255, 218, 0.1);
-          transform: scale(1.1);
-        }
-
-        .voice-btn.recording {
-          color: #ef4444;
-          background: rgba(239, 68, 68, 0.1);
-          animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.1); }
-        }
 
         .input-wrapper {
           flex: 1;
@@ -182,7 +140,7 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
           flex: 1;
           border: none !important;
           background: transparent !important;
-          color: #ffffff;
+          color: #ffffff !important;
           font-size: 0.95rem;
           line-height: 1.4;
           resize: none;
@@ -344,7 +302,7 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
         @media (max-width: 768px) {
           .modern-message-input { padding: 12px 16px; }
           .input-container { gap: 8px; }
-          .voice-btn, .send-btn { width: 40px; height: 40px; }
+          .send-btn { width: 40px; height: 40px; }
           .attach-btn { width: 32px; height: 32px; }
           .message-textarea { font-size: 0.9rem; padding: 6px 10px; }
         }
@@ -353,15 +311,6 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
         [data-theme='light'] .modern-message-input {
           background: rgba(255, 255, 255, 0.98);
           border-top: 1px solid rgba(0, 180, 216, 0.15);
-        }
-
-        [data-theme='light'] .voice-btn {
-          color: rgba(0, 0, 0, 0.6);
-        }
-
-        [data-theme='light'] .voice-btn:hover {
-          color: #00b4d8;
-          background: rgba(0, 180, 216, 0.1);
         }
 
         [data-theme='light'] .input-wrapper {

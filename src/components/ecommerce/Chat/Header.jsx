@@ -46,34 +46,7 @@ const Header = ({ chat }) => {
         </div>
 
         <div className={styles.headerRight}>
-          <Button variant="link" className={styles.headerActionBtn}>
-            <MdPhone size={20} />
-          </Button>
-
-          <Button variant="link" className={styles.headerActionBtn}>
-            <MdVideocam size={20} />
-          </Button>
-
-          <Dropdown align="end">
-            <Dropdown.Toggle variant="link" className={styles.headerActionBtn}>
-              <MdMoreVert size={20} />
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu className={styles.headerDropdown}>
-              <Dropdown.Item className={styles.dropdownItem}>
-                <MdInfo size={18} />
-                View Profile
-              </Dropdown.Item>
-              <Dropdown.Item className={styles.dropdownItem}>
-                <MdInfo size={18} />
-                Product Details
-              </Dropdown.Item>
-              <Dropdown.Divider className={styles.dropdownDivider} />
-              <Dropdown.Item className={`${styles.dropdownItem} ${styles.danger}`}>
-                Report User
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          {/* Icons removed as requested */}
         </div>
       </div>
 
