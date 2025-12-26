@@ -69,7 +69,7 @@ export default function FeaturedProducts({ title = "Featured Products", products
                                         {product.category_name || 'Product'}
                                     </span>
                                     <span className={styles.productPrice}>
-                                        ${product.price || 'N/A'}
+                                        {product.price || 'N/A'} EGP
                                     </span>
                                 </div>
 

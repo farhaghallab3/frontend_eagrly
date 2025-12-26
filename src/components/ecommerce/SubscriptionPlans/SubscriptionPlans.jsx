@@ -1,36 +1,21 @@
 // src/components/ecommerce/SubscriptionPlans/SubscriptionPlans.jsx
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckCircle, AiOutlineCrown, AiOutlineStar } from "react-icons/ai";
 import { MdBolt, MdVerified } from "react-icons/md";
 import styles from "./SubscriptionPlans.module.css";
 import { packageService } from "../../../services/package";
 
-export default function SubscriptionPlans({ isModal }) {
+export default function SubscriptionPlans({ isModal, onClose }) {
+    const navigate = useNavigate();
     const [packages, setPackages] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [subscribingId, setSubscribingId] = useState(null);
 
-    const handleSubscribe = async (packageId) => {
-        try {
-            setSubscribingId(packageId);
-            const response = await packageService.subscribe(packageId);
-            const { client_secret } = response;
-            const publicKey = import.meta.env.VITE_PAYMOB_PUBLIC_KEY;
-
-            if (client_secret && publicKey) {
-                window.location.href = `https://accept.paymob.com/unifiedcheckout/?publicKey=${publicKey}&clientSecret=${client_secret}`;
-            } else {
-                console.error("Missing payment config", { client_secret, publicKey });
-                // Fallback or alert
-                alert("Unable to initiate payment. Please contact support.");
-            }
-        } catch (error) {
-            console.error("Subscription error:", error);
-            alert("Failed to process subscription. Please try again.");
-        } finally {
-            setSubscribingId(null);
-        }
+    const handleSubscribe = (packageId) => {
+        // Navigate to checkout page with package ID
+        if (onClose) onClose(); // Close modal if in modal mode
+        navigate(`/checkout/${packageId}`);
     };
 
     useEffect(() => {
@@ -116,8 +101,8 @@ export default function SubscriptionPlans({ isModal }) {
 
                                 <div className={styles.planPrice}>
                                     <div className={styles.priceWrapper}>
-                                        <span className={styles.currency}>$</span>
                                         <span className={styles.priceValue}>{pkg.price}</span>
+                                        <span className={styles.currency}> EGP</span>
                                     </div>
                                     <span className={styles.pricePeriod}>
                                         / {pkg.duration_in_days} days
@@ -163,21 +148,11 @@ export default function SubscriptionPlans({ isModal }) {
                                     className={`${styles.chooseButton} ${isPopular ? styles.chooseButtonPopular : ""}`}
                                     size="lg"
                                     onClick={() => handleSubscribe(pkg.id)}
-                                    disabled={!!subscribingId}
                                 >
-                                    {subscribingId === pkg.id ? (
-                                        <>
-                                            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2" />
-                                            Processing...
-                                        </>
-                                    ) : (
-                                        <>
-                                            Choose Plan
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="ms-2">
-                                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                        </>
-                                    )}
+                                    Choose Plan
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="ms-2">
+                                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
                                 </Button>
                             </div>
                         );
@@ -186,6 +161,6 @@ export default function SubscriptionPlans({ isModal }) {
 
 
             </Container>
-        </section>
+        </section >
     );
 }

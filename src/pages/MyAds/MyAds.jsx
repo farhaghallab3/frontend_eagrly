@@ -201,7 +201,7 @@ export default function MyAds() {
                                             <div className={styles.productDetails}>
                                                 <div className={styles.detailItem}>
                                                     <span className={styles.detailLabel}>Price:</span>
-                                                    <span className={styles.detailValue}>${product.price}</span>
+                                                    <span className={styles.detailValue}>{product.price} EGP</span>
                                                 </div>
                                                 <div className={styles.detailItem}>
                                                     <span className={styles.detailLabel}>Views:</span>

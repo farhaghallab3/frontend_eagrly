@@ -83,10 +83,13 @@
 }
 
 @keyframes pulseOnline {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.8;
     transform: scale(1.1);
@@ -124,9 +127,12 @@
 }
 
 @keyframes statusPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }
@@ -319,4 +325,89 @@
     height: 40px;
     padding: 8px;
   }
+}
+
+/* Light Mode Support */
+:global([data-theme='light']) .chatHeader {
+  background: rgba(255, 255, 255, 0.98);
+  border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+:global([data-theme='light']) .backButton {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+:global([data-theme='light']) .backButton:hover {
+  color: #00b4d8;
+  background: rgba(0, 180, 216, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 180, 216, 0.2);
+}
+
+:global([data-theme='light']) .avatarImage {
+  border-color: rgba(0, 180, 216, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+:global([data-theme='light']) .avatarImage:hover {
+  border-color: #00b4d8;
+  box-shadow: 0 4px 12px rgba(0, 180, 216, 0.3);
+}
+
+:global([data-theme='light']) .onlineStatus {
+  border-color: rgba(255, 255, 255, 0.98);
+}
+
+:global([data-theme='light']) .userName {
+  color: #1a202c;
+}
+
+:global([data-theme='light']) .statusText {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+:global([data-theme='light']) .headerActionBtn {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+:global([data-theme='light']) .headerActionBtn:hover {
+  color: #00b4d8;
+  background: rgba(0, 180, 216, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 180, 216, 0.2);
+}
+
+:global([data-theme='light']) .headerActionBtn::before {
+  background: rgba(0, 180, 216, 0.1);
+}
+
+:global([data-theme='light']) .headerDropdown {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 180, 216, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+:global([data-theme='light']) .dropdownItem {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+:global([data-theme='light']) .dropdownItem:hover {
+  background: rgba(0, 180, 216, 0.1);
+  color: #00b4d8;
+}
+
+:global([data-theme='light']) .dropdownDivider {
+  border-top-color: rgba(0, 180, 216, 0.1);
+}
+
+:global([data-theme='light']) .productInfoBar {
+  background: linear-gradient(135deg, rgba(0, 180, 216, 0.08) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-top-color: rgba(0, 180, 216, 0.15);
+}
+
+:global([data-theme='light']) .productLabel {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+:global([data-theme='light']) .productTitle {
+  color: #0077b6;
 }

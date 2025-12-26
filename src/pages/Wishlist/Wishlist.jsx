@@ -72,7 +72,7 @@ export default function Wishlist() {
                                             {item.product_title}
                                         </Card.Title>
                                         <Card.Text className={styles.productPrice}>
-                                            ${item.product_price}
+                                            {item.product_price} EGP
                                         </Card.Text>
                                         <Link to={`/product/${item.product_id}`} className={styles.viewButton}>
                                             <span className={styles.buttonText}>View Details</span>

@@ -13,6 +13,15 @@ export const packageService = {
       return [];
     }
   },
+  getById: async (id) => {
+    try {
+      const res = await axiosInstance.get(`${API_URL}${id}/`);
+      return res.data;
+    } catch (error) {
+      console.error("Error fetching package:", error);
+      throw error;
+    }
+  },
   subscribe: async (id) => {
     try {
       const res = await axiosInstance.post(`${API_URL}${id}/subscribe/`);

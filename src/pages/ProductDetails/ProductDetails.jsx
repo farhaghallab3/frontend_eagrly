@@ -219,7 +219,7 @@ export default function ProductDetails() {
 
                             <div className={styles.productActions}>
                                 <div className={styles.priceSection}>
-                                    <div className={styles.price}>${product.price}</div>
+                                    <div className={styles.price}>{product.price} EGP</div>
                                     <div className={styles.priceSubtext}>Best offer available</div>
                                 </div>
 

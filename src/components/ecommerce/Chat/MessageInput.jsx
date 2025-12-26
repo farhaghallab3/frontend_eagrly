@@ -180,8 +180,8 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
 
         .message-textarea {
           flex: 1;
-          border: none;
-          background: transparent;
+          border: none !important;
+          background: transparent !important;
           color: #ffffff;
           font-size: 0.95rem;
           line-height: 1.4;
@@ -193,8 +193,9 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
         }
 
         .message-textarea:focus {
-          outline: none;
-          box-shadow: none;
+          outline: none !important;
+          box-shadow: none !important;
+          background: transparent !important;
         }
 
         .message-textarea::placeholder {
@@ -346,6 +347,96 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
           .voice-btn, .send-btn { width: 40px; height: 40px; }
           .attach-btn { width: 32px; height: 32px; }
           .message-textarea { font-size: 0.9rem; padding: 6px 10px; }
+        }
+
+        /* Light Mode Support */
+        [data-theme='light'] .modern-message-input {
+          background: rgba(255, 255, 255, 0.98);
+          border-top: 1px solid rgba(0, 180, 216, 0.15);
+        }
+
+        [data-theme='light'] .voice-btn {
+          color: rgba(0, 0, 0, 0.6);
+        }
+
+        [data-theme='light'] .voice-btn:hover {
+          color: #00b4d8;
+          background: rgba(0, 180, 216, 0.1);
+        }
+
+        [data-theme='light'] .input-wrapper {
+          background: rgba(0, 0, 0, 0.05);
+          border-color: rgba(0, 180, 216, 0.2);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        [data-theme='light'] .input-wrapper:focus-within {
+          border-color: #00b4d8;
+          background: rgba(0, 180, 216, 0.05);
+          box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.15);
+        }
+
+        [data-theme='light'] .message-textarea {
+          color: #1a202c;
+          background: transparent !important;
+        }
+
+        [data-theme='light'] .message-textarea::placeholder {
+          color: rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme='light'] .attach-btn {
+          color: rgba(0, 0, 0, 0.6);
+        }
+
+        [data-theme='light'] .attach-btn:hover {
+          color: #00b4d8;
+          background: rgba(0, 180, 216, 0.1);
+        }
+
+        [data-theme='light'] .send-btn {
+          color: rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme='light'] .send-btn.active {
+          color: #00b4d8;
+          background: rgba(0, 180, 216, 0.1);
+        }
+
+        [data-theme='light'] .send-btn.active:hover {
+          background: rgba(0, 180, 216, 0.2);
+        }
+
+        [data-theme='light'] .attachment-menu-dropdown {
+          background: rgba(255, 255, 255, 0.98);
+          border-color: rgba(0, 180, 216, 0.2);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme='light'] .menu-header {
+          border-bottom-color: rgba(0, 180, 216, 0.1);
+          color: #0077b6;
+        }
+
+        [data-theme='light'] .close-menu-btn {
+          color: rgba(0, 0, 0, 0.6);
+        }
+
+        [data-theme='light'] .close-menu-btn:hover {
+          color: #00b4d8;
+        }
+
+        [data-theme='light'] .menu-option {
+          color: rgba(0, 0, 0, 0.7);
+        }
+
+        [data-theme='light'] .menu-option:hover {
+          background: rgba(0, 180, 216, 0.1);
+          color: #00b4d8;
+        }
+
+        [data-theme='light'] .message-textarea::-webkit-scrollbar-thumb {
+          background: rgba(0, 180, 216, 0.3);
         }
       `}</style>
     </div>

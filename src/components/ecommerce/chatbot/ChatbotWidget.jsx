@@ -129,7 +129,7 @@ const ChatbotWidget = () => {
       } else {
         // Handle both array responses and object responses
         const products = Array.isArray(response) ? response :
-                        (response.recommendations || response.products || response.data || []);
+          (response.recommendations || response.products || response.data || []);
 
         const botMsg = {
           role: "bot",
@@ -171,7 +171,7 @@ const ChatbotWidget = () => {
       <div>
         {/* Show text content if exists */}
         {msg.content && <div className={styles.botText}>{msg.content}</div>}
-        
+
         {/* Show products if exist */}
         {hasProducts && (
           <div style={{ marginTop: '10px' }}>
@@ -197,7 +197,7 @@ const ChatbotWidget = () => {
                   University: {product.university || 'N/A'} |
                   Faculty: {product.faculty || 'N/A'} |
                   Category: {product.category_name || product.category || 'N/A'} |
-                  Price: ${product.price || 'N/A'} |
+                  Price: {product.price || 'N/A'} EGP |
                   Condition: {product.condition || 'N/A'}
                 </div>
               </div>

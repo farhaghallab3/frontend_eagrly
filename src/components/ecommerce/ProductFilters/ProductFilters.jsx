@@ -89,8 +89,8 @@ const ProductFilters = ({ filters, onFilterChange, products, onClearFilters, sho
               style={{ width: '100%' }}
             />
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '5px', color: '#64ffda', fontWeight: 'bold' }}>
-              <span>$0</span>
-              <span>${filters.priceRange[1]}</span>
+              <span>0 EGP</span>
+              <span>{filters.priceRange[1]} EGP</span>
             </div>
           </div>
         </div>

@@ -76,18 +76,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  /* Explicit dark background */
+  background: linear-gradient(135deg, rgba(15, 26, 36, 0.95) 0%, #0f1627 100%);
   padding: 40px;
 }
 
 .emptyContent {
   text-align: center;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   max-width: 400px;
-  background: var(--bg-card);
+  /* Explicit dark background */
+  background: rgba(15, 26, 36, 0.95);
   padding: 40px;
   border-radius: 16px;
-  box-shadow: 0 4px 20px var(--shadow-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .emptyIcon {
@@ -98,7 +100,7 @@
 }
 
 .emptyContent h3 {
-  color: var(--text-primary);
+  color: #ffffff;
   font-weight: 600;
   margin-bottom: 12px;
   font-size: 1.5rem;

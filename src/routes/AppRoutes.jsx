@@ -38,7 +38,7 @@ export default function AppRoutes() {
                     <Route path="/chat/:chatId" element={<ChatApp />} />
                     <Route path="/product/:id" element={<ProductDetails />} />
                     <Route path="/wishlist" element={<Wishlist />} />
-                    <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route path="/checkout/:packageId" element={<CheckoutPage />} />
                     <Route path="/payment-status" element={<PaymentStatusPage />} />
                     <Route path="/packages" element={<Packages />} />
                     <Route path="/help" element={<HelpCenter />} />
