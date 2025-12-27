@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { toggleWishlist } from "../../../store/slices/wishlistSlice";
 import { useAuth } from "../../../hooks/useAuth";
+import { useAuthModal } from "../../../context/AuthModalContext";
 import styles from "./ProductCard.module.css";
 import ButtonPrimary from "@components/common/ButtonPrimary/ButtonPrimary";
 import SuccessAnimation from "../../common/feedback/SuccessAnimation";
@@ -14,6 +15,7 @@ export default function ProductCard({ product }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { user } = useAuth();
+    const { openAuthModal } = useAuthModal();
     const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
 
     const wishlistState = useSelector((state) => state.wishlist);
@@ -31,7 +33,7 @@ export default function ProductCard({ product }) {
     const handleWishlistToggle = async (e) => {
         e.stopPropagation();
         if (!user) {
-            navigate("/login");
+            openAuthModal();
             return;
         }
 

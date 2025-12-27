@@ -8,6 +8,7 @@ import styles from "./ProductDetails.module.css";
 import ButtonPrimary from "@components/common/ButtonPrimary/ButtonPrimary";
 
 import { useAuth } from "../../hooks/useAuth";
+import { useAuthModal } from "../../context/AuthModalContext";
 import { findOrCreateChat } from "../../services/chatService";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +20,7 @@ export default function ProductDetails() {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { openAuthModal } = useAuthModal();
     const dispatch = useDispatch();
     const wishlistState = useSelector((state) => state.wishlist);
     const wishlistItems = wishlistState?.items?.results || [];
@@ -27,7 +29,7 @@ export default function ProductDetails() {
 
     const handleWishlistToggle = () => {
         if (!user) {
-            navigate("/login");
+            openAuthModal();
             return;
         }
         dispatch(toggleWishlist(parseInt(id)));
@@ -35,7 +37,7 @@ export default function ProductDetails() {
 
     const handleContactSeller = async () => {
         if (!user) {
-            navigate("/login");
+            openAuthModal();
             return;
         }
 
@@ -46,14 +48,7 @@ export default function ProductDetails() {
         }
 
         try {
-            console.log("Initiating chat with:", {
-                productId: product.id,
-                sellerId: product.seller.id,
-                buyerId: user.id
-            });
-
             const chat = await findOrCreateChat(product.id, product.seller.id, user.id);
-            console.log("Chat response:", chat);
 
             if (chat && chat.id) {
                 navigate(`/chat/${chat.id}`);

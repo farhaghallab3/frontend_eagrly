@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { wishlistService } from '../../services/wishlistService';
-import { toast } from 'react-toastify';
 
 // Async thunks
 export const fetchWishlist = createAsyncThunk(
@@ -16,10 +15,8 @@ export const addToWishlist = createAsyncThunk(
   async (productId, { rejectWithValue }) => {
     try {
       const result = await wishlistService.addToWishlist(productId);
-      toast.success('Added to wishlist!');
       return result;
     } catch (error) {
-      toast.error('Failed to add to wishlist');
       return rejectWithValue(error.message);
     }
   }
@@ -30,10 +27,8 @@ export const removeFromWishlist = createAsyncThunk(
   async (productId, { rejectWithValue }) => {
     try {
       await wishlistService.removeFromWishlist(productId);
-      toast.success('Removed from wishlist!');
-      return productId;
+      return productId; // Return the productId to filter from state
     } catch (error) {
-      toast.error('Failed to remove from wishlist');
       return rejectWithValue(error.message);
     }
   }
@@ -57,10 +52,14 @@ const wishlistSlice = createSlice({
     items: [],
     loading: false,
     error: null,
+    lastAction: null, // Track last action for UI feedback
   },
   reducers: {
     clearWishlist: (state) => {
       state.items = [];
+    },
+    clearLastAction: (state) => {
+      state.lastAction = null;
     },
   },
   extraReducers: (builder) => {
@@ -90,24 +89,45 @@ const wishlistSlice = createSlice({
           // Add to list
           state.items.results.push(item);
           state.items.count = (state.items.count || 0) + 1;
+          state.lastAction = { type: 'added', productId: item?.product_id };
         } else if (status === 'removed') {
           // Remove from list
           state.items.results = state.items.results.filter(
             w => w.product_id !== (product_id || item?.product_id)
           );
           state.items.count = Math.max(0, (state.items.count || 1) - 1);
+          state.lastAction = { type: 'removed', productId: product_id || item?.product_id };
         }
       })
       // Add to wishlist - backend returns updated paginated response
       .addCase(addToWishlist.fulfilled, (state, action) => {
         state.items = action.payload;
+        state.lastAction = { type: 'added' };
       })
-      // Remove from wishlist - backend returns updated paginated response
+      // Remove from wishlist - filter out the removed item
+      .addCase(removeFromWishlist.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(removeFromWishlist.fulfilled, (state, action) => {
-        state.items = action.payload;
+        state.loading = false;
+        const removedProductId = action.payload;
+
+        // Ensure state.items structure exists (paginated format from backend)
+        if (state.items && state.items.results) {
+          state.items.results = state.items.results.filter(
+            item => item.product_id !== removedProductId
+          );
+          state.items.count = Math.max(0, (state.items.count || 1) - 1);
+        }
+        state.lastAction = { type: 'removed', productId: removedProductId };
+      })
+      .addCase(removeFromWishlist.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
-export const { clearWishlist } = wishlistSlice.actions;
+export const { clearWishlist, clearLastAction } = wishlistSlice.actions;
 export default wishlistSlice.reducer;
+

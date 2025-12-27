@@ -8,14 +8,17 @@ import App from './App.jsx'
 import { Provider } from 'react-redux';
 import { store } from './store/store.js';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthModalProvider } from './context/AuthModalContext';
 import ErrorBoundary from '@components/common/ErrorBoundary/ErrorBoundary';
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <ThemeProvider>
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
+      <AuthModalProvider>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </AuthModalProvider>
     </ThemeProvider>
   </Provider>
 )

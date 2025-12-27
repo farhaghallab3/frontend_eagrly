@@ -37,21 +37,15 @@ export default function MyAds() {
     };
 
     const handleDeleteClick = (product) => {
-        console.log('Delete button clicked for product:', product.id);
         setProductToDelete(product);
         setShowDeleteModal(true);
     };
 
     const handleDeleteConfirm = async () => {
         if (productToDelete) {
-            console.log('User confirmed deletion, calling removeProduct...');
             const success = await removeProduct(productToDelete.id);
-            console.log('Delete result:', success);
             if (success) {
-                console.log('Product deleted successfully, refreshing products...');
                 fetchProducts();
-            } else {
-                console.log('Product deletion failed');
             }
             setShowDeleteModal(false);
             setProductToDelete(null);
@@ -211,7 +205,6 @@ export default function MyAds() {
                                                 className={styles.editButton}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    console.log('Edit button clicked for product:', product);
                                                     handleEdit(product);
                                                 }}
                                             >
@@ -221,7 +214,6 @@ export default function MyAds() {
                                             <button
                                                 className={styles.deleteButton}
                                                 onClick={() => {
-                                                    console.log('Delete button clicked for product:', product.id);
                                                     handleDeleteClick(product);
                                                 }}
                                             >
@@ -246,7 +238,6 @@ export default function MyAds() {
                     style={{ zIndex: 9999 }}
                     onClick={(e) => {
                         if (e.target === e.currentTarget) {
-                            console.log('Modal overlay clicked, closing modal');
                             handleFormClose();
                         }
                     }}
@@ -255,15 +246,12 @@ export default function MyAds() {
                         className={styles.modal}
                         style={{ position: 'relative', zIndex: 10000 }}
                     >
-                        {console.log('Rendering ProductForm with product:', editingProduct)}
                         <ProductForm
                             product={editingProduct}
                             onClose={() => {
-                                console.log('Form close requested');
                                 handleFormClose();
                             }}
                             onSuccess={() => {
-                                console.log('Form success triggered');
                                 handleFormSuccess();
                             }}
                         />

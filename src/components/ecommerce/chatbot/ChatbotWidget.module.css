@@ -357,7 +357,7 @@
   padding: 14px 18px;
   border-radius: 25px;
   font-size: 14px;
-  background: rgba(15, 26, 36, 0.5);
+  background: var(--bg-secondary);
   backdrop-filter: blur(10px);
   color: var(--text-primary);
   transition: all 0.3s ease;
@@ -366,7 +366,7 @@
 
 .chatInput input:focus {
   border-color: var(--accent-primary);
-  background: rgba(15, 26, 36, 0.8);
+  background: var(--bg-card);
   box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
   transform: scale(1.02);
 }

@@ -7,6 +7,7 @@ import { MdSmartToy } from "react-icons/md";
 import { sendMessageToBot } from "../../../services/chatService";
 // import { getUserIdFromToken } from "../../../utils/auth";
 // import { getUserById } from "../../../services/userService";
+import { useAuthModal } from "../../../context/AuthModalContext";
 import styles from "./ChatbotWidget.module.css";
 
 const ChatbotWidget = () => {
@@ -17,6 +18,7 @@ const ChatbotWidget = () => {
   const [showAll, setShowAll] = useState(false);
 
   const navigate = useNavigate();
+  const { openAuthModal } = useAuthModal();
 
   const toggleChat = () => {
     if (open) {
@@ -116,7 +118,7 @@ const ChatbotWidget = () => {
       if (response.authenticated === false) {
         const botMsg = {
           role: "bot",
-          content: response.error || "Please log in to use the chatbot.",
+          content: response.error || "Please log in to use the AI Assistant.",
           showLoginPrompt: true
         };
         setMessages(prev => [...prev, botMsg]);
@@ -142,7 +144,7 @@ const ChatbotWidget = () => {
       console.error("Chatbot error:", err);
       setMessages(prev => [...prev, {
         role: "bot",
-        content: "An error occurred while contacting the server."
+        content: "I'm having trouble connecting right now. Please try again in a moment."
       }]);
     } finally {
       setLoading(false);
@@ -156,7 +158,7 @@ const ChatbotWidget = () => {
           <div>{msg.content}</div>
           <button
             className={styles.loginBtn}
-            onClick={() => navigate('/login')}
+            onClick={() => openAuthModal()}
           >
             Log In
           </button>
@@ -181,8 +183,6 @@ const ChatbotWidget = () => {
                 className={styles.productPreview}
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
-                  console.log('Product clicked:', product);
-                  console.log('Navigating to:', `/product/${product.id || product._id}`);
                   navigate(`/product/${product.id || product._id}`);
                 }}
               >

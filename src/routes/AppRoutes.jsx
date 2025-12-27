@@ -21,10 +21,12 @@ import PrivacyPage from "@pages/Support/PrivacyPage";
 import TermsOfService from "@pages/Support/TermsOfService";
 import Packages from "@pages/Packages/Packages";
 import Wishlist from "@pages/Wishlist/Wishlist";
+import AuthModal from "@components/common/AuthModal/AuthModal";
 
 export default function AppRoutes() {
     return (
         <Router>
+            <AuthModal />
             <Routes>
                 {/* ---------------- Public Layout ---------------- */}
                 <Route element={<Layout />}>
@@ -64,3 +66,4 @@ export default function AppRoutes() {
         </Router>
     );
 }
+

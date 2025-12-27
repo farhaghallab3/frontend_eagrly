@@ -5,15 +5,30 @@ import FormInput from "@components/common/forms/FormInput/FormInput";
 import FormWrapper from "@components/common/forms/FormWrapper/FormWrapper";
 import { useAuth } from "../../hooks/useAuth";
 import { FaFacebookF, FaGoogle } from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import styles from "./Register.module.css";
 
 const Register = () => {
     const { register: authRegister, loading, error, loginWithGoogle, loginWithFacebook } = useAuth();
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const password = watch("password");
+    const password = watch("password") || "";
+
+    // Password requirement checks
+    const passwordRequirements = [
+        { label: "At least 8 characters", met: password.length >= 8 },
+        { label: "One uppercase letter (A-Z)", met: /[A-Z]/.test(password) },
+        { label: "One lowercase letter (a-z)", met: /[a-z]/.test(password) },
+        { label: "One number (0-9)", met: /[0-9]/.test(password) },
+        { label: "One special character (!@#$%^&*)", met: /[!@#$%^&*(),.?":{}|<>]/.test(password) },
+    ];
+
+    const allRequirementsMet = passwordRequirements.every(req => req.met);
 
     const onSubmit = (data) => {
+        if (!allRequirementsMet) {
+            return; // Don't submit if requirements not met
+        }
         authRegister({
             first_name: data.first_name,
             last_name: data.last_name,
@@ -26,6 +41,7 @@ const Register = () => {
             rePassword: data.rePassword,
         });
     };
+
 
     // Social login buttons configuration
     const socialButtons = [
@@ -167,10 +183,24 @@ const Register = () => {
                     placeholder="Create a strong password"
                     {...register("password", {
                         required: "Password is required",
-                        minLength: { value: 6, message: "Password must be at least 6 characters" },
+                        validate: () => allRequirementsMet || "Password does not meet all requirements",
                     })}
                     error={errors.password}
                 />
+
+                {/* Password Requirements Checklist */}
+                <div className={styles.passwordRequirements}>
+                    <p className={styles.requirementsTitle}>Password must contain:</p>
+                    <ul className={styles.requirementsList}>
+                        {passwordRequirements.map((req, index) => (
+                            <li key={index} className={req.met ? styles.requirementMet : styles.requirementUnmet}>
+                                {req.met ? <FaCheck className={styles.checkIcon} /> : <FaTimes className={styles.timesIcon} />}
+                                <span>{req.label}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
 
                 <FormInput
                     label="Confirm Password"

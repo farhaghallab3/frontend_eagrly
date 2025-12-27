@@ -42,7 +42,6 @@ export default function ProductForm({ product, onClose, onSuccess }) {
     // عند تعديل منتج، نحط القيم القديمة
     useEffect(() => {
         if (product) {
-            console.log('Populating form with product data:', product);
             setValue("title", product.title || "");
             setValue("description", product.description || "");
             setValue("price", product.price || 0);

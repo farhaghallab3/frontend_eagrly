@@ -6,3 +6,53 @@
     margin-bottom: 1rem;
     text-align: center;
 }
+
+/* Password Requirements Styles */
+.passwordRequirements {
+    margin-top: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: var(--bg-secondary, rgba(0, 0, 0, 0.1));
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+}
+
+.requirementsTitle {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary, #888);
+    margin-bottom: 0.5rem;
+}
+
+.requirementsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.4rem;
+}
+
+.requirementsList li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.requirementMet {
+    color: #22c55e;
+}
+
+.requirementUnmet {
+    color: var(--text-secondary, #888);
+}
+
+.checkIcon {
+    color: #22c55e;
+    font-size: 0.75rem;
+}
+
+.timesIcon {
+    color: #ef4444;
+    font-size: 0.75rem;
+}

@@ -1,29 +1,41 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "@components/ecommerce/Chat/Header";
 import ChatMessages from "@components/ecommerce/Chat/ChatMessage";
 import MessageInput from "@components/ecommerce/Chat/MessageInput";
+import ChatList from "@components/ecommerce/Chat/ChatList";
 import { getChat, sendMessage } from "../../services/chatService";
 import { setSelectedChat, fetchChats } from "../../store/slices/chatSlice";
 import { useAuth } from "../../hooks/useAuth";
 import { Spinner, Alert } from "react-bootstrap";
-import { MdMessage } from "react-icons/md";
+import { MdMessage, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import styles from "./ChatApp.module.css";
 
 const ChatApp = () => {
   const dispatch = useDispatch();
-  const { selectedChatId, loading, error } = useSelector((state) => state.chat);
+  const navigate = useNavigate();
+  const { chats, selectedChatId, loading, error } = useSelector((state) => state.chat);
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [sendError, setSendError] = useState(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { chatId } = useParams();
   const { user } = useAuth();
 
   useEffect(() => {
     dispatch(fetchChats());
   }, [dispatch]);
+
+  const handleSelectChat = (id) => {
+    dispatch(setSelectedChat(id));
+    navigate(`/chat/${id}`);
+  };
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed(!sidebarCollapsed);
+  };
 
   useEffect(() => {
     const fetchChat = async () => {
@@ -126,6 +138,34 @@ const ChatApp = () => {
 
   return (
     <div className={styles.chatContainer}>
+      {/* Sidebar with Chat List */}
+      <div className={`${styles.chatSidebar} ${sidebarCollapsed ? styles.collapsed : ''}`}>
+        <div className={styles.sidebarHeader}>
+          <h3 className={styles.sidebarTitle}>Conversations</h3>
+          <button
+            className={styles.toggleButton}
+            onClick={toggleSidebar}
+            title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {sidebarCollapsed ? <MdChevronRight size={24} /> : <MdChevronLeft size={24} />}
+          </button>
+        </div>
+        <div className={styles.sidebarContent}>
+          <ChatList chats={chats} onSelectChat={handleSelectChat} />
+        </div>
+      </div>
+
+      {/* Toggle button when collapsed (visible outside sidebar) */}
+      {sidebarCollapsed && (
+        <button
+          className={styles.expandButton}
+          onClick={toggleSidebar}
+          title="Expand conversations"
+        >
+          <MdChevronRight size={24} />
+        </button>
+      )}
+
       {/* Main Chat Area */}
       <div className={styles.chatMain}>
         {selectedChatId ? (
@@ -151,7 +191,7 @@ const ChatApp = () => {
             <div className={styles.emptyContent}>
               <MdMessage size={80} className={styles.emptyIcon} />
               <h3>Welcome to Messages</h3>
-              <p>Select a conversation to start chatting</p>
+              <p>Select a conversation from the left to start chatting</p>
             </div>
           </div>
         )}

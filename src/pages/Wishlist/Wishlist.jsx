@@ -1,27 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaHeart, FaTrash } from "react-icons/fa";
-import { fetchWishlist, removeFromWishlist } from "../../store/slices/wishlistSlice";
+import { FaHeart, FaTrash, FaCheck } from "react-icons/fa";
+import { fetchWishlist, removeFromWishlist, clearLastAction } from "../../store/slices/wishlistSlice";
 import styles from "./Wishlist.module.css";
 
 export default function Wishlist() {
     const dispatch = useDispatch();
     const wishlistState = useSelector((state) => state.wishlist);
     const wishlistItems = wishlistState?.items?.results || [];
-    const { loading } = wishlistState || {};
+    const { loading, lastAction } = wishlistState || {};
     const safeWishlistItems = wishlistItems || [];
+    const [removingId, setRemovingId] = useState(null);
+    const [showFeedback, setShowFeedback] = useState(false);
 
     useEffect(() => {
         dispatch(fetchWishlist());
     }, [dispatch]);
 
-    const handleRemoveFromWishlist = (productId) => {
-        dispatch(removeFromWishlist(productId));
+    // Show feedback when item is removed
+    useEffect(() => {
+        if (lastAction?.type === 'removed') {
+            setShowFeedback(true);
+            setTimeout(() => {
+                setShowFeedback(false);
+                dispatch(clearLastAction());
+            }, 2000);
+        }
+    }, [lastAction, dispatch]);
+
+    const handleRemoveFromWishlist = async (productId) => {
+        setRemovingId(productId);
+        // Wait for animation before dispatching
+        setTimeout(() => {
+            dispatch(removeFromWishlist(productId));
+            setRemovingId(null);
+        }, 300);
     };
 
-    if (loading) {
+    if (loading && safeWishlistItems.length === 0) {
         return (
             <div className={styles.wishlistPage}>
                 <Container>
@@ -39,6 +57,14 @@ export default function Wishlist() {
                     <p>{safeWishlistItems.length} {safeWishlistItems.length === 1 ? 'item' : 'items'} in your wishlist</p>
                 </div>
 
+                {/* Inline feedback message */}
+                {showFeedback && (
+                    <div className={styles.feedbackMessage}>
+                        <FaCheck className={styles.feedbackIcon} />
+                        <span>Item removed from wishlist</span>
+                    </div>
+                )}
+
                 {safeWishlistItems.length === 0 ? (
                     <div className={styles.emptyWishlist}>
                         <FaHeart size={64} className={styles.emptyIcon} />
@@ -51,7 +77,11 @@ export default function Wishlist() {
                 ) : (
                     <Row className={styles.wishlistGrid}>
                         {safeWishlistItems.map((item) => (
-                            <Col key={item.id} xs={12} sm={6} md={4} lg={3} className={styles.wishlistCol}>
+                            <Col
+                                key={item.id}
+                                xs={12} sm={6} md={4} lg={3}
+                                className={`${styles.wishlistCol} ${removingId === item.product_id ? styles.removing : ''}`}
+                            >
                                 <Card className={styles.wishlistCard}>
                                     <div className={styles.imageContainer}>
                                         <Card.Img
@@ -63,6 +93,7 @@ export default function Wishlist() {
                                             className={styles.removeButton}
                                             onClick={() => handleRemoveFromWishlist(item.product_id)}
                                             title="Remove from wishlist"
+                                            disabled={removingId === item.product_id}
                                         >
                                             <FaTrash />
                                         </button>
@@ -87,3 +118,4 @@ export default function Wishlist() {
         </div>
     );
 }
+

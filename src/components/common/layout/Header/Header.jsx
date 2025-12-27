@@ -35,7 +35,6 @@ export default function Header({ links }) {
 
     useEffect(() => {
         if (token) {
-            console.log("Header: Initial fetch - chats, products, notifications, wishlist");
             dispatch(fetchChats());
             dispatch(fetchMyProducts());
             dispatch(fetchUnreadCount());

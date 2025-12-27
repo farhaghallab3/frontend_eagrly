@@ -11,7 +11,6 @@ export const productService = {
     // Don't send auth headers so backend treats as anonymous user and returns all active products
     const res = await axios.get(import.meta.env.VITE_API_URL + "/products/");
     let products = res.data.results;
-    console.log(products);
 
     // Filter out user's own products if logged in, so they don't see their own in marketplace
     const token = localStorage.getItem("token");
@@ -32,7 +31,6 @@ export const productService = {
     // Don't send auth headers so backend treats as anonymous user and returns all active products
     const res = await axios.get(`${import.meta.env.VITE_API_URL}/categories/${categoryId}/products/`);
     let products = res.data?.results || res.data || [];
-    console.log('Products by category:', products);
 
     // For category browsing, show all active products in the category (public viewing)
     // No filtering of user's own products here
@@ -50,7 +48,6 @@ export const productService = {
       };
 
       const response = await axios.get(`${API_URL}my_products/`, config);
-      console.log(response.data);
 
       return response.data;
     } catch (error) {
@@ -58,8 +55,8 @@ export const productService = {
       return [];
     }
   },
-  
-  
+
+
 
   create: async (data) => {
     const token = localStorage.getItem("token");
@@ -76,7 +73,6 @@ export const productService = {
       headers: { Authorization: `Bearer ${token}` },
     } : {};
     const res = await axiosInstance.patch(`${API_URL}${id}/`, data, config);
-    console.log(res);
 
     return res.data;
   },

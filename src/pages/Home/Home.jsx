@@ -18,8 +18,6 @@ export default function Home() {
     if (errorProducts) return <p>Error loading products: {errorProducts}</p>;
     if (errorCategories) return <p>Error loading categories: {errorCategories}</p>;
 
-    console.log(products);
-
     return (
         <>
             <HeroSection />

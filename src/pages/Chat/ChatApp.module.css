@@ -9,6 +9,109 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* Sidebar for Chat List */
+.chatSidebar {
+  width: 320px;
+  min-width: 320px;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chatSidebar.collapsed {
+  width: 0;
+  min-width: 0;
+  border-right: none;
+}
+
+.chatSidebar.collapsed .sidebarContent,
+.chatSidebar.collapsed .sidebarTitle {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.sidebarHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+}
+
+.sidebarTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: opacity 0.2s ease;
+}
+
+.sidebarContent {
+  flex: 1;
+  overflow-y: auto;
+  transition: opacity 0.2s ease;
+}
+
+.toggleButton {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.toggleButton:hover {
+  background: var(--bg-secondary);
+  color: var(--accent-primary);
+  transform: scale(1.1);
+}
+
+.expandButton {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 8px;
+  cursor: pointer;
+  color: var(--accent-primary);
+  box-shadow: 2px 0 8px var(--shadow-color);
+  transition: all 0.2s ease;
+  animation: slideIn 0.3s ease;
+}
+
+.expandButton:hover {
+  background: var(--accent-primary);
+  color: white;
+  padding-right: 12px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
 /* Main Chat Area */
 .chatMain {
   flex: 1;
@@ -17,6 +120,7 @@
   position: relative;
   background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
   padding: 20px;
+  min-width: 0;
 }
 
 .chatConversation {
@@ -119,7 +223,29 @@
 }
 
 /* Responsive Design */
+@media (max-width: 992px) {
+  .chatSidebar {
+    width: 280px;
+    min-width: 260px;
+  }
+}
+
 @media (max-width: 768px) {
+  .chatSidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 100;
+    width: 300px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .chatSidebar.open {
+    transform: translateX(0);
+  }
+
   .emptyContent {
     padding: 20px;
   }
