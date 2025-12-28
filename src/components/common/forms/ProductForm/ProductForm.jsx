@@ -9,7 +9,7 @@ import { FaUpload, FaImage, FaTimes, FaCheck, FaExclamationTriangle } from "reac
 import SubscriptionModal from "../../../ecommerce/SubscriptionPlans/SubscriptionModal";
 import SuccessAnimation from "../../feedback/SuccessAnimation";
 
-export default function ProductForm({ product, onClose, onSuccess }) {
+export default function ProductForm({ product, onClose, onSuccess, isRepublishing = false }) {
     const navigate = useNavigate();
     const { refetchMyProducts } = useProduct();
     const { categories } = useCategories();
@@ -77,7 +77,11 @@ export default function ProductForm({ product, onClose, onSuccess }) {
             if (product) {
                 // تحديث المنتج (PATCH أفضل لتجنب مسح الحقول غير المرسلة)
                 await editProduct(product.id, formData);
-                setSuccessMessage("Product updated successfully!");
+                if (isRepublishing) {
+                    setSuccessMessage("Ad republished! Waiting for admin approval.");
+                } else {
+                    setSuccessMessage("Product updated successfully!");
+                }
             } else {
                 await addProduct(formData);
                 setSuccessMessage("Product created! Waiting for admin approval.");
@@ -121,7 +125,7 @@ export default function ProductForm({ product, onClose, onSuccess }) {
         <div className={styles.formContainer}>
             {showSuccessAnimation && <SuccessAnimation message={successMessage} />}
             <h1 className={styles.formTitle}>
-                {product ? "Edit Product" : "Add New Product"}
+                {isRepublishing ? "Republish Ad" : (product ? "Edit Product" : "Add New Product")}
             </h1>
 
             {/* Progress Indicator */}

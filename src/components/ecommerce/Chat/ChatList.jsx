@@ -22,7 +22,7 @@ const ChatList = ({ chats, onSelectChat }) => {
           {chats.map((chat) => {
             const otherUser = user?.id === chat.buyer.id ? chat.seller : chat.buyer;
             const isSelected = selectedChatId === chat.id;
-            const hasUnread = chat.unreadCount > 0;
+            const hasUnread = chat.unread_count > 0;
 
             return (
               <ListGroup.Item
@@ -56,7 +56,7 @@ const ChatList = ({ chats, onSelectChat }) => {
                     </div>
                     {hasUnread && (
                       <Badge bg="danger" className="unread-badge">
-                        {chat.unreadCount}
+                        {chat.unread_count}
                       </Badge>
                     )}
                   </div>
@@ -71,6 +71,12 @@ const ChatList = ({ chats, onSelectChat }) => {
         .modern-chat-list {
           height: 100%;
           overflow-y: auto;
+          overflow-x: hidden;
+        }
+        
+        .modern-chat-list .chat-list-group {
+          margin-bottom: 0;
+          padding-bottom: 0;
         }
 
         .empty-chats {

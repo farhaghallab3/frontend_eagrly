@@ -3,7 +3,8 @@
   min-height: 100vh;
   background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
   color: var(--text-primary);
-  padding: 80px 0 60px;
+  padding-top: 100px;
+  padding-bottom: 60px;
 }
 
 .header {

@@ -94,4 +94,24 @@ export const productService = {
     const res = await axiosInstance.get(`${API_URL}${id}/`, config);
     return res.data;
   },
+
+  checkEligibility: async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return { can_post: false, message: 'Please login to post ads' };
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const res = await axios.get(`${API_URL}check_eligibility/`, config);
+    return res.data;
+  },
+
+  republishProduct: async (id) => {
+    const token = localStorage.getItem("token");
+    const config = token ? {
+      headers: { Authorization: `Bearer ${token}` },
+    } : {};
+    const res = await axiosInstance.post(`${API_URL}${id}/republish/`, {}, config);
+    return res.data;
+  },
 };

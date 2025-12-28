@@ -52,7 +52,7 @@ const ChatDropdown = ({ show, onToggle }) => {
             <>
               {chats.slice(0, 5).map((chat) => {
                 const otherUser = user?.id === chat.buyer.id ? chat.seller : chat.buyer;
-                const hasUnread = chat.unreadCount > 0;
+                const hasUnread = chat.unread_count > 0;
 
                 return (
                   <Dropdown.Item
@@ -65,7 +65,7 @@ const ChatDropdown = ({ show, onToggle }) => {
                         <strong>{otherUser.username}</strong>
                         {hasUnread && (
                           <span className={styles.chatUnreadBadge}>
-                            {chat.unreadCount}
+                            {chat.unread_count}
                           </span>
                         )}
                       </div>

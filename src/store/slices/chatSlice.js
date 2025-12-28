@@ -27,38 +27,6 @@ export const sendChatMessage = createAsyncThunk(
   }
 );
 
-// Helper function to calculate unread count for a chat
-const calculateChatUnreadCount = (chat, lastReadTimestamp) => {
-  if (!chat.messages || chat.messages.length === 0) return 0;
-
-  const lastRead = lastReadTimestamp || 0;
-  return chat.messages.filter(message =>
-    new Date(message.timestamp).getTime() > lastRead
-  ).length;
-};
-
-// Helper function to calculate total unread count across all chats
-const calculateTotalUnreadCount = (chats, lastReadTimestamps, excludeChatId = null) => {
-  return chats.reduce((total, chat) => {
-    if (chat.id === excludeChatId) return total;
-    const lastRead = lastReadTimestamps[chat.id] || 0;
-    return total + calculateChatUnreadCount(chat, lastRead);
-  }, 0);
-};
-
-// Helper function to load last read timestamps from localStorage
-const loadLastReadTimestamps = () => {
-  const timestamps = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith('chat_') && key.endsWith('_lastRead')) {
-      const chatId = key.replace('chat_', '').replace('_lastRead', '');
-      timestamps[chatId] = parseInt(localStorage.getItem(key), 10);
-    }
-  }
-  return timestamps;
-};
-
 const chatSlice = createSlice({
   name: "chat",
   initialState: {
@@ -67,7 +35,6 @@ const chatSlice = createSlice({
     loading: false,
     error: null,
     selectedChatId: null,
-    lastReadTimestamps: loadLastReadTimestamps(), // Load from localStorage
   },
   reducers: {
     setSelectedChat: (state, action) => {
@@ -75,16 +42,20 @@ const chatSlice = createSlice({
       state.selectedChatId = chatId;
 
       if (chatId) {
-        // Update last read timestamp for this chat
+        // When selecting a chat, mark it as read locally (backend handles actual marking)
         const chat = state.chats.find(c => c.id === chatId);
-        if (chat && chat.messages && chat.messages.length > 0) {
-          const latestMessage = chat.messages[chat.messages.length - 1];
-          state.lastReadTimestamps[chatId] = new Date(latestMessage.timestamp).getTime();
-          localStorage.setItem(`chat_${chatId}_lastRead`, state.lastReadTimestamps[chatId]);
+        if (chat && chat.unread_count > 0) {
+          state.unreadCount = Math.max(0, state.unreadCount - chat.unread_count);
+          chat.unread_count = 0;
         }
-
-        // Recalculate unread counts
-        state.unreadCount = calculateTotalUnreadCount(state.chats, state.lastReadTimestamps, chatId);
+      }
+    },
+    markChatAsRead: (state, action) => {
+      const chatId = action.payload;
+      const chat = state.chats.find(c => c.id === chatId);
+      if (chat && chat.unread_count > 0) {
+        state.unreadCount = Math.max(0, state.unreadCount - chat.unread_count);
+        chat.unread_count = 0;
       }
     },
     incrementUnreadCount: (state) => {
@@ -95,34 +66,15 @@ const chatSlice = createSlice({
       const { chatId } = action.payload;
       const chat = state.chats.find(c => c.id === chatId);
       if (chat && (!state.selectedChatId || state.selectedChatId !== chatId)) {
-        chat.unreadCount = (chat.unreadCount || 0) + 1;
+        chat.unread_count = (chat.unread_count || 0) + 1;
         state.unreadCount += 1;
       }
     },
     resetUnreadCount: (state) => {
       state.unreadCount = 0;
       state.chats.forEach(chat => {
-        chat.unreadCount = 0;
+        chat.unread_count = 0;
       });
-    },
-    updateChatUnreadCounts: (state, action) => {
-      // Update unread counts based on new chat data
-      const newChats = action.payload;
-      let newUnreadCount = 0;
-
-      newChats.forEach(newChat => {
-        const existingChat = state.chats.find(c => c.id === newChat.id);
-        if (existingChat) {
-          // Preserve existing unread count if not currently selected
-          if (state.selectedChatId !== newChat.id) {
-            newChat.unreadCount = existingChat.unreadCount || 0;
-          }
-        }
-        newUnreadCount += newChat.unreadCount || 0;
-      });
-
-      state.chats = newChats;
-      state.unreadCount = newUnreadCount;
     },
   },
   extraReducers: (builder) => {
@@ -133,16 +85,13 @@ const chatSlice = createSlice({
       })
       .addCase(fetchChats.fulfilled, (state, action) => {
         state.loading = false;
-        // Update chats with calculated unread counts
         const newChats = action.payload;
 
-        newChats.forEach(chat => {
-          const lastRead = state.lastReadTimestamps[chat.id] || 0;
-          chat.unreadCount = calculateChatUnreadCount(chat, lastRead);
-        });
-
+        // Use backend's unread_count directly
         state.chats = newChats;
-        state.unreadCount = calculateTotalUnreadCount(newChats, state.lastReadTimestamps, state.selectedChatId);
+        state.unreadCount = newChats.reduce((total, chat) => {
+          return total + (chat.unread_count || 0);
+        }, 0);
       })
       .addCase(fetchChats.rejected, (state, action) => {
         state.loading = false;
@@ -157,5 +106,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setSelectedChat, incrementUnreadCount, updateUnreadCounts, resetUnreadCount, updateChatUnreadCounts } = chatSlice.actions;
+export const { setSelectedChat, markChatAsRead, incrementUnreadCount, updateUnreadCounts, resetUnreadCount } = chatSlice.actions;
 export default chatSlice.reducer;
+

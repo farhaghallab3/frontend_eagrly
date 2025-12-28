@@ -22,10 +22,12 @@ import TermsOfService from "@pages/Support/TermsOfService";
 import Packages from "@pages/Packages/Packages";
 import Wishlist from "@pages/Wishlist/Wishlist";
 import AuthModal from "@components/common/AuthModal/AuthModal";
+import ScrollToTop from "@components/common/ScrollToTop";
 
 export default function AppRoutes() {
     return (
         <Router>
+            <ScrollToTop />
             <AuthModal />
             <Routes>
                 {/* ---------------- Public Layout ---------------- */}

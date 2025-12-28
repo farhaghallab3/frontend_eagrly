@@ -120,7 +120,8 @@ export const wishlistService = {
     };
 
     try {
-      await axiosInstance.delete(`${API_URL}${productId}/`, config);
+      // Use the remove_by_product endpoint that accepts product ID
+      await axiosInstance.delete(`${API_URL}remove/${productId}/`, config);
       return productId;
     } catch (error) {
       // If endpoint doesn't exist yet (404), simulate success for frontend testing

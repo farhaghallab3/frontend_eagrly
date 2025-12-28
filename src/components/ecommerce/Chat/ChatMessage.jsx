@@ -5,13 +5,20 @@ import styles from "./ChatMessages.module.css";
 
 const ChatMessages = ({ messages }) => {
   const messagesEndRef = useRef(null);
+  const containerRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Scroll within the container only, not the entire page
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Use requestAnimationFrame to ensure DOM is updated before scrolling
+    requestAnimationFrame(() => {
+      scrollToBottom();
+    });
   }, [messages]);
 
   const formatTime = (timeString) => {
@@ -23,7 +30,7 @@ const ChatMessages = ({ messages }) => {
 
   return (
     <div className={styles.messagesContainer}>
-      <div className={styles.messagesList}>
+      <div className={styles.messagesList} ref={containerRef}>
         {messages.length === 0 ? (
           <div className={styles.emptyMessages}>
             <div className={styles.emptyContent}>

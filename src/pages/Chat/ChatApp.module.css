@@ -54,7 +54,10 @@
 .sidebarContent {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   transition: opacity 0.2s ease;
+  /* Prevent extra scrolling */
+  max-height: calc(100% - 60px);
 }
 
 .toggleButton {

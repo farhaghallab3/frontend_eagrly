@@ -16,6 +16,8 @@ export default function Wishlist() {
     const [showFeedback, setShowFeedback] = useState(false);
 
     useEffect(() => {
+        // Scroll to top when page loads
+        window.scrollTo(0, 0);
         dispatch(fetchWishlist());
     }, [dispatch]);
 
