@@ -822,3 +822,25 @@
     font-size: 1.25rem;
   }
 }
+
+/* Custom Scrollbar for Dropdowns */
+.dropdownContent::-webkit-scrollbar,
+.chatListContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdownContent::-webkit-scrollbar-track,
+.chatListContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dropdownContent::-webkit-scrollbar-thumb,
+.chatListContainer::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 20px;
+}
+
+.dropdownContent::-webkit-scrollbar-thumb:hover,
+.chatListContainer::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}

@@ -8,6 +8,7 @@ import { sendMessageToBot } from "../../../services/chatService";
 // import { getUserIdFromToken } from "../../../utils/auth";
 // import { getUserById } from "../../../services/userService";
 import { useAuthModal } from "../../../context/AuthModalContext";
+import { useAuth } from "../../../hooks/useAuth";
 import styles from "./ChatbotWidget.module.css";
 
 const ChatbotWidget = () => {
@@ -19,8 +20,14 @@ const ChatbotWidget = () => {
 
   const navigate = useNavigate();
   const { openAuthModal } = useAuthModal();
+  const { user } = useAuth();
 
   const toggleChat = () => {
+    if (!open && !user) {
+      openAuthModal();
+      return;
+    }
+
     if (open) {
       // Clear conversation when closing chat
       setMessages([]);

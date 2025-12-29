@@ -4,6 +4,7 @@ import { MdSchool, MdMenu, MdShoppingCart, MdPerson, MdNotifications, MdChat, Md
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../../hooks/useAuth";
+import { useAuthModal } from "../../../../context/AuthModalContext";
 import { useTheme } from "../../../../context/ThemeContext";
 import { fetchChats } from "../../../../store/slices/chatSlice";
 import { fetchMyProducts } from "../../../../store/slices/productSlice";
@@ -15,6 +16,7 @@ import styles from "./Header.module.css";
 
 export default function Header({ links }) {
     const { user, logoutUser, token } = useAuth();
+    const { openAuthModal } = useAuthModal();
     const { theme, toggleTheme } = useTheme();
     const dispatch = useDispatch();
     const { unreadCount } = useSelector((state) => state.chat);
@@ -88,60 +90,85 @@ export default function Header({ links }) {
                             {theme === 'dark' ? <MdLightMode size={20} /> : <MdDarkMode size={20} />}
                         </button>
 
+                        {/* Notifications */}
+                        <div className={styles.notificationsButtonContainer}>
+                            <button
+                                ref={notificationsButtonRef}
+                                className={`${styles.iconLink} ${styles.notificationsIcon}`}
+                                title="Notifications"
+                                onClick={() => {
+                                    if (!token) {
+                                        openAuthModal();
+                                        return;
+                                    }
+                                    setShowNotificationsDropdown(!showNotificationsDropdown);
+                                }}
+                            >
+                                <MdNotifications size={20} />
+                                {token && notificationCount > 0 && (
+                                    <span className={styles.notificationBadge}>
+                                        {notificationCount > 99 ? '99+' : notificationCount}
+                                    </span>
+                                )}
+                            </button>
+                            {token && (
+                                <NotificationsDropdown
+                                    show={showNotificationsDropdown}
+                                    onToggle={setShowNotificationsDropdown}
+                                />
+                            )}
+                        </div>
+
+                        {/* Chat */}
+                        <div className={styles.chatButtonContainer}>
+                            <button
+                                className={`${styles.iconLink} ${styles.chatIcon}`}
+                                title="Messages"
+                                onClick={() => {
+                                    if (!token) {
+                                        openAuthModal();
+                                        return;
+                                    }
+                                    setShowChatDropdown(!showChatDropdown);
+                                }}
+                            >
+                                <MdChat size={20} />
+                                {token && unreadCount > 0 && (
+                                    <span className={styles.notificationBadge}>
+                                        {unreadCount > 99 ? '99+' : unreadCount}
+                                    </span>
+                                )}
+                            </button>
+                            {token && (
+                                <ChatDropdown
+                                    show={showChatDropdown}
+                                    onToggle={setShowChatDropdown}
+                                />
+                            )}
+                        </div>
+
+                        {/* Wishlist */}
+                        <Nav.Link
+                            as={Link}
+                            to="/wishlist"
+                            className={`${styles.iconLink} ${styles.wishlistIcon}`}
+                            onClick={(e) => {
+                                if (!token) {
+                                    e.preventDefault();
+                                    openAuthModal();
+                                }
+                            }}
+                        >
+                            <MdFavorite size={20} />
+                            {token && safeWishlistItems.length > 0 && (
+                                <span className={styles.notificationBadge}>
+                                    {safeWishlistItems.length > 99 ? '99+' : safeWishlistItems.length}
+                                </span>
+                            )}
+                        </Nav.Link>
+
                         {token ? (
                             <div className={styles.authenticatedActions}>
-
-                                {/* Notifications */}
-                                <div className={styles.notificationsButtonContainer}>
-                                    <button
-                                        ref={notificationsButtonRef}
-                                        className={`${styles.iconLink} ${styles.notificationsIcon}`}
-                                        title="Notifications"
-                                        onClick={() => setShowNotificationsDropdown(!showNotificationsDropdown)}
-                                    >
-                                        <MdNotifications size={20} />
-                                        {notificationCount > 0 && (
-                                            <span className={styles.notificationBadge}>
-                                                {notificationCount > 99 ? '99+' : notificationCount}
-                                            </span>
-                                        )}
-                                    </button>
-                                    <NotificationsDropdown
-                                        show={showNotificationsDropdown}
-                                        onToggle={setShowNotificationsDropdown}
-                                    />
-                                </div>
-
-                                {/* Chat */}
-                                <div className={styles.chatButtonContainer}>
-                                    <button
-                                        className={`${styles.iconLink} ${styles.chatIcon}`}
-                                        title="Messages"
-                                        onClick={() => setShowChatDropdown(!showChatDropdown)}
-                                    >
-                                        <MdChat size={20} />
-                                        {unreadCount > 0 && (
-                                            <span className={styles.notificationBadge}>
-                                                {unreadCount > 99 ? '99+' : unreadCount}
-                                            </span>
-                                        )}
-                                    </button>
-                                    <ChatDropdown
-                                        show={showChatDropdown}
-                                        onToggle={setShowChatDropdown}
-                                    />
-                                </div>
-
-                                {/* Wishlist */}
-                                <Nav.Link as={Link} to="/wishlist" className={`${styles.iconLink} ${styles.wishlistIcon}`}>
-                                    <MdFavorite size={20} />
-                                    {safeWishlistItems.length > 0 && (
-                                        <span className={styles.notificationBadge}>
-                                            {safeWishlistItems.length > 99 ? '99+' : safeWishlistItems.length}
-                                        </span>
-                                    )}
-                                </Nav.Link>
-
                                 <div className={styles.userMenu}>
                                     <div className={styles.userInfo}>
                                         <MdPerson size={20} className={styles.userIcon} />
@@ -179,6 +206,6 @@ export default function Header({ links }) {
                     </div>
                 </Navbar.Collapse>
             </Container>
-        </Navbar>
+        </Navbar >
     );
 }

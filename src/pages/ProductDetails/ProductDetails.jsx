@@ -6,6 +6,7 @@ import { BsStarFill, BsStarHalf, BsArrowLeft, BsArrowRight } from "react-icons/b
 import { FaShoppingCart, FaUser, FaMapMarkerAlt, FaCalendarAlt, FaPhone, FaEnvelope, FaTag, FaBuilding, FaGraduationCap, FaHeart, FaShare } from "react-icons/fa";
 import styles from "./ProductDetails.module.css";
 import ButtonPrimary from "@components/common/ButtonPrimary/ButtonPrimary";
+import ShareModal from "@components/common/ShareModal/ShareModal";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useAuthModal } from "../../context/AuthModalContext";
@@ -18,6 +19,7 @@ export default function ProductDetails() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showShareModal, setShowShareModal] = useState(false);
     const navigate = useNavigate();
     const { user } = useAuth();
     const { openAuthModal } = useAuthModal();
@@ -135,7 +137,11 @@ export default function ProductDetails() {
                                         >
                                             <FaHeart />
                                         </button>
-                                        <button className={styles.imageActionBtn}>
+                                        <button
+                                            className={styles.imageActionBtn}
+                                            onClick={() => setShowShareModal(true)}
+                                            title="Share product"
+                                        >
                                             <FaShare />
                                         </button>
                                     </div>
@@ -269,6 +275,15 @@ export default function ProductDetails() {
             </section>
 
             {/* Section Removed */}
+            {/* Share Modal */}
+            {product && (
+                <ShareModal
+                    show={showShareModal}
+                    onHide={() => setShowShareModal(false)}
+                    productUrl={window.location.href}
+                    productName={product.title}
+                />
+            )}
         </div>
     );
 }

@@ -7,6 +7,7 @@ import styles from './CheckoutPage.module.css';
 import { packageService } from '../../services/package';
 import { toast } from 'react-toastify';
 import ButtonPrimary from '@components/common/ButtonPrimary/ButtonPrimary';
+import SuccessAnimation from '@components/common/feedback/SuccessAnimation';
 
 const PAYMENT_METHODS = [
     {
@@ -51,6 +52,7 @@ const CheckoutPage = () => {
     const [showBankDetails, setShowBankDetails] = useState(false);
     const [showWalletDetails, setShowWalletDetails] = useState(false);
     const [confirmingManualPayment, setConfirmingManualPayment] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     useEffect(() => {
         const fetchPackage = async () => {
@@ -213,8 +215,10 @@ const CheckoutPage = () => {
                                             setConfirmingManualPayment(true);
                                             try {
                                                 await packageService.confirmManualPayment(packageId, 'bank');
-                                                toast.success('Thank you! We will verify your payment and activate your subscription within 24 hours.');
-                                                navigate('/profile');
+                                                setShowSuccess(true);
+                                                setTimeout(() => {
+                                                    navigate('/');
+                                                }, 2500);
                                             } catch (error) {
                                                 toast.error('Failed to submit payment confirmation. Please try again.');
                                             } finally {
@@ -264,8 +268,10 @@ const CheckoutPage = () => {
                                             setConfirmingManualPayment(true);
                                             try {
                                                 await packageService.confirmManualPayment(packageId, 'wallet');
-                                                toast.success('Thank you! We will verify your payment and activate your subscription within 24 hours.');
-                                                navigate('/profile');
+                                                setShowSuccess(true);
+                                                setTimeout(() => {
+                                                    navigate('/');
+                                                }, 2500);
                                             } catch (error) {
                                                 toast.error('Failed to submit payment confirmation. Please try again.');
                                             } finally {
@@ -354,6 +360,10 @@ const CheckoutPage = () => {
                     </Col>
                 </Row>
             </Container>
+
+            {showSuccess && (
+                <SuccessAnimation message="Payment Submitted! We will verify and activate your subscription within 24 hours." />
+            )}
         </div>
     );
 };
