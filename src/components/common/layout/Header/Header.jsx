@@ -40,8 +40,14 @@ export default function Header({ links }) {
             dispatch(fetchUnreadCount());
             dispatch(fetchWishlist());
 
-            // Polling interval removed as per user request
+            // Poll for new notifications every 5 seconds
+            const notificationInterval = setInterval(() => {
+                dispatch(fetchUnreadCount());
+            }, 5000);
 
+            return () => {
+                clearInterval(notificationInterval);
+            };
         }
     }, [token, dispatch]);
 
