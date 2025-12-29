@@ -50,6 +50,7 @@ const CheckoutPage = () => {
     const [processing, setProcessing] = useState(false);
     const [showBankDetails, setShowBankDetails] = useState(false);
     const [showWalletDetails, setShowWalletDetails] = useState(false);
+    const [confirmingManualPayment, setConfirmingManualPayment] = useState(false);
 
     useEffect(() => {
         const fetchPackage = async () => {
@@ -206,10 +207,19 @@ const CheckoutPage = () => {
                                         Please include the reference number in your transfer. Your subscription will be activated within 24 hours after we confirm your payment.
                                     </p>
                                     <ButtonPrimary
-                                        text="I've Made the Transfer"
-                                        onClick={() => {
-                                            toast.success('Thank you! We will verify your payment and activate your subscription.');
-                                            navigate('/packages');
+                                        text={confirmingManualPayment ? "Submitting..." : "I've Made the Transfer"}
+                                        disabled={confirmingManualPayment}
+                                        onClick={async () => {
+                                            setConfirmingManualPayment(true);
+                                            try {
+                                                await packageService.confirmManualPayment(packageId, 'bank');
+                                                toast.success('Thank you! We will verify your payment and activate your subscription within 24 hours.');
+                                                navigate('/profile');
+                                            } catch (error) {
+                                                toast.error('Failed to submit payment confirmation. Please try again.');
+                                            } finally {
+                                                setConfirmingManualPayment(false);
+                                            }
                                         }}
                                     />
                                 </div>
@@ -248,10 +258,19 @@ const CheckoutPage = () => {
                                         Include the reference in the transfer notes. Your subscription will be activated within 24 hours after confirmation.
                                     </p>
                                     <ButtonPrimary
-                                        text="I've Made the Transfer"
-                                        onClick={() => {
-                                            toast.success('Thank you! We will verify your payment and activate your subscription.');
-                                            navigate('/packages');
+                                        text={confirmingManualPayment ? "Submitting..." : "I've Made the Transfer"}
+                                        disabled={confirmingManualPayment}
+                                        onClick={async () => {
+                                            setConfirmingManualPayment(true);
+                                            try {
+                                                await packageService.confirmManualPayment(packageId, 'wallet');
+                                                toast.success('Thank you! We will verify your payment and activate your subscription within 24 hours.');
+                                                navigate('/profile');
+                                            } catch (error) {
+                                                toast.error('Failed to submit payment confirmation. Please try again.');
+                                            } finally {
+                                                setConfirmingManualPayment(false);
+                                            }
                                         }}
                                     />
                                 </div>

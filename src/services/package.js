@@ -42,5 +42,17 @@ export const packageService = {
       console.error("Error verifying payment:", error);
       throw error;
     }
+  },
+  confirmManualPayment: async (packageId, paymentMethod) => {
+    try {
+      const res = await axiosInstance.post(`/payments/confirm_user_payment/`, {
+        package_id: packageId,
+        payment_method: paymentMethod
+      });
+      return res.data;
+    } catch (error) {
+      console.error("Error confirming manual payment:", error);
+      throw error;
+    }
   }
 };
