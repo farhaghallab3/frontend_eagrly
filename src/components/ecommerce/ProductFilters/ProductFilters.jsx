@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaSlidersH } from "react-icons/fa";
 import styles from "./ProductFilters.module.css";
+import CustomDropdown from "../../common/CustomDropdown/CustomDropdown";
+
+// Egypt governorates list
+const EGYPT_GOVERNORATES = [
+  "Cairo", "Giza", "Alexandria", "Dakahlia", "Red Sea", "Beheira",
+  "Fayoum", "Gharbia", "Ismailia", "Menofia", "Minya", "Qaliubiya",
+  "New Valley", "Suez", "Aswan", "Assiut", "Beni Suef", "Port Said",
+  "Damietta", "Sharkia", "South Sinai", "Kafr El Sheikh", "Matrouh",
+  "Luxor", "Qena", "North Sinai", "Sohag"
+];
 
 const ProductFilters = ({ filters, onFilterChange, products, onClearFilters, showCategoryFilter = true, categories = [] }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
 
   const getUniqueValues = (field) => {
     if (!Array.isArray(products)) return [];
@@ -25,6 +34,11 @@ const ProductFilters = ({ filters, onFilterChange, products, onClearFilters, sho
     }));
   };
 
+  // Convert categories to dropdown options
+  const categoryOptions = Array.isArray(categories)
+    ? categories.map(cat => typeof cat === 'object' ? cat.name : cat)
+    : [];
+
   return (
     <div className={styles.filtersContainer}>
       <div className={styles.filtersHeader}>
@@ -35,45 +49,37 @@ const ProductFilters = ({ filters, onFilterChange, products, onClearFilters, sho
         <button className={styles.clearButton} onClick={onClearFilters}>Clear All</button>
       </div>
 
-      <div className={styles.filtersContent} style={{ display: 'block', opacity: 1, visibility: 'visible', maxHeight: 'none' }}>
+      <div className={styles.filtersContent}>
         {showCategoryFilter && (
           <div className={styles.filterGroup}>
-            <label className={styles.filterLabel}>Category</label>
-            <div className={styles.selectWrapper}>
-              <select
-                value={filters.category}
-                onChange={(e) => handleFilterChange('category', e.target.value)}
-                className={styles.customSelect}
-                style={{ background: '#0a192f', color: 'white', border: '2px solid rgba(100, 255, 218, 0.2)', borderRadius: '12px', padding: '12px 16px', width: '100%' }}
-              >
-                <option value="">All Categories</option>
-                {Array.isArray(categories) && categories.map((cat, idx) => (
-                  <option key={idx} value={cat.name || cat}>
-                    {cat.name || cat || 'Uncategorized'}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <CustomDropdown
+              label="Category"
+              value={filters.category}
+              onChange={(e) => handleFilterChange('category', e.target.value)}
+              options={categoryOptions}
+              placeholder="All Categories"
+            />
           </div>
         )}
 
         <div className={styles.filterGroup}>
-          <label className={styles.filterLabel}>University</label>
-          <div className={styles.selectWrapper}>
-            <select
-              value={filters.university}
-              onChange={(e) => handleFilterChange('university', e.target.value)}
-              className={styles.customSelect}
-              style={{ background: '#0a192f', color: 'white', border: '2px solid rgba(100, 255, 218, 0.2)', borderRadius: '12px', padding: '12px 16px', width: '100%' }}
-            >
-              <option value="">All Universities</option>
-              {universities.map((uni, idx) => (
-                <option key={idx} value={uni}>
-                  {uni}
-                </option>
-              ))}
-            </select>
-          </div>
+          <CustomDropdown
+            label="University"
+            value={filters.university}
+            onChange={(e) => handleFilterChange('university', e.target.value)}
+            options={universities}
+            placeholder="All Universities"
+          />
+        </div>
+
+        <div className={styles.filterGroup}>
+          <CustomDropdown
+            label="Governorate"
+            value={filters.governorate || ''}
+            onChange={(e) => handleFilterChange('governorate', e.target.value)}
+            options={EGYPT_GOVERNORATES}
+            placeholder="All Governorates"
+          />
         </div>
 
         <div className={styles.filterGroup}>
@@ -86,11 +92,11 @@ const ProductFilters = ({ filters, onFilterChange, products, onClearFilters, sho
               step={1000}
               value={filters.priceRange[1]}
               onChange={(e) => handleFilterChange('priceRange', [0, parseInt(e.target.value)])}
-              style={{ width: '100%' }}
+              className={styles.rangeInput}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '5px', color: '#64ffda', fontWeight: 'bold' }}>
-              <span>0 EGP</span>
-              <span>{filters.priceRange[1]} EGP</span>
+            <div className={styles.priceDisplay}>
+              <span className={styles.priceMin}>0 EGP</span>
+              <span className={styles.priceMax}>{filters.priceRange[1]} EGP</span>
             </div>
           </div>
         </div>

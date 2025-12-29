@@ -5,9 +5,18 @@ import { useCategories } from "../../../../hooks/useCategories";
 import { useProduct } from "../../../../hooks/useProducts";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { FaUpload, FaImage, FaTimes, FaCheck, FaExclamationTriangle } from "react-icons/fa";
+import { FaUpload, FaImage, FaTimes, FaCheck, FaExclamationTriangle, FaMapMarkerAlt } from "react-icons/fa";
 import SubscriptionModal from "../../../ecommerce/SubscriptionPlans/SubscriptionModal";
 import SuccessAnimation from "../../feedback/SuccessAnimation";
+
+// Egypt governorates list
+const EGYPT_GOVERNORATES = [
+    "Cairo", "Giza", "Alexandria", "Dakahlia", "Red Sea", "Beheira",
+    "Fayoum", "Gharbia", "Ismailia", "Menofia", "Minya", "Qaliubiya",
+    "New Valley", "Suez", "Aswan", "Assiut", "Beni Suef", "Port Said",
+    "Damietta", "Sharkia", "South Sinai", "Kafr El Sheikh", "Matrouh",
+    "Luxor", "Qena", "North Sinai", "Sohag"
+];
 
 export default function ProductForm({ product, onClose, onSuccess, isRepublishing = false }) {
     const navigate = useNavigate();
@@ -36,6 +45,7 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
             status: "",
             image: null,
             condition: "",
+            governorate: "",
         },
     });
 
@@ -50,6 +60,7 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
             setValue("faculty", product.faculty || "");
             setValue("status", product.status || "");
             setValue("condition", product.condition || "");
+            setValue("governorate", product.governorate || "");
             if (product.image) setPreview(product.image);
         }
     }, [product, setValue]);
@@ -257,6 +268,39 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                         {errors.faculty && (
                             <p className={styles.error}>{errors.faculty.message}</p>
                         )}
+                    </div>
+                </div>
+
+                {/* Location Information Section */}
+                <div className={styles.formSections}>
+                    <div className={styles.sectionHeader}>
+                        <FaMapMarkerAlt className={styles.sectionIcon} />
+                        <h2 className={styles.sectionTitle}>Location Information</h2>
+                    </div>
+
+                    {/* Governorate */}
+                    <div className={styles.formGroup}>
+                        <label>Governorate <span style={{ color: '#ef4444', fontSize: '1.2em' }}>*</span></label>
+                        <select
+                            {...register("governorate", {
+                                required: "Please select a governorate",
+                                validate: (value) => value !== "" || "Please select a governorate"
+                            })}
+                            className={styles.select}
+                        >
+                            <option value="">Select your governorate</option>
+                            {EGYPT_GOVERNORATES.map((gov) => (
+                                <option key={gov} value={gov}>
+                                    {gov}
+                                </option>
+                            ))}
+                        </select>
+                        {errors.governorate && (
+                            <p className={styles.error}>{errors.governorate.message}</p>
+                        )}
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+                            This helps buyers find products near their location
+                        </p>
                     </div>
                 </div>
 

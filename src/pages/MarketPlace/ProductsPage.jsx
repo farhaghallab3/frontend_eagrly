@@ -21,6 +21,7 @@ const ProductsPage = () => {
     category: categoryFromUrl || "",
     university: "",
     faculty: "",
+    governorate: "",
     priceRange: [0, 100000],
     inStock: false,
     features: []
@@ -61,12 +62,14 @@ const ProductsPage = () => {
     const prodCategory = String(product.category_name || product.category?.name || product.category || '').trim();
     const prodUniversity = String(product.university || '').trim();
     const prodFaculty = String(product.faculty || '').trim();
+    const prodGovernorate = String(product.governorate || '').trim();
     const prodPrice = Number(product.price || 0);
     const prodStatus = String(product.status || '').trim();
 
     if (filters.category && prodCategory.toLowerCase() !== String(filters.category || '').trim().toLowerCase()) return false;
     if (filters.university && prodUniversity.toLowerCase() !== String(filters.university || '').trim().toLowerCase()) return false;
     if (filters.faculty && prodFaculty.toLowerCase() !== String(filters.faculty || '').trim().toLowerCase()) return false;
+    if (filters.governorate && prodGovernorate.toLowerCase() !== String(filters.governorate || '').trim().toLowerCase()) return false;
     if (prodPrice < filters.priceRange[0] || prodPrice > filters.priceRange[1]) return false;
     if (filters.inStock && prodStatus.toLowerCase() !== 'active' && prodStatus.toLowerCase() !== 'available') return false;
 
@@ -77,6 +80,7 @@ const ProductsPage = () => {
     category: "",
     university: "",
     faculty: "",
+    governorate: "",
     priceRange: [0, 100000],
     inStock: false,
     features: []
