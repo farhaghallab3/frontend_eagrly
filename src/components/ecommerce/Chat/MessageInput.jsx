@@ -326,12 +326,12 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
         }
 
         [data-theme='light'] .message-textarea {
-          color: #1a202c;
+          color: #000000 !important;
           background: transparent !important;
         }
 
         [data-theme='light'] .message-textarea::placeholder {
-          color: rgba(0, 0, 0, 0.4);
+          color: rgba(0, 0, 0, 0.7) !important;
         }
 
         [data-theme='light'] .attach-btn {

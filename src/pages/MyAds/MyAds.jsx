@@ -194,8 +194,6 @@ export default function MyAds() {
                             ) : (
                                 myProducts.map((product) => {
                                     const isExpired = product.is_expired || product.status === 'expired';
-                                    const isPending = product.status === 'pending';
-                                    const isActive = product.status === 'active';
 
                                     return (
                                         <div key={product.id} className={`${styles.productCard} ${isExpired ? styles.expiredCard : ''}`}>
@@ -211,11 +209,7 @@ export default function MyAds() {
                                                         <span className={`${styles.statusBadge} ${styles.statusExpired}`}>
                                                             Expired
                                                         </span>
-                                                    ) : isPending ? (
-                                                        <span className={`${styles.statusBadge} ${styles.statusPending}`}>
-                                                            Pending Approval
-                                                        </span>
-                                                    ) : isActive ? (
+                                                    ) : product.is_active ? (
                                                         <span className={`${styles.statusBadge} ${styles.statusActive}`}>
                                                             Active
                                                         </span>
@@ -233,7 +227,7 @@ export default function MyAds() {
                                                         <span className={styles.detailLabel}>Price:</span>
                                                         <span className={styles.detailValue}>{product.price} EGP</span>
                                                     </div>
-                                                    {isActive && product.days_remaining !== null && (
+                                                    {product.is_active && product.days_remaining !== null && (
                                                         <div className={styles.detailItem}>
                                                             <span className={styles.detailLabel}>
                                                                 <FaClock className={styles.clockIcon} /> Expires in:

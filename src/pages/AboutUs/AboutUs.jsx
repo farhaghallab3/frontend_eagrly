@@ -120,23 +120,23 @@ const AboutUs = () => {
                 <div className={styles.teamGrid}>
                     {[
                         {
-                            name: "Alex Johnson",
-                            role: "Founder & CEO",
-                            img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDUEMKiytN31g7mLuRxWIR40BaDFCOfwWRvt46vPxIo4Vdcn_G9tGVWHBaKGGDw00S3uRKPSrkrkNJ4TOmGjFf5inmVDG8tXNlwt6ly5Djq7eVxoEw6kjgk7h0levXaMOfFpZQl6lT6vDfV-AUoC7tTxW9eQgNTgiDDqwvgjn2iaU_GuyChgWh6wcOKym13EAkAKg9NI1JJOaFn0WyaBYwVmevcK5LkU0VMgjQpnBGQWvUyX_9T0GpUSrBs3F80gzxZdJDpMCiVgFQn",
+                            name: "Ahmed",
+                            role: "Team Member",
                         },
                         {
-                            name: "Maria Garcia",
-                            role: "Chief Technology Officer",
-                            img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCaiuySVQMWSQjyxPKXkls97hiPMKSmrKh4Bb3z2Rvl27-4kC4sTbt2oZGMVyFm_jAgIahBlmpDftzJCqEL0-a70Xt9IqFsMSNsu3_vjPzLuEh5TNYM1h8YZg-nh613jihHe61L-LhgkDRn7l9On_cZeVplPKjb7N1j7Li_NFMU3nE7xGda4_V7tG9dCaS7zlBUYhidnRF9hbSw1hdeBy1x5dbIOleUWNpQAN6vTi7cGyE3aTXhzuarCmGqb-skEsSdDyaGTIZqhIUA",
+                            name: "Farha",
+                            role: "Team Member",
                         },
                         {
-                            name: "David Chen",
-                            role: "Head of Product Design",
-                            img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAIB6jJWEDNPM1GCRLfSjTWMEetPmDXhACRz8NXzzE7Mfvm_4PdbXCULTj1kaFKNapFIbC16kWlgetjtMHqSBaX7-NVyaWiIpfKa8tNJeqWbIXHLLkbEBN8bDjkqlIjB3tmPICEhrIso34XDTVwR2bI0t1XOM9buwOMeEF3U3vTPNz_W10_vZ2TpNPokr6mFdwKtEf2CaCJZg49G5W2Vxm9Q9idif0pTf9-TG8yN_7APDgCnJJU2E8OwqRpm8dtTm6U-Toy5zM1L9qO",
+                            name: "Kamel",
+                            role: "Team Member",
+                        },
+                        {
+                            name: "Kareem",
+                            role: "Team Member",
                         },
                     ].map((member, idx) => (
                         <div key={idx} className={styles.teamCard}>
-                            <img src={member.img} alt={member.name} />
                             <h4>{member.name}</h4>
                             <p>{member.role}</p>
                         </div>

@@ -122,15 +122,7 @@ export default function UserProfile() {
                         Student at {user.university || 'University'} • {user.faculty || 'Faculty'}
                     </p>
                     <div className={styles.profileStats}>
-                        <div className={styles.statItem}>
-                            <span className={styles.statNumber}>0</span>
-                            <span className={styles.statLabel}>Products Listed</span>
-                        </div>
-                        <div className={styles.statItem}>
-                            <span className={styles.statNumber}>0</span>
-                            <span className={styles.statLabel}>Items Sold</span>
-                        </div>
-                        {/* Rating Removed */}
+                        {/* Stats removed */}
                     </div>
                 </div>
             </section>
