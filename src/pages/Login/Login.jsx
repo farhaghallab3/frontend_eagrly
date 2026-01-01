@@ -19,7 +19,7 @@ const Login = () => {
 
     const onSubmit = (data) => {
         login({
-            username: data.username,
+            email: data.email,
             password: data.password,
         });
     };
@@ -81,11 +81,11 @@ const Login = () => {
             {/* Login Form */}
             <div style={{ marginBottom: '2rem' }}>
                 <FormInput
-                    label="Username"
-                    type="text"
-                    placeholder="Enter your username"
-                    {...register("username", { required: "Username is required" })}
-                    error={errors.username}
+                    label="Email"
+                    type="email"
+                    placeholder="Enter your email"
+                    {...register("email", { required: "Email is required" })}
+                    error={errors.email}
                 />
 
                 <FormInput
