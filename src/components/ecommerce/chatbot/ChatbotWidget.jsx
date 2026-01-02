@@ -1,7 +1,7 @@
 // ChatbotWidget.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaRobot, FaTimes, FaPaperPlane, FaMicrophone, FaStop, FaSpinner } from "react-icons/fa";
+import { FaRobot, FaTimes, FaPaperPlane, FaMicrophone, FaStop, FaSpinner, FaPlay, FaPause } from "react-icons/fa";
 import { MdSmartToy } from "react-icons/md";
 import { sendMessageToBot } from "../../../services/chatService";
 
@@ -18,8 +18,10 @@ const ChatbotWidget = () => {
   // Audio Recording States
   const [isRecording, setIsRecording] = useState(false);
   const [isInitializingAudio, setIsInitializingAudio] = useState(false);
+  const [playingMessageId, setPlayingMessageId] = useState(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
+  const audioRefs = useRef({});
 
   const navigate = useNavigate();
   // Auth is optional now
@@ -103,11 +105,16 @@ const ChatbotWidget = () => {
   const sendAudioMessage = async (audioBlob) => {
     setLoading(true);
 
-    // Add temporary message for "Processing audio..."
+    // Create audio URL for playback
+    const audioUrl = URL.createObjectURL(audioBlob);
+
+    // Add temporary message with audio
     setMessages(prev => [...prev, {
       role: "user",
-      content: "🎤 Voice Message",
-      isAudio: true
+      content: "Voice Message",
+      isAudio: true,
+      audioUrl: audioUrl,
+      duration: 0 // We'll calculate this later
     }]);
 
     try {
@@ -177,18 +184,58 @@ const ChatbotWidget = () => {
     const botMsg = {
       role: "bot",
       content: response.reply || response.message || "",
-      products: products,
-      audio: response.audio // Base64 audio string
+      products: products
     };
 
     setMessages(prev => [...prev, botMsg]);
+  };
 
-    // Auto-play audio if present
-    if (response.audio) {
-      console.log("Playing audio response...");
-      const audio = new Audio(response.audio);
-      audio.play().catch(e => console.error("Auto-play blocked:", e));
+  const playVoiceMessage = (messageId, audioUrl) => {
+    if (playingMessageId === messageId) {
+      // Stop playing
+      if (audioRefs.current[messageId]) {
+        audioRefs.current[messageId].pause();
+        audioRefs.current[messageId].currentTime = 0;
+      }
+      setPlayingMessageId(null);
+    } else {
+      // Stop any currently playing audio
+      if (playingMessageId && audioRefs.current[playingMessageId]) {
+        audioRefs.current[playingMessageId].pause();
+        audioRefs.current[playingMessageId].currentTime = 0;
+      }
+
+      // Start playing new audio
+      if (!audioRefs.current[messageId]) {
+        audioRefs.current[messageId] = new Audio(audioUrl);
+        audioRefs.current[messageId].onended = () => setPlayingMessageId(null);
+      }
+      audioRefs.current[messageId].play();
+      setPlayingMessageId(messageId);
     }
+  };
+
+  const renderVoiceMessage = (msg, messageId) => {
+    const isPlaying = playingMessageId === messageId;
+
+    return (
+      <div className={styles.voiceMessage}>
+        <button
+          onClick={() => playVoiceMessage(messageId, msg.audioUrl)}
+          className={styles.voicePlayButton}
+        >
+          {isPlaying ? <FaPause /> : <FaPlay />}
+        </button>
+        <div className={styles.voiceWaveform}>
+          <div className={`${styles.waveBar} ${isPlaying ? styles.playing : ''}`}></div>
+          <div className={`${styles.waveBar} ${isPlaying ? styles.playing : ''}`}></div>
+          <div className={`${styles.waveBar} ${isPlaying ? styles.playing : ''}`}></div>
+          <div className={`${styles.waveBar} ${isPlaying ? styles.playing : ''}`}></div>
+          <div className={`${styles.waveBar} ${isPlaying ? styles.playing : ''}`}></div>
+        </div>
+        <span className={styles.voiceDuration}>0:05</span>
+      </div>
+    );
   };
 
   const renderBotMessage = (msg) => {
@@ -199,13 +246,6 @@ const ChatbotWidget = () => {
       <div>
         {/* Show text content if exists */}
         {msg.content && <div className={styles.botText}>{msg.content}</div>}
-
-        {/* Audio Player */}
-        {msg.audio && (
-          <div className={styles.audioPlayer}>
-            <audio controls src={msg.audio} className={styles.audioElement} />
-          </div>
-        )}
 
         {/* Show products if exist */}
         {hasProducts && (
@@ -275,7 +315,7 @@ const ChatbotWidget = () => {
                 key={idx}
                 className={`${styles.message} ${msg.role === "user" ? styles.user : styles.bot}`}
               >
-                {msg.role === "user" ? msg.content : renderBotMessage(msg)}
+                {msg.isAudio ? renderVoiceMessage(msg, idx) : (msg.role === "user" ? msg.content : renderBotMessage(msg))}
               </div>
             ))}
             {loading && (
