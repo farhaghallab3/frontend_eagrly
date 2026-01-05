@@ -61,7 +61,7 @@
 
 .title {
     font-size: 2.5rem;
-    font-weight: 800;
+    font-weight: 500;
     color: #ffffff;
     margin-bottom: 16px;
 }
@@ -98,7 +98,7 @@
 
 .infoRow span:last-child {
     color: #ffffff;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .actionButtons {
@@ -113,7 +113,7 @@
     color: #64ffda;
     padding: 14px 28px;
     border-radius: 50px;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1rem;
     display: flex;
     align-items: center;

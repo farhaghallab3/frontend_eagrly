@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./FormWrapper.module.css";
 
 const FormWrapper = ({
@@ -8,7 +8,6 @@ const FormWrapper = ({
     onSubmit,
     socialButtons = [],
     footerText = "",
-    footerLink = "",
     footerLinkText = "",
     footerLinkTo = ""
 }) => {
@@ -53,14 +52,14 @@ const FormWrapper = ({
                 </form>
 
                 {/* Footer */}
-                {(footerText || footerLink) && (
+                {(footerText || footerLinkText) && (
                     <div className={styles.formFooter}>
                         <p className={styles.footerText}>
                             {footerText}
-                            {footerLink && footerLinkText && (
-                                <a href={footerLinkTo} className={styles.footerLink}>
+                            {footerLinkTo && footerLinkText && (
+                                <Link to={footerLinkTo} className={styles.footerLink}>
                                     {footerLinkText}
-                                </a>
+                                </Link>
                             )}
                         </p>
                     </div>

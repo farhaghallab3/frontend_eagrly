@@ -1,179 +1,203 @@
-/* Product Form Container */
 .formContainer {
   width: 100%;
+  max-width: 900px;
   margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  color: #111111;
+  background: #FFFFFF;
 }
 
-/* Form Title */
-/* Form Title */
 .formTitle {
-  font-size: 2.25rem;
-  font-weight: 800;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #111111;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
   text-align: left;
-  margin-bottom: 2.5rem;
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.2;
 }
 
-/* Form */
+/* Progress Indicator */
+.progressIndicator {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.progressStep {
+  width: 48px;
+  height: 4px;
+  background: #EEEEEE;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.progressStep.active {
+  background: #FFB300;
+  width: 64px;
+}
+
+.progressStep.completed {
+  background: #111111;
+}
+
 .form {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 40px;
+}
+
+/* Form Sections */
+.formSections {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 40px;
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.formSections:hover {
+  border-color: #DDDDDD;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.sectionIcon {
+  font-size: 1.2rem;
+  color: #FFB300;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #111111;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
 }
 
 /* Form Groups */
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
 }
 
-label {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--accent-primary);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  letter-spacing: 0.5px;
+.formGroup label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #999999;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-label::after {
-  content: none;
-  /* Removed default star */
-}
-
-/* Inputs */
+/* Inputs, Textarea, Select */
 .input,
 .textarea,
 .select {
-  padding: 16px 20px;
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
+  width: 100%;
+  padding: 16px;
   font-size: 1rem;
-  background: var(--bg-secondary);
-  backdrop-filter: blur(10px);
-  color: var(--text-primary);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  border-radius: 4px;
+  color: #111111;
+  font-weight: 500;
+  transition: all 0.2s ease;
   outline: none;
-  box-shadow: inset 0 2px 4px var(--shadow-color);
 }
 
 .input::placeholder,
 .textarea::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.5;
+  color: #BBBBBB;
 }
 
 .input:focus,
 .textarea:focus,
 .select:focus {
-  border-color: var(--accent-primary);
-  background: var(--bg-card);
-  box-shadow:
-    0 0 0 4px rgba(100, 255, 218, 0.1),
-    0 8px 16px var(--shadow-color);
-  transform: translateY(-1px);
+  border-color: #111111;
+  background: #F9F9F9;
 }
 
 .textarea {
   resize: vertical;
-  min-height: 120px;
-}
-
-/* Category Input with Datalist */
-.categoryInput {
-  position: relative;
-}
-
-.categoryInput input {
-  padding-right: 40px;
+  min-height: 140px;
 }
 
 /* Error Messages */
 .error {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #ff4d4d;
-  font-size: 0.85rem;
+  color: #C62828;
+  font-size: 0.8rem;
   font-weight: 500;
-  margin-top: 0.5rem;
-  padding: 8px 12px;
-  background: rgba(255, 77, 77, 0.1);
-  border-radius: 8px;
-  border-left: 3px solid #ff4d4d;
+  margin: 4px 0 0 0;
 }
 
-.error::before {
-  content: '⚠️';
-  font-size: 0.9rem;
-}
-
-/* Image Upload */
+/* Image Upload Area */
 .imageUpload {
   position: relative;
-  border: 2px dashed var(--border-color);
-  border-radius: 20px;
-  padding: 3rem 2rem;
+  border: 2px dashed #EEEEEE;
+  border-radius: 8px;
+  padding: 60px 40px;
   text-align: center;
-  background: var(--bg-secondary);
-  transition: all 0.4s ease;
+  background: #F9F9F9;
+  transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .imageUpload:hover {
-  border-color: var(--accent-primary);
-  background: rgba(100, 255, 218, 0.05);
-  transform: scale(1.01);
+  border-color: #FFB300;
+  background: #FFFFFF;
 }
 
 .uploadIcon {
-  font-size: 2.5rem;
-  color: var(--accent-primary);
-  margin-bottom: 1.25rem;
-  display: block;
-  opacity: 0.8;
+  font-size: 32px;
+  color: #FFB300;
+  margin-bottom: 16px;
 }
 
 .uploadText {
-  color: var(--text-primary);
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #111111;
+  margin-bottom: 4px;
 }
 
 .uploadHint {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  color: #999999;
 }
 
 .fileInput {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   cursor: pointer;
 }
 
 /* Image Preview */
 .imagePreview {
-  margin-top: 1.5rem;
-  position: relative;
-  border-radius: 20px;
+  margin-top: 24px;
+  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 10px 30px var(--shadow-color);
+  border: 1px solid #EEEEEE;
 }
 
 .previewImage {
   width: 100%;
-  height: 250px;
-  object-fit: cover;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
   display: block;
 }
 
@@ -181,172 +205,70 @@ label::after {
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1.25rem;
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #EEEEEE;
 }
 
 .cancelBtn,
 .saveBtn {
-  padding: 14px 28px;
-  border-radius: 14px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
+  gap: 10px;
+  padding: 16px 32px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
 }
 
 .cancelBtn {
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
+  background: #F5F5F5;
+  color: #666666;
 }
 
 .cancelBtn:hover {
-  background: var(--bg-secondary);
-  border-color: var(--text-primary);
-  color: var(--text-primary);
-  transform: translateY(-2px);
+  background: #EEEEEE;
+  color: #111111;
 }
 
 .saveBtn {
-  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-  color: #0a192f;
-  box-shadow: 0 10px 20px -10px var(--shadow-color);
+  background: #111111;
+  color: #FFFFFF;
 }
 
 .saveBtn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px -10px var(--shadow-color);
+  background: #FFB300;
+  color: #000000;
 }
 
-/* Progress Indicator */
-.progressIndicator {
-  display: flex;
-  justify-content: flex-start;
-  gap: 0.75rem;
-  margin-bottom: 3rem;
+/* Success Animation Spacer - Ensure standard centering if success is shown */
+:global(.success-animation-container) {
+  margin-bottom: 32px;
 }
 
-.progressStep {
-  width: 40px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--border-color);
-  transition: all 0.4s ease;
-}
-
-.progressStep.active {
-  background: var(--accent-primary);
-  box-shadow: 0 0 15px rgba(100, 255, 218, 0.4);
-  width: 60px;
-}
-
-.progressStep.completed {
-  background: #22c55e;
-}
-
-/* Form Sections */
-.formSections {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 24px;
-  background: var(--bg-card);
-  border-radius: 24px;
-  border: 1px solid var(--border-color);
-}
-
-.sectionHeader {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.sectionIcon {
-  font-size: 1.5rem;
-  color: var(--accent-primary);
-  opacity: 0.9;
-}
-
-.sectionTitle {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0;
-  letter-spacing: 0.5px;
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
-  .formContainer {
-    max-width: 100%;
+  .formTitle {
+    font-size: 1.8rem;
   }
 
-  .formTitle {
-    font-size: 1.75rem;
-    text-align: center;
+  .formSections {
+    padding: 24px;
   }
 
   .actions {
     flex-direction: column-reverse;
-    gap: 0.75rem;
   }
 
   .cancelBtn,
   .saveBtn {
     width: 100%;
     justify-content: center;
-  }
-
-  .imageUpload {
-    padding: 1.5rem;
-  }
-
-  .uploadIcon {
-    font-size: 1.5rem;
-  }
-
-  .progressIndicator {
-    justify-content: center;
-  }
-
-  .formSections {
-    padding: 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .formTitle {
-    font-size: 1.25rem;
-  }
-
-  label {
-    font-size: 0.9rem;
-  }
-
-  .input,
-  .textarea,
-  .select {
-    font-size: 0.9rem;
-    padding: 12px;
-  }
-
-  .actions {
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-  }
-
-  .cancelBtn,
-  .saveBtn {
-    padding: 14px 20px;
-    font-size: 0.9rem;
   }
 }

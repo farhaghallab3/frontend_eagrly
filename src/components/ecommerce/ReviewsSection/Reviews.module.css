@@ -54,12 +54,16 @@
 }
 
 @keyframes bgFloat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) scale(1) rotate(0deg);
   }
+
   33% {
     transform: translateY(-20px) scale(1.1) rotate(120deg);
   }
+
   66% {
     transform: translateY(15px) scale(0.9) rotate(240deg);
   }
@@ -92,9 +96,12 @@
 }
 
 @keyframes badgePulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
@@ -102,7 +109,7 @@
 
 .sectionTitle {
   font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 800;
+  font-weight: 500;
   margin-bottom: 16px;
   background: linear-gradient(135deg, #ffffff 0%, #64ffda 50%, #00c2ff 100%);
   -webkit-background-clip: text;
@@ -200,9 +207,12 @@
 }
 
 @keyframes starGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.7;
   }
@@ -238,7 +248,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 1.1rem;
   color: #0a192f;
   flex-shrink: 0;
@@ -251,7 +261,7 @@
 
 .reviewerName {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #ffffff;
   margin-bottom: 4px;
   display: block;

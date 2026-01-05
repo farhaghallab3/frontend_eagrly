@@ -172,6 +172,21 @@ const AuthModal = () => {
 
                     {/* Modal Content */}
                     <div className={styles.modalContent}>
+                        {/* Tab Headers */}
+                        <div className={styles.modalHeader}>
+                            {activeTab === 'login' ? (
+                                <>
+                                    <h2 className={styles.modalTitle}>Welcome Back</h2>
+                                    <p className={styles.modalSubtitle}>Sign in to manage your listings and messages</p>
+                                </>
+                            ) : (
+                                <>
+                                    <h2 className={styles.modalTitle}>Join Eagerly</h2>
+                                    <p className={styles.modalSubtitle}>Create an account to start selling your university gear</p>
+                                </>
+                            )}
+                        </div>
+
                         {/* Error Messages */}
                         <div className={styles.errorContainer}>
                             {formatErrors()}

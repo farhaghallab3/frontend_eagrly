@@ -20,7 +20,7 @@
     border: none;
     color: #666666;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
     margin-bottom: 32px;
     padding: 8px 0;
@@ -54,7 +54,7 @@
 
 .sectionTitle {
     font-size: 1.8rem;
-    font-weight: 900;
+    font-weight: 500;
     color: #111111;
     margin-bottom: 8px;
     text-transform: uppercase;
@@ -145,7 +145,7 @@
 
 .methodInfo h4 {
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 500;
     color: #111111;
     margin: 0 0 4px 0;
     text-transform: uppercase;
@@ -181,7 +181,7 @@
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 0.7rem;
-    font-weight: 700;
+    font-weight: 500;
     text-transform: uppercase;
 }
 
@@ -194,7 +194,7 @@
     padding: 4px 10px;
     border-radius: 4px;
     font-size: 0.65rem;
-    font-weight: 800;
+    font-weight: 500;
     text-transform: uppercase;
 }
 
@@ -208,7 +208,7 @@
 }
 
 .bankDetails h4 {
-    font-weight: 900;
+    font-weight: 500;
     color: #111111;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -242,7 +242,7 @@
 
 .bankRow strong {
     color: #111111;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .bankNote {
@@ -264,7 +264,7 @@
 
 .summaryTitle {
     font-size: 1.3rem;
-    font-weight: 900;
+    font-weight: 500;
     color: #111111;
     margin-bottom: 24px;
     text-transform: uppercase;
@@ -284,7 +284,7 @@
 
 .packageHeader h4 {
     font-size: 1.4rem;
-    font-weight: 900;
+    font-weight: 500;
     color: #111111;
     margin: 0;
     text-transform: uppercase;
@@ -296,7 +296,7 @@
     padding: 4px 10px;
     border-radius: 4px;
     font-size: 0.65rem;
-    font-weight: 900;
+    font-weight: 500;
     text-transform: uppercase;
 }
 
@@ -349,7 +349,7 @@
     border-top: 1px solid #111111;
     padding-top: 16px;
     margin-top: 8px;
-    font-weight: 900;
+    font-weight: 500;
     color: #111111;
     text-transform: uppercase;
 }
@@ -369,7 +369,7 @@
     border-radius: 6px;
     color: #FFFFFF;
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 500;
     cursor: pointer;
     margin-top: 32px;
     display: flex;
@@ -398,7 +398,7 @@
     margin-top: 16px;
     color: #999999;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
 }
 

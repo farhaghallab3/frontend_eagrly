@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Spinner, Container } from "react-bootstrap";
-import { FaPlusCircle, FaEdit, FaTrash, FaBox, FaEye, FaChartLine, FaStar, FaCalendarAlt, FaRedo, FaClock } from "react-icons/fa";
+import { FaPlusCircle, FaEdit, FaTrash, FaBox, FaEye, FaCalendarAlt, FaRedo, FaClock, FaExclamationTriangle } from "react-icons/fa";
 import styles from "./MyAds.module.css";
 import ProductForm from "../../components/common/forms/ProductForm/ProductForm";
 import { useProduct } from "../../hooks/useProducts";
@@ -18,6 +17,16 @@ export default function MyAds() {
     const [daysUntilReset, setDaysUntilReset] = useState(30);
     const [isRepublishing, setIsRepublishing] = useState(false);
 
+    const formatDate = (dateString) => {
+        if (!dateString) return '—';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        });
+    };
+
     const fetchProducts = async () => {
         await getMyProducts();
     };
@@ -26,7 +35,6 @@ export default function MyAds() {
         fetchProducts();
     }, []);
 
-    // Update local state when Redux state changes
     useEffect(() => {
         setMyProducts(reduxMyProducts || []);
     }, [reduxMyProducts]);
@@ -43,8 +51,6 @@ export default function MyAds() {
                 setShowSubscriptionModal(true);
             }
         } catch (error) {
-            console.error('Error checking eligibility:', error);
-            // If error, allow them to try adding (backend will validate)
             setEditingProduct(null);
             setIsRepublishing(false);
             setShowForm(true);
@@ -92,70 +98,54 @@ export default function MyAds() {
 
     return (
         <div className={styles.dashboardPage}>
-            {/* Hero Section */}
-            <section className={styles.dashboardHero}>
-                <div className={styles.heroBackground}>
-                    <div className={styles.heroGlow1}></div>
-                    <div className={styles.heroGlow2}></div>
-                    <div className={styles.heroGlow3}></div>
-                </div>
-
-                <Container className={styles.heroContent}>
-                    <div className={styles.heroHeader}>
-                        <FaBox className={styles.heroIcon} />
-                        <h1 className={styles.heroTitle}>My Dashboard</h1>
-                        <p className={styles.heroSubtitle}>Manage your products and track your performance</p>
+            <div className={styles.container}>
+                {/* Hero Section */}
+                <section className={styles.dashboardHero}>
+                    <div className={styles.heroContent}>
+                        <div className={styles.heroHeader}>
+                            <FaBox className={styles.heroIcon} />
+                            <h1 className={styles.heroTitle}>Dashboard</h1>
+                            <p className={styles.heroSubtitle}>Manage your products and track your performance</p>
+                        </div>
+                        <div className={styles.heroActions}>
+                            <button className={styles.primaryButton} onClick={handleAdd}>
+                                <FaPlusCircle />
+                                <span>List New Product</span>
+                            </button>
+                        </div>
                     </div>
+                </section>
 
-                    <div className={styles.heroActions}>
-                        <button className={styles.primaryButton} onClick={handleAdd}>
-                            <FaPlusCircle />
-                            Add New Product
-                        </button>
-                    </div>
-                </Container>
-            </section>
-
-            {/* Stats Section */}
-            <section className={styles.statsSection}>
-                <Container>
+                {/* Stats Section */}
+                <section className={styles.statsSection}>
                     <div className={styles.statsGrid}>
                         <div className={styles.statCard}>
-                            <div className={styles.statIcon}>
-                                <FaBox />
-                            </div>
+                            <div className={styles.statIcon}><FaBox /></div>
                             <div className={styles.statContent}>
                                 <span className={styles.statNumber}>{myProducts.length}</span>
                                 <span className={styles.statLabel}>Total Products</span>
                             </div>
                         </div>
-
                         <div className={styles.statCard}>
-                            <div className={styles.statIcon}>
-                                <FaEye />
-                            </div>
+                            <div className={styles.statIcon}><FaEye /></div>
                             <div className={styles.statContent}>
                                 <span className={styles.statNumber}>
-                                    {myProducts.filter(p => p.is_active).length}
+                                    {myProducts.filter(p => p.status === 'active').length}
                                 </span>
                                 <span className={styles.statLabel}>Active Listings</span>
                             </div>
                         </div>
-
-                        {/* Rating Removed */}
                     </div>
-                </Container>
-            </section>
+                </section>
 
-            {/* Main Content */}
-            <section className={styles.dashboardContent}>
-                <Container>
+                {/* Main Content */}
+                <section className={styles.dashboardContent}>
                     <div className={styles.contentHeader}>
-                        <h2 className={styles.sectionTitle}>My Products</h2>
+                        <h2 className={styles.sectionTitle}>Your Listings</h2>
                         <div className={styles.contentActions}>
                             <button className={styles.secondaryButton} onClick={fetchProducts}>
                                 <FaCalendarAlt />
-                                Refresh
+                                <span>Refresh</span>
                             </button>
                         </div>
                     </div>
@@ -163,60 +153,56 @@ export default function MyAds() {
                     {loading ? (
                         <div className={styles.loadingState}>
                             <div className={styles.loadingSpinner}></div>
-                            <p>Loading your products...</p>
+                            <p>Updating your inventory...</p>
                         </div>
                     ) : error ? (
                         <div className={styles.errorState}>
-                            <div className={styles.errorAlert}>
-                                <h4>Oops! Something went wrong</h4>
-                                <p>{error}</p>
-                                <button className={styles.retryButton} onClick={fetchProducts}>
-                                    Try Again
-                                </button>
-                            </div>
+                            <p>{error}</p>
+                            <button className={styles.primaryButton} onClick={fetchProducts}>Retry</button>
                         </div>
                     ) : (
                         <div className={styles.productsGrid}>
                             {myProducts.length === 0 ? (
                                 <div className={styles.emptyState}>
-                                    <div className={styles.emptyIcon}>
-                                        <FaBox />
-                                    </div>
-                                    <h3 className={styles.emptyTitle}>No products yet</h3>
+                                    <FaBox className={styles.emptyIcon} />
+                                    <h3 className={styles.emptyTitle}>Nothing here yet</h3>
                                     <p className={styles.emptyDescription}>
-                                        Start building your marketplace presence by listing your first product.
+                                        Ready to start selling? List your first product now.
                                     </p>
                                     <button className={styles.primaryButton} onClick={handleAdd}>
                                         <FaPlusCircle />
-                                        Add Your First Product
+                                        <span>Add Product</span>
                                     </button>
                                 </div>
                             ) : (
                                 myProducts.map((product) => {
-                                    const isExpired = product.is_expired || product.status === 'expired';
+                                    // Calculate days remaining manually if backend doesn't provide it
+                                    let daysRemaining = product.days_remaining;
+                                    if (daysRemaining === undefined && product.expires_at) {
+                                        const expiry = new Date(product.expires_at);
+                                        const now = new Date();
+                                        const diffTime = expiry - now;
+                                        daysRemaining = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+                                    }
 
+                                    const isExpired = product.status === 'expired' ||
+                                        (product.expires_at && new Date(product.expires_at) < new Date());
                                     return (
-                                        <div key={product.id} className={`${styles.productCard} ${isExpired ? styles.expiredCard : ''}`}>
+                                        <div key={product.id} className={styles.productCard}>
                                             <div className={styles.cardHeader}>
                                                 <div className={styles.productInfo}>
                                                     <h3 className={styles.productTitle}>{product.title}</h3>
                                                     <span className={styles.productCategory}>
-                                                        {product.category_name || 'Uncategorized'}
+                                                        {product.category_name || 'Marketplace'}
                                                     </span>
                                                 </div>
                                                 <div className={styles.productStatus}>
                                                     {isExpired ? (
-                                                        <span className={`${styles.statusBadge} ${styles.statusExpired}`}>
-                                                            Expired
-                                                        </span>
+                                                        <span className={`${styles.statusBadge} ${styles.statusExpired}`}>Expired</span>
                                                     ) : product.is_active ? (
-                                                        <span className={`${styles.statusBadge} ${styles.statusActive}`}>
-                                                            Active
-                                                        </span>
+                                                        <span className={`${styles.statusBadge} ${styles.statusActive}`}>Active</span>
                                                     ) : (
-                                                        <span className={`${styles.statusBadge} ${styles.statusPending}`}>
-                                                            Pending
-                                                        </span>
+                                                        <span className={`${styles.statusBadge} ${styles.statusPending}`}>Pending</span>
                                                     )}
                                                 </div>
                                             </div>
@@ -224,158 +210,84 @@ export default function MyAds() {
                                             <div className={styles.cardContent}>
                                                 <div className={styles.productDetails}>
                                                     <div className={styles.detailItem}>
-                                                        <span className={styles.detailLabel}>Price:</span>
+                                                        <span className={styles.detailLabel}>Price</span>
                                                         <span className={styles.detailValue}>{product.price} EGP</span>
                                                     </div>
-                                                    {product.is_active && product.days_remaining !== null && (
+                                                    {product.status === 'active' && product.expires_at && (
                                                         <div className={styles.detailItem}>
-                                                            <span className={styles.detailLabel}>
-                                                                <FaClock className={styles.clockIcon} /> Expires in:
-                                                            </span>
-                                                            <span className={`${styles.detailValue} ${product.days_remaining <= 5 ? styles.expiringWarn : ''}`}>
-                                                                {product.days_remaining} days
-                                                            </span>
+                                                            <span className={styles.detailLabel}>Expiry Date</span>
+                                                            <div className={styles.expiryDetail}>
+                                                                <span className={`${styles.detailValue} ${daysRemaining <= 5 ? styles.expiringWarn : ''}`}>
+                                                                    {formatDate(product.expires_at)}
+                                                                </span>
+                                                                <span className={`${styles.daysLeftBadge} ${daysRemaining <= 5 ? styles.daysLeftUrgent : ''}`}>
+                                                                    {daysRemaining}d left
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     )}
-                                                    <div className={styles.detailItem}>
-                                                        <span className={styles.detailLabel}>Listed:</span>
-                                                        <span className={styles.detailValue}>
-                                                            {new Date(product.created_at || Date.now()).toLocaleDateString()}
-                                                        </span>
-                                                    </div>
                                                 </div>
                                             </div>
 
                                             <div className={styles.cardActions}>
                                                 {isExpired ? (
-                                                    <>
-                                                        <button
-                                                            className={styles.republishButton}
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                handleRepublish(product);
-                                                            }}
-                                                        >
-                                                            <FaRedo />
-                                                            Republish
-                                                        </button>
-                                                        <button
-                                                            className={styles.deleteButton}
-                                                            onClick={() => {
-                                                                handleDeleteClick(product);
-                                                            }}
-                                                        >
-                                                            <FaTrash />
-                                                            Delete
-                                                        </button>
-                                                    </>
+                                                    <button className={styles.republishButton} onClick={() => handleRepublish(product)}>
+                                                        <FaRedo /> Republish
+                                                    </button>
                                                 ) : (
-                                                    <>
-                                                        <button
-                                                            className={styles.editButton}
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                handleEdit(product);
-                                                            }}
-                                                        >
-                                                            <FaEdit />
-                                                            Edit
-                                                        </button>
-                                                        <button
-                                                            className={styles.deleteButton}
-                                                            onClick={() => {
-                                                                handleDeleteClick(product);
-                                                            }}
-                                                        >
-                                                            <FaTrash />
-                                                            Delete
-                                                        </button>
-                                                    </>
+                                                    <button className={styles.editButton} onClick={() => handleEdit(product)}>
+                                                        <FaEdit /> Edit
+                                                    </button>
                                                 )}
+                                                <button className={styles.deleteButton} onClick={() => handleDeleteClick(product)}>
+                                                    <FaTrash /> Delete
+                                                </button>
                                             </div>
-
-                                            <div className={styles.cardGlow}></div>
                                         </div>
                                     );
                                 })
                             )}
                         </div>
                     )}
-                </Container>
-            </section>
+                </section>
 
-            {/* Product Form Modal */}
-            {showForm && (
-                <div
-                    className={styles.modalOverlay}
-                    style={{ zIndex: 9999 }}
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget) {
-                            handleFormClose();
-                        }
-                    }}
-                >
-                    <div
-                        className={styles.modal}
-                        style={{ position: 'relative', zIndex: 10000 }}
-                    >
-                        <ProductForm
-                            product={editingProduct}
-                            isRepublishing={isRepublishing}
-                            onClose={() => {
-                                handleFormClose();
-                            }}
-                            onSuccess={() => {
-                                handleFormSuccess();
-                            }}
-                        />
-                    </div>
-                </div>
-            )}
-
-            {/* Delete Confirmation Modal */}
-            {showDeleteModal && productToDelete && (
-                <div
-                    className={styles.modalOverlay}
-                    onClick={handleDeleteCancel}
-                >
-                    <div className={styles.deleteModal}>
-                        <div className={styles.deleteModalHeader}>
-                            <FaTrash className={styles.deleteIcon} />
-                            <h3 className={styles.deleteModalTitle}>Delete Product</h3>
+                {/* Form Modal */}
+                {showForm && (
+                    <div className={styles.modalOverlay} onClick={(e) => e.target === e.currentTarget && handleFormClose()}>
+                        <div className={styles.modal}>
+                            <ProductForm
+                                product={editingProduct}
+                                isRepublishing={isRepublishing}
+                                onClose={handleFormClose}
+                                onSuccess={handleFormSuccess}
+                            />
                         </div>
-                        <div className={styles.deleteModalBody}>
+                    </div>
+                )}
+
+                {/* Delete Modal */}
+                {showDeleteModal && productToDelete && (
+                    <div className={styles.modalOverlay} onClick={handleDeleteCancel}>
+                        <div className={styles.deleteModal} onClick={e => e.stopPropagation()}>
+                            <h3 className={styles.deleteModalTitle}>Delete Product?</h3>
                             <p className={styles.deleteModalMessage}>
-                                Are you sure you want to delete <strong>"{productToDelete.title}"</strong>?
+                                Removing <strong>"{productToDelete.title}"</strong> is permanent.
                             </p>
-                            <p className={styles.deleteModalWarning}>
-                                This action cannot be undone. The product will be permanently removed from your listings.
-                            </p>
-                        </div>
-                        <div className={styles.deleteModalActions}>
-                            <button
-                                className={styles.cancelButton}
-                                onClick={handleDeleteCancel}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className={styles.confirmDeleteButton}
-                                onClick={handleDeleteConfirm}
-                            >
-                                Delete Product
-                            </button>
+                            <p className={styles.deleteModalWarning}>This action cannot be undone.</p>
+                            <div className={styles.deleteModalActions}>
+                                <button className={styles.cancelButton} onClick={handleDeleteCancel}>Keep</button>
+                                <button className={styles.confirmDeleteButton} onClick={handleDeleteConfirm}>Delete</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
 
-            {/* Subscription Required Modal */}
-            <SubscriptionRequiredModal
-                show={showSubscriptionModal}
-                onClose={() => setShowSubscriptionModal(false)}
-                daysUntilReset={daysUntilReset}
-            />
+                <SubscriptionRequiredModal
+                    show={showSubscriptionModal}
+                    onClose={() => setShowSubscriptionModal(false)}
+                    daysUntilReset={daysUntilReset}
+                />
+            </div>
         </div>
     );
 }

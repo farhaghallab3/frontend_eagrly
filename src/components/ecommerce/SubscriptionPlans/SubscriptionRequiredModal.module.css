@@ -73,7 +73,7 @@
 
 .title {
     font-size: 1.8rem;
-    font-weight: 700;
+    font-weight: 500;
     color: #fff;
     margin-bottom: 10px;
 }
@@ -93,7 +93,7 @@
 
 .days {
     font-size: 3rem;
-    font-weight: 800;
+    font-weight: 500;
     background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -145,7 +145,7 @@
 
 .upgradeTitle {
     font-size: 1.3rem;
-    font-weight: 600;
+    font-weight: 500;
     color: #fff;
     margin-bottom: 8px;
 }

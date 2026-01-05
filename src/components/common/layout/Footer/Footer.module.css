@@ -36,7 +36,7 @@
 
 .brandText {
   font-size: 1.6rem;
-  font-weight: 900;
+  font-weight: 500;
   letter-spacing: 0.1rem;
   color: #111111;
   font-family: 'Inter', sans-serif;
@@ -75,7 +75,7 @@
 
 .sectionTitle {
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05rem;
   color: #111111;
@@ -124,7 +124,7 @@
 
 .socialTitle {
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   color: #999999;
 }

@@ -7,7 +7,7 @@
 .label {
     display: block;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text-primary);
     margin-bottom: 12px;
 }
@@ -124,7 +124,7 @@
 .dropdownItem.selected {
     background: linear-gradient(135deg, rgba(100, 255, 218, 0.15) 0%, rgba(0, 180, 216, 0.15) 100%);
     color: var(--accent-primary);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .dropdownItem.selected::before {

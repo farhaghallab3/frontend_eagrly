@@ -25,7 +25,7 @@
 
 .headerTitle {
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   color: #111111;
@@ -38,7 +38,7 @@
   padding: 6px 12px;
   border-radius: 4px;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;
@@ -64,7 +64,7 @@
 
 .filterLabel {
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   color: #999999;
   letter-spacing: 0.05rem;
@@ -126,7 +126,7 @@
 .priceMin,
 .priceMax {
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #111111;
 }
 

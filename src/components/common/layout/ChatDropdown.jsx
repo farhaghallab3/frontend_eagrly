@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Dropdown, ListGroup, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchChats, setSelectedChat } from '../../../store/slices/chatSlice';
@@ -42,53 +41,51 @@ const ChatDropdown = ({ show, onToggle }) => {
 
       <div className={styles.chatListContainer}>
         {loading ? (
-          <div className="d-flex justify-content-center p-3">
-            <Spinner animation="border" size="sm" />
+          <div className={styles.loadingState}>
+            <div className={styles.loadingSpinner}></div>
           </div>
         ) : chats.length === 0 ? (
-          <div className="text-center p-3 text-muted">
-            No messages yet
+          <div className={styles.emptyState}>
+            <p>No messages yet</p>
           </div>
         ) : (
           <>
-            {chats.slice(0, 5).map((chat) => {
-              const otherUser = user?.id === chat.buyer.id ? chat.seller : chat.buyer;
-              const hasUnread = chat.unread_count > 0;
+            <div className={styles.dropdownList}>
+              {chats.slice(0, 5).map((chat) => {
+                const otherUser = user?.id === chat.buyer.id ? chat.seller : chat.buyer;
+                const hasUnread = chat.unread_count > 0;
 
-              return (
-                <div
-                  key={chat.id}
-                  className={`${styles.chatItem} ${hasUnread ? styles.unreadChat : ''}`}
-                  onClick={() => handleChatSelect(chat.id)}
-                >
-                  <div className={styles.chatItemContent}>
-                    <div className={styles.chatUser}>
-                      <strong>{otherUser.username}</strong>
-                      {hasUnread && (
-                        <span className={styles.chatUnreadBadge}>
-                          {chat.unread_count}
-                        </span>
-                      )}
+                return (
+                  <div
+                    key={chat.id}
+                    className={`${styles.chatItem} ${hasUnread ? styles.unreadChat : ''}`}
+                    onClick={() => handleChatSelect(chat.id)}
+                  >
+                    <div className={styles.chatItemContent}>
+                      <div className={styles.chatUser}>
+                        <span className={styles.chatUserName}>{otherUser.username}</span>
+                        {hasUnread && (
+                          <span className={styles.unreadIndicator}></span>
+                        )}
+                      </div>
+                      <div className={styles.chatProduct}>
+                        {chat.product.title}
+                      </div>
+                      <span className={styles.chatDate}>
+                        {new Date(chat.created_at).toLocaleDateString()}
+                      </span>
                     </div>
-                    <div className={styles.chatProduct}>
-                      {chat.product.title}
-                    </div>
-                    <small className={styles.chatDate}>
-                      {new Date(chat.created_at).toLocaleDateString()}
-                    </small>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
 
-            {chats.length > 5 && (
-              <div
-                className={styles.viewAllButton}
-                onClick={handleViewAll}
-              >
-                View all messages
-              </div>
-            )}
+            <button
+              className={styles.viewAllButton}
+              onClick={handleViewAll}
+            >
+              View all messages
+            </button>
           </>
         )}
       </div>

@@ -17,7 +17,7 @@
 .headerTitle {
   font-size: 1.25rem;
   /* ~20px */
-  font-weight: 900;
+  font-weight: 500;
   color: #111111;
   text-transform: none;
   margin: 0;
@@ -34,7 +34,7 @@
 
 .resultsCount {
   font-size: 1.25rem;
-  font-weight: 900;
+  font-weight: 500;
   color: #111111;
 }
 
@@ -140,7 +140,7 @@
   color: white;
   padding: 12px 24px;
   border-radius: 6px;
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
   margin-top: 16px;
   transition: all 0.2s ease;

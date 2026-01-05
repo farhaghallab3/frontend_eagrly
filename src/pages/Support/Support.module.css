@@ -14,7 +14,7 @@
 
 .heroContent h1 {
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
+    font-weight: 500;
     margin-bottom: 2rem;
     background: linear-gradient(135deg, #ffffff 0%, #64ffda 100%);
     -webkit-background-clip: text;
@@ -75,7 +75,7 @@
 
 .sectionTitle {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 500;
     margin-bottom: 2.5rem;
     color: #ffffff;
 }
@@ -106,7 +106,7 @@
 
 .categoryCard h3 {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 1rem;
     color: #ffffff;
 }
@@ -121,7 +121,7 @@
 .learnMore {
     color: #64ffda !important;
     text-decoration: none !important;
-    font-weight: 600;
+    font-weight: 500;
     padding: 0;
 }
 
@@ -182,7 +182,7 @@
 
 .contactBanner h2 {
     font-size: 2.5rem;
-    font-weight: 800;
+    font-weight: 500;
     margin-bottom: 1rem;
 }
 
@@ -204,7 +204,7 @@
     border: none !important;
     padding: 14px 32px;
     border-radius: 50px;
-    font-weight: 600;
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 
@@ -218,7 +218,7 @@
     color: #64ffda !important;
     padding: 14px 32px;
     border-radius: 50px;
-    font-weight: 600;
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 

@@ -41,7 +41,7 @@
   padding: 10px 24px;
   border-radius: 6px;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-bottom: 24px;
@@ -50,7 +50,7 @@
 
 .sectionTitle {
   font-size: 3.5rem;
-  font-weight: 900;
+  font-weight: 500;
   color: #000;
   margin-bottom: 18px;
   letter-spacing: -2px;
@@ -105,7 +105,7 @@
   padding: 6px 16px;
   border-radius: 6px;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -130,7 +130,7 @@
 
 .planTitle {
   font-size: 1.6rem;
-  font-weight: 800;
+  font-weight: 500;
   color: #000;
   margin: 0;
 }
@@ -150,14 +150,14 @@
 
 .priceValue {
   font-size: 3.5rem;
-  font-weight: 900;
+  font-weight: 500;
   color: #000;
   line-height: 1;
 }
 
 .currency {
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #666;
 }
 
@@ -210,7 +210,7 @@
   border: none;
   padding: 16px;
   border-radius: 6px;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 1rem;
   transition: all 0.2s ease;
   display: flex;

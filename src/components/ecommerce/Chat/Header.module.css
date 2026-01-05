@@ -75,7 +75,7 @@
 .userName {
   margin: 0;
   font-size: 1.1rem;
-  font-weight: 800;
+  font-weight: 500;
   color: #111111;
 }
 
@@ -109,10 +109,10 @@
 
 .productLabel {
   color: #999999;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .productTitle {
   color: #FFB300;
-  font-weight: 700;
+  font-weight: 500;
 }

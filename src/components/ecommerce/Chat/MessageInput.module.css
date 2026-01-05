@@ -27,7 +27,7 @@
 
 .inputLabel {
     font-size: 0.9rem;
-    font-weight: 800;
+    font-weight: 500;
     color: #111111;
     white-space: nowrap;
     letter-spacing: -0.02em;
@@ -87,7 +87,7 @@
     cursor: pointer;
     transition: all 0.2s;
     flex-shrink: 0;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 0.9rem;
 }
 
@@ -136,5 +136,5 @@
 
 .menuItem span {
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
 }

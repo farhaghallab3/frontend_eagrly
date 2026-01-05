@@ -56,7 +56,7 @@
 
 .senderName {
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #999999;
   margin-bottom: 2px;
 }
@@ -150,7 +150,7 @@
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   font-size: 1.2rem;
-  font-weight: 900;
+  font-weight: 500;
   z-index: 10;
   transition: all 0.2s;
 }

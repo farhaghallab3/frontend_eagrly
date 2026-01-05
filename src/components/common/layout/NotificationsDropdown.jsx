@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dropdown } from "react-bootstrap";
 import { MdCheckCircle, MdError, MdInfo, MdMessage } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { fetchNotifications, markNotificationRead, markAllNotificationsRead } from "../../../store/slices/notificationSlice";
@@ -28,20 +27,21 @@ const NotificationsDropdown = ({ show, onToggle }) => {
     }
   };
 
-  const handleMarkAllRead = () => {
+  const handleMarkAllRead = (e) => {
+    e.stopPropagation();
     dispatch(markAllNotificationsRead());
   };
 
   const getNotificationIcon = (type) => {
     switch (type) {
       case 'product_approved':
-        return <MdCheckCircle className={styles.notificationIconSuccess} />;
+        return <MdCheckCircle className={styles.iconSuccess} />;
       case 'product_rejected':
-        return <MdError className={styles.notificationIconError} />;
+        return <MdError className={styles.iconError} />;
       case 'new_message':
-        return <MdMessage className={styles.notificationIconInfo} />;
+        return <MdMessage className={styles.iconInfo} />;
       default:
-        return <MdInfo className={styles.notificationIconInfo} />;
+        return <MdInfo className={styles.iconInfo} />;
     }
   };
 
@@ -64,7 +64,7 @@ const NotificationsDropdown = ({ show, onToggle }) => {
   return (
     <div className={styles.notificationsDropdown} onClick={(e) => e.stopPropagation()}>
       <div className={styles.dropdownHeader}>
-        <h6 className={styles.dropdownTitle}>Notifications</h6>
+        <span className={styles.dropdownTitle}>Notifications</span>
         {notifications.length > 0 && (
           <button
             className={styles.markAllReadBtn}
@@ -79,51 +79,49 @@ const NotificationsDropdown = ({ show, onToggle }) => {
         {loading ? (
           <div className={styles.loadingState}>
             <div className={styles.loadingSpinner}></div>
-            <p>Loading notifications...</p>
           </div>
         ) : notifications.length === 0 ? (
           <div className={styles.emptyState}>
-            <MdInfo size={32} className={styles.emptyIcon} />
             <p>No notifications yet</p>
           </div>
         ) : (
-          <div className={styles.notificationsList}>
-            {notifications.slice(0, 10).map((notification) => (
-              <div
-                key={notification.id}
-                className={`${styles.notificationItem} ${!notification.is_read ? styles.unread : ''}`}
-                onClick={() => handleNotificationClick(notification)}
-              >
-                <div className={styles.notificationIcon}>
-                  {getNotificationIcon(notification.notification_type)}
-                </div>
+          <>
+            <div className={styles.dropdownList}>
+              {notifications.slice(0, 10).map((notification) => (
+                <div
+                  key={notification.id}
+                  className={`${styles.notificationItem} ${!notification.is_read ? styles.unreadItem : ''}`}
+                  onClick={() => handleNotificationClick(notification)}
+                >
+                  <div className={styles.itemIcon}>
+                    {getNotificationIcon(notification.notification_type)}
+                  </div>
 
-                <div className={styles.notificationContent}>
-                  <div className={styles.notificationTitle}>
-                    {notification.title}
+                  <div className={styles.itemContent}>
+                    <div className={styles.itemTitle}>
+                      {notification.title}
+                    </div>
+                    <div className={styles.itemMessage}>
+                      {notification.message}
+                    </div>
+                    <div className={styles.itemTime}>
+                      {formatTime(notification.created_at)}
+                    </div>
                   </div>
-                  <div className={styles.notificationMessage}>
-                    {notification.message}
-                  </div>
-                  <div className={styles.notificationTime}>
-                    {formatTime(notification.created_at)}
-                  </div>
-                </div>
 
-                {!notification.is_read && (
-                  <div className={styles.unreadIndicator}></div>
-                )}
-              </div>
-            ))}
+                  {!notification.is_read && (
+                    <div className={styles.unreadDot}></div>
+                  )}
+                </div>
+              ))}
+            </div>
 
             {notifications.length > 10 && (
-              <div className={styles.viewAllBtn}>
-                <button onClick={() => {/* Navigate to full notifications page */ }}>
-                  View all notifications
-                </button>
-              </div>
+              <button className={styles.viewAllButton}>
+                View all notifications
+              </button>
             )}
-          </div>
+          </>
         )}
       </div>
     </div>

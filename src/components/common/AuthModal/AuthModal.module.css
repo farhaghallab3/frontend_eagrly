@@ -2,78 +2,95 @@
 .modalOverlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
-    padding: 20px;
+    z-index: 10000;
+    padding: 24px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* Modal Container */
 .modal {
-    background: var(--bg-card);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
     border-radius: 24px;
-    max-width: 550px;
+    max-width: 500px;
     width: 100%;
-    max-height: 90vh;
+    max-height: 85vh;
     overflow-y: auto;
     position: relative;
-    z-index: 10000;
-    box-shadow: 0 25px 50px -12px var(--shadow-color);
+    z-index: 10001;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    animation: modalPop 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@keyframes modalPop {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .modal::-webkit-scrollbar {
-    width: 8px;
-}
-
-.modal::-webkit-scrollbar-track {
-    background: rgba(10, 25, 47, 0.3);
-    border-radius: 10px;
+    width: 4px;
 }
 
 .modal::-webkit-scrollbar-thumb {
-    background: rgba(100, 255, 218, 0.2);
+    background: #EEEEEE;
     border-radius: 10px;
-}
-
-.modal::-webkit-scrollbar-thumb:hover {
-    background: rgba(100, 255, 218, 0.4);
 }
 
 /* Close Button */
 .closeButton {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 40px;
-    height: 40px;
-    background: rgba(100, 255, 218, 0.1);
-    border: 1px solid var(--border-color);
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    background: #F5F5F5;
+    border: none;
     border-radius: 50%;
-    color: var(--text-secondary);
+    color: #999999;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     z-index: 10;
 }
 
 .closeButton:hover {
-    background: rgba(100, 255, 218, 0.2);
-    border-color: var(--accent-primary);
-    color: var(--accent-primary);
+    background: #111111;
+    color: #FFFFFF;
     transform: rotate(90deg);
 }
 
 /* Tab Container */
 .tabContainer {
     display: flex;
-    border-bottom: 1px solid var(--border-color);
+    background: #F9F9F9;
+    padding: 6px;
+    margin: 32px 32px 0 32px;
+    border-radius: 12px;
 }
 
 .tab {
@@ -81,59 +98,60 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 20px;
+    gap: 8px;
+    padding: 12px;
     background: transparent;
     border: none;
-    color: var(--text-secondary);
-    font-weight: 600;
-    font-size: 1rem;
+    color: #666666;
+    font-weight: 500;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.tab::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: transparent;
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    transition: all 0.2s ease;
 }
 
 .tab:hover {
-    color: var(--text-primary);
-    background: rgba(100, 255, 218, 0.05);
+    color: #111111;
 }
 
 .activeTab {
-    color: var(--accent-primary);
-}
-
-.activeTab::after {
-    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    background: #FFFFFF;
+    color: #111111;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 /* Modal Content */
 .modalContent {
-    padding: 32px;
+    padding: 0 40px 48px 40px;
+}
+
+.modalHeader {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.modalTitle {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #111111;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+}
+
+.modalSubtitle {
+    color: #666666;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 /* Error Container */
-.errorContainer {
-    margin-bottom: 20px;
-}
-
 .errorMessage {
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: #FFF5F5;
+    border: 1px solid #FFEBEB;
     border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 10px;
-    color: #fca5a5;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    color: #C62828;
     font-size: 0.85rem;
     font-weight: 500;
 }
@@ -152,23 +170,20 @@
     justify-content: center;
     gap: 12px;
     width: 100%;
-    padding: 14px 20px;
-    border: 2px solid var(--border-color);
+    padding: 14px;
+    border: 1px solid #EEEEEE;
     border-radius: 12px;
-    background: var(--bg-secondary);
-    backdrop-filter: blur(10px);
-    color: var(--text-primary);
-    font-weight: 600;
+    background: #FFFFFF;
+    color: #111111;
+    font-weight: 500;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .socialButton:hover {
-    background: rgba(100, 255, 218, 0.1);
-    border-color: var(--accent-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(100, 255, 218, 0.2);
+    border-color: #111111;
+    background: #F9F9F9;
 }
 
 .socialIcon {
@@ -186,21 +201,22 @@
 .dividerLine {
     flex: 1;
     height: 1px;
-    background: var(--border-color);
+    background: #EEEEEE;
 }
 
 .dividerText {
-    color: var(--text-secondary);
-    font-size: 0.85rem;
+    color: #999999;
+    font-size: 0.8rem;
     font-weight: 500;
-    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 /* Form */
 .form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
 }
 
 .formSection {
@@ -208,85 +224,80 @@
 }
 
 .sectionTitle {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: var(--accent-primary);
-    margin-bottom: 12px;
+    color: #999999;
+    margin-bottom: 16px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.1em;
 }
 
 .formRow {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 16px;
 }
 
 /* Forgot Password */
 .forgotPassword {
     text-align: right;
     margin-top: -8px;
-    margin-bottom: 8px;
 }
 
 .forgotPasswordLink {
-    color: var(--text-secondary);
+    color: #666666;
     font-size: 0.85rem;
     text-decoration: none;
-    transition: color 0.3s ease;
+    font-weight: 500;
 }
 
 .forgotPasswordLink:hover {
-    color: var(--accent-primary);
+    color: #FFB300;
 }
 
-/* Switch Text (Already have account / Don't have account) */
+/* Switch Text */
 .switchText {
     text-align: center;
-    color: var(--text-secondary);
+    color: #666666;
     font-size: 0.9rem;
-    margin-top: 16px;
+    margin-top: 24px;
 }
 
 .switchLink {
     background: none;
     border: none;
-    color: var(--accent-primary);
+    color: #FFB300;
     font-weight: 600;
-    font-size: 0.9rem;
     cursor: pointer;
-    padding: 0;
-    transition: all 0.3s ease;
+    padding: 0 4px;
 }
 
 .switchLink:hover {
-    color: var(--accent-secondary);
     text-decoration: underline;
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
+@media (max-width: 576px) {
     .modal {
         max-width: 100%;
-        max-height: 100vh;
         border-radius: 0;
-        margin: 0;
+        max-height: 100vh;
+        height: 100vh;
+    }
+
+    .modalOverlay {
+        padding: 0;
+    }
+
+    .tabContainer {
+        margin: 64px 20px 0 20px;
     }
 
     .modalContent {
         padding: 24px 20px;
     }
 
-    .tabContainer {
-        padding-top: 48px;
-    }
-
     .formRow {
         grid-template-columns: 1fr;
-    }
-
-    .tab {
-        padding: 16px;
-        font-size: 0.9rem;
     }
 }

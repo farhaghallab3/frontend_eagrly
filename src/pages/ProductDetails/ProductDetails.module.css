@@ -3,6 +3,7 @@
   min-height: 100vh;
   background-color: #FFFFFF;
   color: #111111;
+  padding-top: 120px;
   padding-bottom: 100px;
   /* Space for sticky bar */
   font-family: 'Inter', sans-serif;
@@ -118,7 +119,7 @@
 
 .categoryLabel {
   color: #FFB300;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -126,7 +127,7 @@
 
 .productTitle {
   font-size: 3.5rem;
-  font-weight: 900;
+  font-weight: 500;
   color: #111111;
   margin: 0;
   line-height: 1.1;
@@ -134,7 +135,7 @@
 
 .price {
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 500;
   color: #111111;
 }
 
@@ -142,7 +143,7 @@
 .descriptionSection h3,
 .specsSection h3 {
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 500;
   margin-bottom: 16px;
   color: #111111;
 }
@@ -168,14 +169,14 @@
 
 .specLabel {
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #999999;
   text-transform: uppercase;
 }
 
 .specValue {
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #111111;
 }
 
@@ -216,7 +217,7 @@
 
 .sellerHeader h4 {
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 500;
   margin: 0;
 }
 
@@ -267,12 +268,12 @@
 }
 
 .stickyTitle {
-  font-weight: 700;
+  font-weight: 500;
   font-size: 1rem;
 }
 
 .stickyPrice {
-  font-weight: 800;
+  font-weight: 500;
   color: #FFB300;
 }
 

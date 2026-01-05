@@ -30,7 +30,7 @@
   padding: 10px 24px;
   border-radius: 6px;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-bottom: 24px;
@@ -39,7 +39,7 @@
 
 .sectionTitle {
   font-size: 3.5rem;
-  font-weight: 900;
+  font-weight: 500;
   color: #000;
   margin-bottom: 18px;
   letter-spacing: -2px;
@@ -114,7 +114,7 @@
 
 .productPrice {
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #000;
 }
 
@@ -129,7 +129,7 @@
   color: #000;
   border: 1px solid #000;
   border-radius: 6px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -152,7 +152,7 @@
   color: #FFFFFF;
   padding: 14px 40px;
   border-radius: 6px;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.95rem;
   border: none;
   cursor: pointer;
