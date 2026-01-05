@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
-import { MdSchool, MdMenu, MdShoppingCart, MdPerson, MdNotifications, MdChat, MdLightMode, MdDarkMode, MdFavorite } from "react-icons/md";
+import { MdSchool, MdMenu, MdShoppingCart, MdPerson, MdNotifications, MdChat, MdFavorite } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../../hooks/useAuth";
 import { useAuthModal } from "../../../../context/AuthModalContext";
-import { useTheme } from "../../../../context/ThemeContext";
 import { fetchChats } from "../../../../store/slices/chatSlice";
 import { fetchMyProducts } from "../../../../store/slices/productSlice";
 import { fetchUnreadCount } from "../../../../store/slices/notificationSlice";
@@ -17,7 +16,6 @@ import styles from "./Header.module.css";
 export default function Header({ links }) {
     const { user, logoutUser, token } = useAuth();
     const { openAuthModal } = useAuthModal();
-    const { theme, toggleTheme } = useTheme();
     const dispatch = useDispatch();
     const { unreadCount } = useSelector((state) => state.chat);
     const { unreadCount: notificationCount } = useSelector((state) => state.notifications);
@@ -27,7 +25,7 @@ export default function Header({ links }) {
     // Remove test code - using real notificationCount now
     const [showChatDropdown, setShowChatDropdown] = useState(false);
     const [showNotificationsDropdown, setShowNotificationsDropdown] = useState(false);
-    const notificationsButtonRef = useRef(null);
+    const headerActionsRef = useRef(null);
 
     const navLinks = links || [
         { label: "Home", path: "/" },
@@ -42,7 +40,6 @@ export default function Header({ links }) {
             dispatch(fetchUnreadCount());
             dispatch(fetchWishlist());
 
-            // Poll for new notifications every 5 seconds
             const notificationInterval = setInterval(() => {
                 dispatch(fetchUnreadCount());
             }, 5000);
@@ -53,13 +50,27 @@ export default function Header({ links }) {
         }
     }, [token, dispatch]);
 
+    // Close dropdowns when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (headerActionsRef.current && !headerActionsRef.current.contains(event.target)) {
+                setShowChatDropdown(false);
+                setShowNotificationsDropdown(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
         <Navbar expand="lg" className={`${styles.navbar} ${styles.glassEffect}`}>
             <Container fluid className={styles.container}>
                 <Navbar.Brand as={Link} to="/" className={styles.brand}>
                     <div className={styles.logoWrapper}>
-                        <MdSchool size={32} className={styles.logoIcon} />
-                        <span className={styles.brandText}>Eagerly</span>
+                        <span className={styles.brandText}>EAGERLY</span>
                     </div>
                 </Navbar.Brand>
 
@@ -81,27 +92,20 @@ export default function Header({ links }) {
                         ))}
                     </Nav>
 
-                    <div className={styles.navActions}>
-                        <button
-                            className={styles.themeToggle}
-                            onClick={toggleTheme}
-                            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-                        >
-                            {theme === 'dark' ? <MdLightMode size={20} /> : <MdDarkMode size={20} />}
-                        </button>
-
+                    <div className={styles.navActions} ref={headerActionsRef}>
                         {/* Notifications */}
                         <div className={styles.notificationsButtonContainer}>
                             <button
-                                ref={notificationsButtonRef}
                                 className={`${styles.iconLink} ${styles.notificationsIcon}`}
                                 title="Notifications"
-                                onClick={() => {
+                                onClick={(e) => {
+                                    e.stopPropagation();
                                     if (!token) {
                                         openAuthModal();
                                         return;
                                     }
                                     setShowNotificationsDropdown(!showNotificationsDropdown);
+                                    setShowChatDropdown(false); // Close other dropdown
                                 }}
                             >
                                 <MdNotifications size={20} />
@@ -124,12 +128,14 @@ export default function Header({ links }) {
                             <button
                                 className={`${styles.iconLink} ${styles.chatIcon}`}
                                 title="Messages"
-                                onClick={() => {
+                                onClick={(e) => {
+                                    e.stopPropagation();
                                     if (!token) {
                                         openAuthModal();
                                         return;
                                     }
                                     setShowChatDropdown(!showChatDropdown);
+                                    setShowNotificationsDropdown(false); // Close other dropdown
                                 }}
                             >
                                 <MdChat size={20} />

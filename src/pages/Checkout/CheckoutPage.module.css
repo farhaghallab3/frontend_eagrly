@@ -1,145 +1,142 @@
-/* Checkout Page Styles */
 .checkoutPage {
     min-height: 100vh;
-    background: linear-gradient(135deg, #071515 0%, #0a1a1a 50%, #0d1f1f 100%);
-    padding: 2rem 0 4rem;
+    background-color: #FFFFFF;
+    padding: 120px 0 80px;
+    font-family: 'Inter', sans-serif;
+    color: #111111;
 }
 
 .container {
-    max-width: 1200px;
-}
-
-.loadingState {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-    color: white;
-    gap: 1rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
 .backButton {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 8px;
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.95rem;
+    color: #666666;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
-    margin-bottom: 1.5rem;
-    padding: 0.5rem 0;
+    margin-bottom: 32px;
+    padding: 8px 0;
     transition: color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .backButton:hover {
-    color: #27e7dd;
+    color: #FFB300;
 }
 
-/* FIXED: Side-by-side layout for payment methods and order summary */
 .checkoutRow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: 1.6fr 1.4fr;
+    gap: 40px;
+    align-items: start;
 }
 
 .mainCol {
-    flex: 1 1 60%;
-    min-width: 320px;
-}
-
-.sidebarCol {
-    flex: 1 1 35%;
-    min-width: 300px;
+    min-width: 0;
 }
 
 /* Section Card */
 .sectionCard {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 2rem;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
+    padding: 32px;
 }
 
 .sectionTitle {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #111111;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
 }
 
 .sectionSubtitle {
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 1.5rem;
+    color: #666666;
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+    line-height: 1.5;
 }
 
 /* Payment Methods */
 .paymentMethods {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
 }
 
 .paymentMethod {
     display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 2px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     position: relative;
 }
 
 .paymentMethod:hover:not(.disabled) {
-    background: rgba(39, 231, 221, 0.05);
-    border-color: rgba(39, 231, 221, 0.3);
+    border-color: #FFB300;
+    background: #FAFAFA;
 }
 
 .paymentMethod.selected {
-    background: rgba(39, 231, 221, 0.08);
-    border-color: #27e7dd;
+    border-color: #FFB300;
+    background: rgba(255, 179, 0, 0.03);
 }
 
 .paymentMethod.disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
 }
 
 .methodRadio {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #DDDDDD;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #27e7dd;
-    font-size: 12px;
-    margin-top: 2px;
+    color: #FFFFFF;
+    font-size: 10px;
+    flex-shrink: 0;
 }
 
 .paymentMethod.selected .methodRadio {
-    background: #27e7dd;
-    border-color: #27e7dd;
-    color: #071515;
+    background: #FFB300;
+    border-color: #FFB300;
 }
 
 .methodIcon {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    background: rgba(39, 231, 221, 0.1);
-    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    background: #F5F5F5;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #27e7dd;
-    font-size: 1.5rem;
+    color: #111111;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.paymentMethod.selected .methodIcon {
+    background: #111111;
+    color: #FFB300;
 }
 
 .methodInfo {
@@ -147,83 +144,90 @@
 }
 
 .methodInfo h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: white;
-    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #111111;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
 }
 
 .methodInfo p {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    color: #666666;
     margin: 0;
 }
 
 .brandIcons {
     display: flex;
-    gap: 0.75rem;
-    margin-top: 0.75rem;
+    gap: 10px;
+    margin-top: 8px;
 }
 
 .brandIcon {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.8rem;
+    color: #999999;
 }
 
 .walletLogos {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
+    gap: 6px;
+    margin-top: 8px;
 }
 
 .walletBadge {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.8);
-    padding: 0.25rem 0.6rem;
+    background: #F0F0F0;
+    color: #666666;
+    padding: 4px 8px;
     border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 .comingSoon {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    top: 12px;
+    right: 12px;
+    background: #EEEEEE;
+    color: #999999;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
 /* Bank Details */
 .bankDetails {
-    margin-top: 1.5rem;
-    padding: 1.5rem;
-    background: rgba(39, 231, 221, 0.05);
-    border: 1px solid rgba(39, 231, 221, 0.2);
-    border-radius: 12px;
+    margin-top: 24px;
+    padding: 24px;
+    background: #F9F9F9;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
 }
 
 .bankDetails h4 {
-    color: #27e7dd;
-    margin-bottom: 1rem;
+    font-weight: 900;
+    color: #111111;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: 1.1rem;
 }
 
 .bankInfo {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 24px;
 }
 
 .bankRow {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 0;
+    border-bottom: 1px solid #FAFAFA;
 }
 
 .bankRow:last-child {
@@ -231,76 +235,81 @@
 }
 
 .bankRow span {
-    color: rgba(255, 255, 255, 0.6);
+    color: #666666;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .bankRow strong {
-    color: white;
-    font-weight: 600;
+    color: #111111;
+    font-weight: 700;
 }
 
 .bankNote {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    color: #666666;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    line-height: 1.4;
 }
 
-/* Order Summary Sidebar */
+/* Order Summary */
 .orderSummary {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 2rem;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
+    padding: 32px;
     position: sticky;
-    top: 2rem;
-    height: fit-content;
+    top: 100px;
 }
 
 .summaryTitle {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #111111;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .packageInfo {
-    margin-bottom: 1rem;
+    margin-bottom: 20px;
 }
 
 .packageHeader {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.5rem;
+    gap: 12px;
+    margin-bottom: 8px;
 }
 
 .packageHeader h4 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #27e7dd;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #111111;
     margin: 0;
+    text-transform: uppercase;
 }
 
 .popularBadge {
-    background: linear-gradient(135deg, #27e7dd 0%, #1bc5bc 100%);
-    color: #071515;
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 700;
+    background: #FFB300;
+    color: #000000;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 900;
     text-transform: uppercase;
 }
 
 .packageDesc {
-    color: rgba(255, 255, 255, 0.6);
+    color: #666666;
     font-size: 0.9rem;
     margin: 0;
 }
 
 .summaryDivider {
     height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 1.25rem 0;
+    background: #EEEEEE;
+    margin: 24px 0;
 }
 
 .featuresList {
@@ -312,69 +321,72 @@
 .featuresList li {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0;
-    color: rgba(255, 255, 255, 0.8);
+    gap: 12px;
+    padding: 8px 0;
+    color: #444444;
     font-size: 0.95rem;
 }
 
 .checkIcon {
-    color: #27e7dd;
+    color: #FFB300;
     font-size: 0.9rem;
 }
 
 /* Price Breakdown */
 .priceBreakdown {
-    margin-top: 1rem;
+    margin-top: 24px;
 }
 
 .priceRow {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 0;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.95rem;
+    padding: 8px 0;
+    color: #666666;
+    font-size: 1rem;
 }
 
 .totalRow {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 1rem;
-    margin-top: 0.5rem;
-    font-weight: 600;
-    color: white;
+    border-top: 1px solid #111111;
+    padding-top: 16px;
+    margin-top: 8px;
+    font-weight: 900;
+    color: #111111;
+    text-transform: uppercase;
 }
 
 .totalPrice {
-    font-size: 1.5rem;
-    color: #27e7dd;
-    font-weight: 700;
+    font-size: 1.8rem;
+    color: #111111;
+    font-weight: 950;
 }
 
-/* Pay Button */
+/* Buttons */
 .payButton {
     width: 100%;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #27e7dd 0%, #1bc5bc 100%);
+    padding: 18px 32px;
+    background: #111111;
     border: none;
-    border-radius: 12px;
-    color: #071515;
-    font-size: 1.1rem;
-    font-weight: 700;
+    border-radius: 6px;
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-weight: 800;
     cursor: pointer;
-    margin-top: 1.5rem;
+    margin-top: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
 .payButton:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(39, 231, 221, 0.3);
+    background: #FFB300;
+    color: #000000;
 }
 
 .payButton:disabled {
-    opacity: 0.7;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
@@ -382,190 +394,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.8rem;
+    gap: 8px;
+    margin-top: 16px;
+    color: #999999;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
-/* ============================================
-   LIGHT MODE STYLES
-   ============================================ */
-:global([data-theme="light"]) .checkoutPage {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 20px;
 }
 
-:global([data-theme="light"]) .loadingState {
-    color: #1e293b;
-}
-
-:global([data-theme="light"]) .backButton {
-    color: rgba(30, 41, 59, 0.7);
-}
-
-:global([data-theme="light"]) .backButton:hover {
-    color: #0d9488;
-}
-
-:global([data-theme="light"]) .sectionCard,
-:global([data-theme="light"]) .orderSummary {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-:global([data-theme="light"]) .sectionTitle,
-:global([data-theme="light"]) .summaryTitle {
-    color: #1e293b;
-}
-
-:global([data-theme="light"]) .sectionSubtitle,
-:global([data-theme="light"]) .packageDesc {
-    color: rgba(30, 41, 59, 0.6);
-}
-
-:global([data-theme="light"]) .paymentMethod {
-    background: rgba(241, 245, 249, 0.5);
-    border: 2px solid rgba(0, 0, 0, 0.08);
-}
-
-:global([data-theme="light"]) .paymentMethod:hover:not(.disabled) {
-    background: rgba(13, 148, 136, 0.05);
-    border-color: rgba(13, 148, 136, 0.3);
-}
-
-:global([data-theme="light"]) .paymentMethod.selected {
-    background: rgba(13, 148, 136, 0.08);
-    border-color: #0d9488;
-}
-
-:global([data-theme="light"]) .methodRadio {
-    border-color: rgba(30, 41, 59, 0.3);
-    color: #0d9488;
-}
-
-:global([data-theme="light"]) .paymentMethod.selected .methodRadio {
-    background: #0d9488;
-    border-color: #0d9488;
-    color: white;
-}
-
-:global([data-theme="light"]) .methodIcon {
-    background: rgba(13, 148, 136, 0.1);
-    color: #0d9488;
-}
-
-:global([data-theme="light"]) .methodInfo h4 {
-    color: #1e293b;
-}
-
-:global([data-theme="light"]) .methodInfo p {
-    color: rgba(30, 41, 59, 0.6);
-}
-
-:global([data-theme="light"]) .brandIcon {
-    color: rgba(30, 41, 59, 0.7);
-}
-
-:global([data-theme="light"]) .walletBadge {
-    background: rgba(30, 41, 59, 0.08);
-    color: rgba(30, 41, 59, 0.8);
-}
-
-:global([data-theme="light"]) .comingSoon {
-    background: rgba(245, 158, 11, 0.15);
-    color: #b45309;
-}
-
-:global([data-theme="light"]) .bankDetails {
-    background: rgba(13, 148, 136, 0.05);
-    border: 1px solid rgba(13, 148, 136, 0.2);
-}
-
-:global([data-theme="light"]) .bankDetails h4 {
-    color: #0d9488;
-}
-
-:global([data-theme="light"]) .bankInfo {
-    background: rgba(241, 245, 249, 0.8);
-}
-
-:global([data-theme="light"]) .bankRow {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-:global([data-theme="light"]) .bankRow span {
-    color: rgba(30, 41, 59, 0.6);
-}
-
-:global([data-theme="light"]) .bankRow strong {
-    color: #1e293b;
-}
-
-:global([data-theme="light"]) .bankNote {
-    color: rgba(30, 41, 59, 0.6);
-}
-
-:global([data-theme="light"]) .packageHeader h4 {
-    color: #0d9488;
-}
-
-:global([data-theme="light"]) .popularBadge {
-    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-    color: white;
-}
-
-:global([data-theme="light"]) .summaryDivider {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-:global([data-theme="light"]) .featuresList li {
-    color: rgba(30, 41, 59, 0.8);
-}
-
-:global([data-theme="light"]) .checkIcon {
-    color: #0d9488;
-}
-
-:global([data-theme="light"]) .priceRow {
-    color: rgba(30, 41, 59, 0.7);
-}
-
-:global([data-theme="light"]) .totalRow {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    color: #1e293b;
-}
-
-:global([data-theme="light"]) .totalPrice {
-    color: #0d9488;
-}
-
-:global([data-theme="light"]) .payButton {
-    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-    color: white;
-}
-
-:global([data-theme="light"]) .payButton:hover:not(:disabled) {
-    box-shadow: 0 8px 25px rgba(13, 148, 136, 0.3);
-}
-
-:global([data-theme="light"]) .secureNote {
-    color: rgba(30, 41, 59, 0.5);
-}
-
-/* Responsive */
 @media (max-width: 991px) {
     .checkoutRow {
-        flex-direction: column;
-    }
-
-    .mainCol,
-    .sidebarCol {
-        flex: 1 1 100%;
+        grid-template-columns: 1fr;
     }
 
     .orderSummary {
         position: static;
+    }
+
+    .checkoutPage {
+        padding-top: 100px;
     }
 }
 
@@ -573,31 +429,10 @@
 
     .sectionCard,
     .orderSummary {
-        padding: 1.25rem;
+        padding: 24px;
     }
 
-    .paymentMethod {
-        flex-wrap: wrap;
-        gap: 0.75rem;
-    }
-
-    .methodIcon {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-    }
-
-    .walletLogos {
-        gap: 0.35rem;
-    }
-
-    .walletBadge {
-        font-size: 0.65rem;
-        padding: 0.2rem 0.4rem;
-    }
-
-    .bankRow {
-        flex-direction: column;
-        gap: 0.25rem;
+    .sectionTitle {
+        font-size: 1.5rem;
     }
 }

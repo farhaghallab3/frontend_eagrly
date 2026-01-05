@@ -10,14 +10,14 @@ import styles from './CategoryProductsPage.module.css';
 import { FaTag, FaBox, FaStar } from "react-icons/fa";
 
 const CategoryProductsPage = () => {
-  const { categoryId } = useParams(); 
+  const { categoryId } = useParams();
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [category, setCategory] = useState(null);
 
-  
+
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -49,59 +49,95 @@ const CategoryProductsPage = () => {
     }
   }, [categoryId]);
 
-  
+
   const featuredProducts = Array.isArray(products)
     ? products.filter(p => p.is_featured).slice(0, 6)
     : [];
 
+  const [selectedUniversity, setSelectedUniversity] = useState("");
+  const [selectedFaculty, setSelectedFaculty] = useState("");
+
+  const getUniqueValues = (field) => {
+    if (!Array.isArray(products)) return [];
+    return [...new Set(products
+      .map(p => p[field])
+      .filter(v => typeof v === 'string' && v.trim() !== '')
+    )].sort();
+  };
+
+  const universities = getUniqueValues('university');
+  const faculties = getUniqueValues('faculty');
+
+  const filteredProducts = products.filter(p => {
+    if (selectedUniversity && p.university !== selectedUniversity) return false;
+    if (selectedFaculty && p.faculty !== selectedFaculty) return false;
+    return true;
+  });
+
   return (
     <div className={styles.categoryPage}>
-      {/* Hero Section */}
-      <section className={styles.categoryHero}>
-        <div className={styles.heroBackground}>
-          <div className={styles.heroGlow1}></div>
-          <div className={styles.heroGlow2}></div>
-          <div className={styles.heroGlow3}></div>
-        </div>
-
-        <Container className={styles.heroContent}>
-          <div className={styles.categoryIcon}>
-            <FaTag />
-          </div>
-
-          <h1 className={styles.heroTitle}>
+      {/* Hero Header */}
+      <header className={styles.categoryHeader}>
+        <div className={styles.container}>
+          <h1 className={styles.headerTitle}>
             {category?.name || 'Category'} Products
           </h1>
-
-          <p className={styles.heroSubtitle}>
-            Discover our carefully curated collection of high-quality products in this category.
-            Find exactly what you need with our premium selection.
-          </p>
-
-          <div className={styles.categoryStats}>
-            <div className={styles.categoryStatItem}>
-              <span className={styles.statNumber}>
-                {Array.isArray(products) ? products.length : 0}+
-              </span>
-              <span className={styles.statLabel}>Products</span>
-            </div>
-            <div className={styles.categoryStatItem}>
-              <span className={styles.statNumber}>
-                {featuredProducts.length}
-              </span>
-              <span className={styles.statLabel}>Featured</span>
-            </div>
-            <div className={styles.categoryStatItem}>
-              <span className={styles.statNumber}>4.8</span>
-              <span className={styles.statLabel}>Avg Rating</span>
-            </div>
-          </div>
-        </Container>
-      </section>
+        </div>
+      </header>
 
       {/* Main Content */}
       <section className={styles.categoryContent}>
-        <Container className={styles.contentContainer}>
+        <div className={styles.contentContainer}>
+          {/* Top Filter Bar */}
+          <div className={styles.filterBar}>
+            <div className={styles.resultsCount}>
+              {filteredProducts.length} Products
+            </div>
+
+            <div className={styles.filterActions}>
+              {/* University Filter */}
+              <div className={styles.filterItem}>
+                <span className={styles.filterLabel}>University</span>
+                <select
+                  className={styles.filterSelect}
+                  value={selectedUniversity}
+                  onChange={(e) => setSelectedUniversity(e.target.value)}
+                >
+                  <option value="">All Universities</option>
+                  {universities.map(uni => (
+                    <option key={uni} value={uni}>{uni}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Faculty Filter */}
+              <div className={styles.filterItem}>
+                <span className={styles.filterLabel}>Faculty</span>
+                <select
+                  className={styles.filterSelect}
+                  value={selectedFaculty}
+                  onChange={(e) => setSelectedFaculty(e.target.value)}
+                >
+                  <option value="">All Faculties</option>
+                  {faculties.map(fac => (
+                    <option key={fac} value={fac}>{fac}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Sort Filter */}
+              <div className={styles.filterItem}>
+                <span className={styles.filterLabel}>Sort By</span>
+                <select className={styles.filterSelect}>
+                  <option>Our Suggestions</option>
+                  <option>Newest</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
           {loading && (
             <div className={styles.loadingState}>
               <div className={styles.loadingSpinner}></div>
@@ -126,25 +162,15 @@ const CategoryProductsPage = () => {
 
           {!loading && !error && (
             <>
-              {/* Featured Products */}
-              {featuredProducts.length > 0 && (
-                <div className={styles.featuredSection}>
-                  <FeaturedProducts
-                    title="⭐ Featured in This Category"
-                    products={featuredProducts}
-                  />
-                </div>
-              )}
-
               {/* All Products Grid */}
               <ProductsGrid
-                products={products}
+                products={filteredProducts}
                 allProductsCount={products.length}
                 categoryName={category?.name}
               />
             </>
           )}
-        </Container>
+        </div>
       </section>
     </div>
   );

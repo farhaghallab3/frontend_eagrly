@@ -55,33 +55,40 @@ export default function ProductCard({ product }) {
         <>
             {showSuccessAnimation && <SuccessAnimation message="Added to Wishlist!" />}
             <div
-                className={`${styles.card} d-flex flex-column justify-content-between p-3`}
+                className={styles.card}
                 onClick={handleClick}
-                style={{ cursor: 'pointer' }}
             >
-                <div>
-                    <div className={styles.imageContainer}>
-                        <div
-                            className={styles.image}
-                            style={{ backgroundImage: `url(${image})` }}
-                        ></div>
-                        <button
-                            className={`${styles.wishlistButton} ${isInWishlist ? styles.wishlistActive : ''}`}
-                            onClick={handleWishlistToggle}
-                            title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-                        >
-                            <FaHeart />
-                        </button>
-                    </div>
-                    <div className="mt-3">
-                        <p className={styles.title}>{title}{name}</p>
-                        <p className={styles.desc}>{description}</p>
-                    </div>
+                <div className={styles.imageContainer}>
+                    <div
+                        className={styles.image}
+                        style={{ backgroundImage: `url(${image})` }}
+                    ></div>
+                    <button
+                        className={`${styles.wishlistButton} ${isInWishlist ? styles.wishlistActive : ''}`}
+                        onClick={handleWishlistToggle}
+                        title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+                    >
+                        <FaHeart />
+                    </button>
                 </div>
-                <ButtonPrimary text={buttonText} onClick={(e) => {
-                    e.stopPropagation();
-                    handleClick();
-                }} />
+
+                <div className={styles.cardContent}>
+                    <h3 className={styles.title}>{title || name}</h3>
+                    <p className={styles.desc}>{description}</p>
+                    {product.price && (
+                        <div className={styles.price}>
+                            {product.price} EGP
+                        </div>
+                    )}
+                </div>
+
+                <ButtonPrimary
+                    text={buttonText}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleClick();
+                    }}
+                />
             </div>
         </>
     );

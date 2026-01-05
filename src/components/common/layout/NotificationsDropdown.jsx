@@ -59,74 +59,74 @@ const NotificationsDropdown = ({ show, onToggle }) => {
     return `${diffDays}d ago`;
   };
 
+  if (!show) return null;
+
   return (
-    <Dropdown show={show} onToggle={onToggle} align="end">
-      <Dropdown.Menu className={styles.notificationsDropdown}>
-        <div className={styles.dropdownHeader}>
-          <h6 className={styles.dropdownTitle}>Notifications</h6>
-          {notifications.length > 0 && (
-            <button
-              className={styles.markAllReadBtn}
-              onClick={handleMarkAllRead}
-            >
-              Mark all read
-            </button>
-          )}
-        </div>
+    <div className={styles.notificationsDropdown} onClick={(e) => e.stopPropagation()}>
+      <div className={styles.dropdownHeader}>
+        <h6 className={styles.dropdownTitle}>Notifications</h6>
+        {notifications.length > 0 && (
+          <button
+            className={styles.markAllReadBtn}
+            onClick={handleMarkAllRead}
+          >
+            Mark all read
+          </button>
+        )}
+      </div>
 
-        <div className={styles.dropdownContent}>
-          {loading ? (
-            <div className={styles.loadingState}>
-              <div className={styles.loadingSpinner}></div>
-              <p>Loading notifications...</p>
-            </div>
-          ) : notifications.length === 0 ? (
-            <div className={styles.emptyState}>
-              <MdInfo size={32} className={styles.emptyIcon} />
-              <p>No notifications yet</p>
-            </div>
-          ) : (
-            <div className={styles.notificationsList}>
-              {notifications.slice(0, 10).map((notification) => (
-                <div
-                  key={notification.id}
-                  className={`${styles.notificationItem} ${!notification.is_read ? styles.unread : ''}`}
-                  onClick={() => handleNotificationClick(notification)}
-                >
-                  <div className={styles.notificationIcon}>
-                    {getNotificationIcon(notification.notification_type)}
-                  </div>
-
-                  <div className={styles.notificationContent}>
-                    <div className={styles.notificationTitle}>
-                      {notification.title}
-                    </div>
-                    <div className={styles.notificationMessage}>
-                      {notification.message}
-                    </div>
-                    <div className={styles.notificationTime}>
-                      {formatTime(notification.created_at)}
-                    </div>
-                  </div>
-
-                  {!notification.is_read && (
-                    <div className={styles.unreadIndicator}></div>
-                  )}
+      <div className={styles.dropdownContent}>
+        {loading ? (
+          <div className={styles.loadingState}>
+            <div className={styles.loadingSpinner}></div>
+            <p>Loading notifications...</p>
+          </div>
+        ) : notifications.length === 0 ? (
+          <div className={styles.emptyState}>
+            <MdInfo size={32} className={styles.emptyIcon} />
+            <p>No notifications yet</p>
+          </div>
+        ) : (
+          <div className={styles.notificationsList}>
+            {notifications.slice(0, 10).map((notification) => (
+              <div
+                key={notification.id}
+                className={`${styles.notificationItem} ${!notification.is_read ? styles.unread : ''}`}
+                onClick={() => handleNotificationClick(notification)}
+              >
+                <div className={styles.notificationIcon}>
+                  {getNotificationIcon(notification.notification_type)}
                 </div>
-              ))}
 
-              {notifications.length > 10 && (
-                <div className={styles.viewAllBtn}>
-                  <button onClick={() => {/* Navigate to full notifications page */ }}>
-                    View all notifications
-                  </button>
+                <div className={styles.notificationContent}>
+                  <div className={styles.notificationTitle}>
+                    {notification.title}
+                  </div>
+                  <div className={styles.notificationMessage}>
+                    {notification.message}
+                  </div>
+                  <div className={styles.notificationTime}>
+                    {formatTime(notification.created_at)}
+                  </div>
                 </div>
-              )}
-            </div>
-          )}
-        </div>
-      </Dropdown.Menu>
-    </Dropdown>
+
+                {!notification.is_read && (
+                  <div className={styles.unreadIndicator}></div>
+                )}
+              </div>
+            ))}
+
+            {notifications.length > 10 && (
+              <div className={styles.viewAllBtn}>
+                <button onClick={() => {/* Navigate to full notifications page */ }}>
+                  View all notifications
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

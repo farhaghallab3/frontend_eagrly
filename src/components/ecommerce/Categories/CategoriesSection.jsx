@@ -11,9 +11,11 @@ export default function CategoriesSection({ categories }) {
 
     return (
         <section id="categories" className={style.categoriesSection}>
-            {/* Background elements moved to Home wrapper */}
-            <div className="container">
+            <div className={style.sectionContainer}>
                 <div className={style.header}>
+                    <div className={style.headerBadge}>
+                        <span>Featured Collection</span>
+                    </div>
                     <h2 className={style.title}>Shop by Category</h2>
                     <p className={style.subtitle}>Discover products in your favorite categories</p>
                 </div>

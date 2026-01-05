@@ -1,4 +1,5 @@
 import React from "react";
+import { FaSearch } from "react-icons/fa";
 import styles from "./ProductsGrid.module.css";
 import ProductCard from "../ProductCard/ProductCard";
 
@@ -7,17 +8,6 @@ const ProductsGrid = ({ products, allProductsCount, filters = {}, onFilterChange
     <div className={styles.productsGrid}>
       {/* Active Filters Summary */}
       <div className={styles.filtersSummary}>
-        <div className={styles.resultsInfo}>
-          <span className={styles.resultsCount}>
-            Showing {products?.length || 0} of {allProductsCount} products
-          </span>
-          {filters.category && (
-            <span className={styles.activeFilter}>
-              in {categoryName || filters.category}
-            </span>
-          )}
-        </div>
-
         <div className={styles.activeFilters}>
           {filters.category && (
             <div className={styles.filterTag}>
@@ -45,7 +35,7 @@ const ProductsGrid = ({ products, allProductsCount, filters = {}, onFilterChange
         ) : (
           <div className={styles.emptyState}>
             <div className={styles.emptyIcon}>
-              <span>🔍</span>
+              <FaSearch />
             </div>
             <h3 className={styles.emptyTitle}>
               {allProductsCount === 0 ? 'No products available' : 'No products found'}

@@ -1,96 +1,137 @@
 @import "leaflet/dist/leaflet.css";
 @import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* Dark Theme (Default) */
-  --bg-primary: #0a0f1a;
-  --bg-secondary: #0f1627;
-  --bg-card: rgba(15, 26, 36, 0.95);
-  --text-primary: #ffffff;
-  --text-secondary: #8892b0;
-  --accent-primary: #64ffda;
-  --accent-secondary: #00c2ff;
-  --border-color: rgba(100, 255, 218, 0.2);
-  --shadow-color: rgba(0, 0, 0, 0.3);
-  --input-bg: rgba(10, 25, 47, 0.5);
-  --input-focus-bg: rgba(100, 255, 218, 0.05);
-  --glass-bg: rgba(15, 26, 36, 0.7);
-  --gradient-overlay: linear-gradient(135deg, rgba(10, 15, 26, 0.9) 0%, rgba(15, 22, 39, 0.95) 100%);
+  /* Phizz-Inspired Layout + Eagerly Yellow/Orange */
+  --color-primary: #FFB300;
+  /* Amber/Yellow-Orange */
+  --color-primary-dark: #FF8F00;
+  /* Darker Amber */
+  --color-secondary: #FF6B00;
+  /* Phizz Orange as secondary */
+
+  /* Gradient for mix */
+  --gradient-primary: linear-gradient(135deg, #FFB300 0%, #FF6B00 100%);
+
+  --color-accent-lime: #00FF88;
+  --color-accent-teal: #00F6FF;
+
+  --color-bg-body: #FFFFFF;
+  /* Pure White */
+  --color-bg-light: #FFF5EB;
+  /* Light Orange Tint */
+  --color-bg-white: #FFFFFF;
+
+  --color-text-main: #111111;
+  /* Soft Black */
+  --color-text-muted: #666666;
+  /* Grey */
+  --color-border: #EEEEEE;
+  /* Very Light Grey */
+
+  /* Shadows - Energetic but soft */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  --shadow-primary: 0 10px 20px rgba(255, 107, 0, 0.3);
+  /* Orange Glow */
+
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-theme='light'] {
-  /* Light Theme - Harmonized */
-  --bg-primary: #f0f4f8;
-  /* Slate-ish white */
-  --bg-secondary: #ffffff;
-  --bg-card: rgba(255, 255, 255, 0.95);
-  --text-primary: #1a202c;
-  /* Dark slate */
-  --text-secondary: #4a5568;
-  /* Gray slate */
-  --accent-primary: #00b4d8;
-  /* Slightly darker teal/blue for contrast */
-  --accent-secondary: #0077b6;
-  --border-color: rgba(0, 180, 216, 0.2);
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --input-bg: rgba(255, 255, 255, 0.8);
-  --input-focus-bg: rgba(0, 180, 216, 0.05);
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --gradient-overlay: linear-gradient(135deg, rgba(240, 244, 248, 0.9) 0%, rgba(255, 255, 255, 0.95) 100%);
+/* Strict Light Mode - No Dark Mode Overrides */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  /* Tight tracking like Phizz */
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  position: relative;
+  background-color: var(--color-bg-body);
+  color: var(--color-text-main);
+  font-family: 'Poppins', 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
   min-height: 100vh;
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
   line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: 400;
+  /* Ensure clean regular text */
 }
 
-.background-container {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-  background: linear-gradient(135deg, #0a0f1a 0%, #0f1627 50%, #0a0f1a 100%);
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-fast);
 }
 
-.grid-pattern {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, rgba(33, 150, 243, 0.03) 2px, transparent 2px);
-  background-size: 2rem 2rem;
-  z-index: 1;
+button {
+  font-family: 'Poppins', sans-serif;
 }
 
-.academic-accent::before,
-.academic-accent::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(33, 150, 243, 0.08);
-  filter: blur(60px);
-  opacity: 0.6;
-  z-index: 0;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.academic-accent::before {
-  width: 300px;
-  height: 300px;
-  top: -150px;
-  left: -150px;
+::-webkit-scrollbar-track {
+  background: var(--color-bg-body);
 }
 
-.academic-accent::after {
-  width: 250px;
-  height: 250px;
-  bottom: -125px;
-  right: -125px;
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Utilities */
+.text-primary {
+  color: var(--color-primary) !important;
+}
+
+.text-secondary {
+  color: var(--color-secondary) !important;
+}
+
+.bg-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.bg-white {
+  background-color: var(--color-bg-white) !important;
+}
+
+.rounded-full {
+  border-radius: var(--radius-full) !important;
+}
+
+.shadow-card {
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Global Layout Containers */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
 }

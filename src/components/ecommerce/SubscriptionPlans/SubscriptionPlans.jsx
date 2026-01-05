@@ -55,17 +55,16 @@ export default function SubscriptionPlans({ isModal, onClose }) {
         <section className={`${styles.plansSection} ${isModal ? styles.plansSectionModal : ''}`}>
             {/* Background elements moved to Home wrapper */}
 
-            <Container id="plans" className={`${styles.plansContainer} ${isModal ? styles.modalContainer : ''}`}>
+            <Container id="plans" className={`${styles.sectionContainer} ${isModal ? styles.modalContainer : ''}`}>
                 <div className={styles.sectionHeader}>
                     {!isModal && (
                         <div className={styles.headerBadge}>
-                            <AiOutlineCrown className={styles.badgeIcon} />
-                            <span>Pricing Plans</span>
+                            <span>Featured Collection</span>
                         </div>
                     )}
 
                     <h2 className={styles.sectionTitle}>
-                        {isModal ? "Upgrade to Continue" : "Choose Your Plan"}
+                        {isModal ? "Upgrade to Continue" : "Pricing Plans"}
                     </h2>
                     <p className={styles.sectionSubtitle}>
                         {isModal ? "You've reached your ad limit. Subscribe to post more ads." : "Join our community with a plan that suits your needs. Upgrade, downgrade, or cancel anytime."}

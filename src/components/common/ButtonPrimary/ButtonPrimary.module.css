@@ -2,37 +2,42 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  border-radius: 0.5rem;
-  padding: 0.6rem 1.2rem;
+  gap: 0.5rem;
+  border-radius: 0.3rem;
+  padding: 0.75rem 1.5rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 0.95rem;
 }
 
 /* 🔹 Filled Button */
 .filled {
-  background: linear-gradient(135deg, #64ffda 0%, #00c2ff 100%);
-  color: #0a192f;
+  background-color: var(--color-primary);
+  color: #111;
+  /* Black text on neon */
   border: none;
+  box-shadow: 0 4px 6px rgba(255, 107, 0, 0.25);
 }
 
 .filled:hover {
+  background-color: var(--color-primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(100, 255, 218, 0.3);
+  box-shadow: 0 8px 16px rgba(255, 107, 0, 0.4);
 }
 
 /* 🔹 Outline Button */
 .outline {
   background-color: transparent;
-  color: #64ffda;
-  border: 2px solid rgba(100, 255, 218, 0.5);
+  color: var(--color-text-main);
+  border-color: var(--color-border);
 }
 
 .outline:hover {
-  background-color: rgba(100, 255, 218, 0.1);
-  border-color: #64ffda;
-  color: #64ffda;
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+  background-color: rgba(57, 255, 20, 0.05);
   transform: translateY(-2px);
 }

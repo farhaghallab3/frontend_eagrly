@@ -76,6 +76,21 @@ const ProductsPage = () => {
     return true;
   }) : [];
 
+  const getUniqueValues = (field) => {
+    if (!Array.isArray(products)) return [];
+    return [...new Set(products
+      .map(p => p[field])
+      .filter(v => typeof v === 'string' && v.trim() !== '')
+    )].sort();
+  };
+
+  const universities = getUniqueValues('university');
+  const faculties = getUniqueValues('faculty');
+
+  const handleFilterChange = (field, value) => {
+    setFilters(prev => ({ ...prev, [field]: value }));
+  };
+
   const clearAllFilters = () => setFilters({
     category: "",
     university: "",
@@ -88,124 +103,118 @@ const ProductsPage = () => {
 
   return (
     <div className={styles.marketplacePage}>
-      {/* Hero Section */}
-      <section className={styles.marketplaceHero}>
-        <div className={styles.heroBackground}>
-          <div className={styles.heroGlow1}></div>
-          <div className={styles.heroGlow2}></div>
-          <div className={styles.heroGlow3}></div>
+      {/* Hero Header */}
+      <header className={styles.marketplaceHeader}>
+        <div className={styles.container}>
+          <h1 className={styles.headerTitle}>Products</h1>
         </div>
-
-        <Container className={styles.heroContent}>
-          <div className={styles.heroBadge}>
-            <span className={styles.badgeIcon}>🛍️</span>
-            <span>Marketplace</span>
-          </div>
-
-          <h1 className={styles.heroTitle}>
-            Discover Amazing Products
-          </h1>
-
-          <p className={styles.heroSubtitle}>
-            Explore our curated collection of high-quality products from trusted sellers.
-            Find exactly what you need with our advanced filtering and search features.
-          </p>
-
-          <div className={styles.heroStats}>
-            <div className={styles.statItem}>
-              <span className={styles.statNumber}>
-                {Array.isArray(products) ? products.length : 0}+
-              </span>
-              <span className={styles.statLabel}>Products</span>
-            </div>
-            <div className={styles.statItem}>
-              <span className={styles.statNumber}>
-                {Array.isArray(categories) ? categories.length : 0}+
-              </span>
-              <span className={styles.statLabel}>Categories</span>
-            </div>
-            {/* Avg Rating Removed */}
-          </div>
-        </Container>
-      </section>
+      </header>
 
       {/* Main Content */}
       <section className={styles.marketplaceContent}>
-        <Container>
-          <div className={styles.contentGrid}>
-            {/* Sidebar */}
-            <div className={styles.sidebar}>
-              <div className={styles.sidebarCard}>
-                <ProductFilters
-                  filters={filters}
-                  onFilterChange={setFilters}
-                  products={products}
-                  onClearFilters={clearAllFilters}
-                  categories={categories}
-                />
-              </div>
+        <div className={styles.container}>
+          {/* Top Filter Bar */}
+          <div className={styles.filterBar}>
+            <div className={styles.resultsCount}>
+              {filteredProducts.length} Products
             </div>
 
-            {/* Main Content */}
-            <div className={styles.mainContent}>
-              {loading && (
-                <div className={styles.loadingState}>
-                  <div className={styles.loadingSpinner}></div>
-                  <p>Loading amazing products...</p>
-                </div>
-              )}
+            <div className={styles.filterActions}>
+              {/* Category Filter */}
+              <div className={styles.filterItem}>
+                <span className={styles.filterLabel}>Category</span>
+                <select
+                  className={styles.filterSelect}
+                  value={filters.category}
+                  onChange={(e) => handleFilterChange('category', e.target.value)}
+                >
+                  <option value="">All Categories</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.name}>{cat.name}</option>
+                  ))}
+                </select>
+              </div>
 
-              {error && (
-                <div className={styles.errorState}>
-                  <div className={styles.errorAlert}>
-                    <h3>Oops! Something went wrong</h3>
-                    <p>{error}</p>
-                    <button
-                      className={styles.retryButton}
-                      onClick={fetchProducts}
-                    >
-                      Try Again
-                    </button>
-                  </div>
-                </div>
-              )}
+              {/* University Filter */}
+              <div className={styles.filterItem}>
+                <span className={styles.filterLabel}>University</span>
+                <select
+                  className={styles.filterSelect}
+                  value={filters.university}
+                  onChange={(e) => handleFilterChange('university', e.target.value)}
+                >
+                  <option value="">All Universities</option>
+                  {universities.map(uni => (
+                    <option key={uni} value={uni}>{uni}</option>
+                  ))}
+                </select>
+              </div>
 
-              {!loading && !error && (
-                <>
-                  {/* Results Summary */}
-                  <div className={styles.resultsSummary}>
-                    <div className={styles.resultsText}>
-                      Showing {filteredProducts.length} of {products.length} products
-                      {filters.category && ` in ${filters.category}`}
-                    </div>
-                    <div className={styles.resultsCount}>
-                      {filteredProducts.length} Results
-                    </div>
-                  </div>
+              {/* Faculty Filter */}
+              <div className={styles.filterItem}>
+                <span className={styles.filterLabel}>Faculty</span>
+                <select
+                  className={styles.filterSelect}
+                  value={filters.faculty}
+                  onChange={(e) => handleFilterChange('faculty', e.target.value)}
+                >
+                  <option value="">All Faculties</option>
+                  {faculties.map(fac => (
+                    <option key={fac} value={fac}>{fac}</option>
+                  ))}
+                </select>
+              </div>
 
-                  {/* Featured Products */}
-                  {featuredProducts.length > 0 && (
-                    <div style={{ marginBottom: '60px' }}>
-                      <FeaturedProducts
-                        title="⭐ Featured Products"
-                        products={featuredProducts}
-                      />
-                    </div>
-                  )}
-
-                  {/* Products Grid */}
-                  <ProductsGrid
-                    products={filteredProducts}
-                    allProductsCount={products.length}
-                    filters={filters}
-                    onFilterChange={setFilters}
-                    categoryName={categories.find(c => c.id === Number(filters.category))?.name}
-                  />
-                </>
-              )}
+              {/* Sort Filter */}
+              {/* <div className={styles.filterItem}>
+                <span className={styles.filterLabel}>Sort By</span>
+                <select className={styles.filterSelect}>
+                  <option>Our Suggestions</option>
+                  <option>Newest</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                </select>
+              </div> */}
             </div>
           </div>
-        </Container>
+
+          <div className={styles.mainContent}>
+            {loading && (
+              <div className={styles.loadingState}>
+                <div className={styles.loadingSpinner}></div>
+                <p>Loading amazing products...</p>
+              </div>
+            )}
+
+            {error && (
+              <div className={styles.errorState}>
+                <div className={styles.errorAlert}>
+                  <h3>Oops! Something went wrong</h3>
+                  <p>{error}</p>
+                  <button
+                    className={styles.retryButton}
+                    onClick={fetchProducts}
+                  >
+                    Try Again
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {!loading && !error && (
+              <>
+                {/* Products Grid */}
+                <ProductsGrid
+                  products={filteredProducts}
+                  allProductsCount={products.length}
+                  filters={filters}
+                  onFilterChange={setFilters}
+                  categoryName={categories.find(c => c.id === Number(filters.category))?.name}
+                />
+              </>
+            )}
+          </div>
+        </div>
       </section>
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { FaCreditCard, FaMobileAlt, FaUniversity, FaPaypal, FaLock, FaArrowLeft, FaCheck } from 'react-icons/fa';
 import { SiVisa, SiMastercard } from 'react-icons/si';
 import styles from './CheckoutPage.module.css';
@@ -13,7 +12,7 @@ const PAYMENT_METHODS = [
     {
         id: 'card',
         name: 'Credit / Debit Card',
-        description: 'Pay securely with Visa or Mastercard',
+        description: 'Visa or Mastercard',
         icon: FaCreditCard,
         brands: ['visa', 'mastercard'],
         available: true
@@ -21,7 +20,7 @@ const PAYMENT_METHODS = [
     {
         id: 'wallet',
         name: 'Mobile Wallet',
-        description: 'Vodafone Cash, Etisalat Cash, Orange Money, WE Pay',
+        description: 'Vodafone, Etisalat, Orange, WE',
         icon: FaMobileAlt,
         wallets: ['vodafone', 'etisalat', 'orange', 'we'],
         available: true
@@ -29,16 +28,16 @@ const PAYMENT_METHODS = [
     {
         id: 'bank',
         name: 'Bank Transfer',
-        description: 'Direct bank transfer to our account',
+        description: 'Direct transfer to account',
         icon: FaUniversity,
         available: true
     },
     {
         id: 'paypal',
         name: 'PayPal',
-        description: 'Pay with your PayPal account',
+        description: 'Pay with PayPal',
         icon: FaPaypal,
-        available: false // Coming soon
+        available: false
     }
 ];
 
@@ -95,10 +94,8 @@ const CheckoutPage = () => {
             const publicKey = import.meta.env.VITE_PAYMOB_PUBLIC_KEY;
 
             if (client_secret && publicKey) {
-                // Redirect to Paymob checkout
                 window.location.href = `https://accept.paymob.com/unifiedcheckout/?publicKey=${publicKey}&clientSecret=${client_secret}`;
             } else {
-                console.error("Missing payment config", { client_secret, publicKey });
                 toast.error("Unable to initiate payment. Please check configuration.");
             }
         } catch (error) {
@@ -112,34 +109,30 @@ const CheckoutPage = () => {
     if (loading) {
         return (
             <div className={styles.checkoutPage}>
-                <Container className={styles.container}>
+                <div className={styles.container}>
                     <div className={styles.loadingState}>
-                        <Spinner animation="border" variant="primary" />
-                        <p>Loading checkout...</p>
+                        <div className={styles.spinner}></div>
+                        <p>Preparing Checkout...</p>
                     </div>
-                </Container>
+                </div>
             </div>
         );
     }
 
-    if (!packageData) {
-        return null;
-    }
+    if (!packageData) return null;
 
     return (
         <div className={styles.checkoutPage}>
-            <Container className={styles.container}>
-                {/* Back Button */}
+            <div className={styles.container}>
                 <button className={styles.backButton} onClick={() => navigate('/packages')}>
-                    <FaArrowLeft /> Back to Plans
+                    <FaArrowLeft /> Back
                 </button>
 
-                <Row className={styles.checkoutRow}>
-                    {/* Main Content - Payment Methods */}
-                    <Col lg={7} className={styles.mainCol}>
+                <div className={styles.checkoutRow}>
+                    <div className={styles.mainCol}>
                         <div className={styles.sectionCard}>
-                            <h2 className={styles.sectionTitle}>Select Payment Method</h2>
-                            <p className={styles.sectionSubtitle}>Choose your preferred payment method. You'll complete the payment on our secure payment partner's page.</p>
+                            <h2 className={styles.sectionTitle}>Payment</h2>
+                            <p className={styles.sectionSubtitle}>Select your preferred payment method below.</p>
 
                             <div className={styles.paymentMethods}>
                                 {PAYMENT_METHODS.map((method) => (
@@ -149,7 +142,7 @@ const CheckoutPage = () => {
                                         onClick={() => method.available && setSelectedMethod(method.id)}
                                     >
                                         <div className={styles.methodRadio}>
-                                            {selectedMethod === method.id && <FaCheck />}
+                                            {selectedMethod === method.id && <FaCheck size={10} />}
                                         </div>
                                         <div className={styles.methodIcon}>
                                             <method.icon />
@@ -157,20 +150,6 @@ const CheckoutPage = () => {
                                         <div className={styles.methodInfo}>
                                             <h4>{method.name}</h4>
                                             <p>{method.description}</p>
-                                            {method.brands && (
-                                                <div className={styles.brandIcons}>
-                                                    <SiVisa className={styles.brandIcon} title="Visa" />
-                                                    <SiMastercard className={styles.brandIcon} title="Mastercard" />
-                                                </div>
-                                            )}
-                                            {method.wallets && (
-                                                <div className={styles.walletLogos}>
-                                                    <span className={styles.walletBadge}>Vodafone Cash</span>
-                                                    <span className={styles.walletBadge}>Etisalat Cash</span>
-                                                    <span className={styles.walletBadge}>Orange</span>
-                                                    <span className={styles.walletBadge}>WE Pay</span>
-                                                </div>
-                                            )}
                                         </div>
                                         {!method.available && (
                                             <span className={styles.comingSoon}>Coming Soon</span>
@@ -179,48 +158,41 @@ const CheckoutPage = () => {
                                 ))}
                             </div>
 
-                            {/* Bank Details Modal/Section */}
                             {showBankDetails && selectedMethod === 'bank' && (
                                 <div className={styles.bankDetails}>
-                                    <h4>Bank Transfer Details</h4>
+                                    <h4>Bank Transfer</h4>
                                     <div className={styles.bankInfo}>
                                         <div className={styles.bankRow}>
-                                            <span>Bank Name:</span>
-                                            <strong>Commercial International Bank (CIB)</strong>
+                                            <span>Bank:</span>
+                                            <strong>CIB</strong>
                                         </div>
                                         <div className={styles.bankRow}>
-                                            <span>Account Name:</span>
-                                            <strong>Eagerly Marketplace Ltd</strong>
+                                            <span>Account:</span>
+                                            <strong>Eagerly Marketplace</strong>
                                         </div>
                                         <div className={styles.bankRow}>
-                                            <span>Account Number:</span>
+                                            <span>Number:</span>
                                             <strong>1234567890123456</strong>
                                         </div>
                                         <div className={styles.bankRow}>
-                                            <span>IBAN:</span>
-                                            <strong>EG123456789012345678901234</strong>
-                                        </div>
-                                        <div className={styles.bankRow}>
                                             <span>Reference:</span>
-                                            <strong>PKG-{packageId}-{Date.now()}</strong>
+                                            <strong>PKG-{packageId}</strong>
                                         </div>
                                     </div>
                                     <p className={styles.bankNote}>
-                                        Please include the reference number in your transfer. Your subscription will be activated within 24 hours after we confirm your payment.
+                                        Subscription activates within 24h after verification.
                                     </p>
                                     <ButtonPrimary
-                                        text={confirmingManualPayment ? "Submitting..." : "I've Made the Transfer"}
+                                        text={confirmingManualPayment ? "Submitting..." : "Confirm Transfer"}
                                         disabled={confirmingManualPayment}
                                         onClick={async () => {
                                             setConfirmingManualPayment(true);
                                             try {
                                                 await packageService.confirmManualPayment(packageId, 'bank');
                                                 setShowSuccess(true);
-                                                setTimeout(() => {
-                                                    navigate('/');
-                                                }, 2500);
+                                                setTimeout(() => navigate('/'), 2500);
                                             } catch (error) {
-                                                toast.error('Failed to submit payment confirmation. Please try again.');
+                                                toast.error('Failed to confirm. Try again.');
                                             } finally {
                                                 setConfirmingManualPayment(false);
                                             }
@@ -229,51 +201,41 @@ const CheckoutPage = () => {
                                 </div>
                             )}
 
-                            {/* Mobile Wallet Details Section */}
                             {showWalletDetails && selectedMethod === 'wallet' && (
                                 <div className={styles.bankDetails}>
-                                    <h4>Mobile Wallet Transfer</h4>
-                                    <p className={styles.bankNote} style={{ marginTop: 0, marginBottom: '1rem' }}>
-                                        Send <strong>{packageData.price} EGP</strong> to one of the following numbers. Make sure to save the transfer receipt.
-                                    </p>
+                                    <h4>Mobile Wallet</h4>
                                     <div className={styles.bankInfo}>
                                         <div className={styles.bankRow}>
-                                            <span>🔴 Vodafone Cash:</span>
-                                            <strong style={{ direction: 'ltr' }}>010 1234 5678</strong>
+                                            <span>Amount:</span>
+                                            <strong>{packageData.price} EGP</strong>
                                         </div>
                                         <div className={styles.bankRow}>
-                                            <span>🟢 Etisalat Cash:</span>
-                                            <strong style={{ direction: 'ltr' }}>011 1234 5678</strong>
+                                            <span>Vodafone:</span>
+                                            <strong>010 1234 5678</strong>
                                         </div>
                                         <div className={styles.bankRow}>
-                                            <span>🟠 Orange Money:</span>
-                                            <strong style={{ direction: 'ltr' }}>012 1234 5678</strong>
+                                            <span>Etisalat:</span>
+                                            <strong>011 1234 5678</strong>
                                         </div>
                                         <div className={styles.bankRow}>
-                                            <span>🟣 WE Pay:</span>
-                                            <strong style={{ direction: 'ltr' }}>015 1234 5678</strong>
-                                        </div>
-                                        <div className={styles.bankRow} style={{ marginTop: '0.5rem', borderTop: '1px solid rgba(39, 231, 221, 0.3)', paddingTop: '0.75rem' }}>
-                                            <span>Reference:</span>
-                                            <strong>PKG-{packageId}-{Date.now().toString().slice(-6)}</strong>
+                                            <span>Orange:</span>
+                                            <strong>012 1234 5678</strong>
                                         </div>
                                     </div>
                                     <p className={styles.bankNote}>
-                                        Include the reference in the transfer notes. Your subscription will be activated within 24 hours after confirmation.
+                                        Please save your transfer receipt for verification.
                                     </p>
                                     <ButtonPrimary
-                                        text={confirmingManualPayment ? "Submitting..." : "I've Made the Transfer"}
+                                        text={confirmingManualPayment ? "Submitting..." : "Confirm Transfer"}
                                         disabled={confirmingManualPayment}
                                         onClick={async () => {
                                             setConfirmingManualPayment(true);
                                             try {
                                                 await packageService.confirmManualPayment(packageId, 'wallet');
                                                 setShowSuccess(true);
-                                                setTimeout(() => {
-                                                    navigate('/');
-                                                }, 2500);
+                                                setTimeout(() => navigate('/'), 2500);
                                             } catch (error) {
-                                                toast.error('Failed to submit payment confirmation. Please try again.');
+                                                toast.error('Failed to confirm. Try again.');
                                             } finally {
                                                 setConfirmingManualPayment(false);
                                             }
@@ -282,17 +244,16 @@ const CheckoutPage = () => {
                                 </div>
                             )}
                         </div>
-                    </Col>
+                    </div>
 
-                    {/* Sidebar - Order Summary */}
-                    <Col lg={5} className={styles.sidebarCol}>
+                    <div className={styles.sidebarCol}>
                         <div className={styles.orderSummary}>
-                            <h3 className={styles.summaryTitle}>Order Summary</h3>
+                            <h3 className={styles.summaryTitle}>Summary</h3>
 
                             <div className={styles.packageInfo}>
                                 <div className={styles.packageHeader}>
                                     <h4>{packageData.name}</h4>
-                                    {packageData.popular && <span className={styles.popularBadge}>Popular</span>}
+                                    {packageData.popular && <span className={styles.popularBadge}>POPULAR</span>}
                                 </div>
                                 <p className={styles.packageDesc}>{packageData.description}</p>
                             </div>
@@ -302,17 +263,15 @@ const CheckoutPage = () => {
                             <ul className={styles.featuresList}>
                                 <li>
                                     <FaCheck className={styles.checkIcon} />
-                                    <span><strong>{packageData.ad_limit >= 999 ? 'Unlimited' : packageData.ad_limit}</strong> Ad postings</span>
+                                    <span><strong>{packageData.ad_limit >= 999 ? 'Unlimited' : packageData.ad_limit}</strong> AD LIMIT</span>
                                 </li>
-                                {packageData.featured_ad_limit !== null && (
-                                    <li>
-                                        <FaCheck className={styles.checkIcon} />
-                                        <span><strong>{packageData.featured_ad_limit}</strong> Featured ads</span>
-                                    </li>
-                                )}
                                 <li>
                                     <FaCheck className={styles.checkIcon} />
-                                    <span><strong>{packageData.duration_in_days}</strong> Days validity</span>
+                                    <span><strong>{packageData.featured_ad_limit || 0}</strong> FEATURED ADS</span>
+                                </li>
+                                <li>
+                                    <FaCheck className={styles.checkIcon} />
+                                    <span><strong>{packageData.duration_in_days}</strong> DAYS VALIDITY</span>
                                 </li>
                             </ul>
 
@@ -320,15 +279,7 @@ const CheckoutPage = () => {
 
                             <div className={styles.priceBreakdown}>
                                 <div className={styles.priceRow}>
-                                    <span>Subtotal</span>
-                                    <span>{packageData.price} EGP</span>
-                                </div>
-                                <div className={styles.priceRow}>
-                                    <span>Tax</span>
-                                    <span>0 EGP</span>
-                                </div>
-                                <div className={`${styles.priceRow} ${styles.totalRow}`}>
-                                    <span>Total</span>
+                                    <span>TOTAL</span>
                                     <span className={styles.totalPrice}>{packageData.price} EGP</span>
                                 </div>
                             </div>
@@ -338,31 +289,22 @@ const CheckoutPage = () => {
                                 onClick={handlePayment}
                                 disabled={processing}
                             >
-                                {processing ? (
-                                    <>
-                                        <Spinner as="span" animation="border" size="sm" className="me-2" />
-                                        Processing...
-                                    </>
-                                ) : (
-                                    <>
-                                        <FaLock className="me-2" />
-                                        {selectedMethod === 'bank' ? 'View Bank Details' :
-                                            selectedMethod === 'wallet' ? 'View Wallet Numbers' :
-                                                `Pay ${packageData.price} EGP`}
-                                    </>
-                                )}
+                                {processing ? 'Processing...' :
+                                    selectedMethod === 'bank' ? 'View Details' :
+                                        selectedMethod === 'wallet' ? 'View Numbers' :
+                                            `Subscribe Now`}
                             </button>
 
                             <p className={styles.secureNote}>
-                                <FaLock /> Your payment is secured by 256-bit SSL encryption
+                                <FaLock size={12} /> Secure 256-bit Encryption
                             </p>
                         </div>
-                    </Col>
-                </Row>
-            </Container>
+                    </div>
+                </div>
+            </div>
 
             {showSuccess && (
-                <SuccessAnimation message="Payment Submitted! We will verify and activate your subscription within 24 hours." />
+                <SuccessAnimation message="Subscription requested! We'll notify you once verified." />
             )}
         </div>
     );

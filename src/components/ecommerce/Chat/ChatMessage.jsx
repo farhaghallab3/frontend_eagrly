@@ -1,24 +1,26 @@
 import React, { useEffect, useRef } from "react";
-import { Image } from "react-bootstrap";
-import { MdDone, MdDoneAll } from "react-icons/md";
 import styles from "./ChatMessages.module.css";
+import { MdDoneAll } from "react-icons/md";
 
 const ChatMessages = ({ messages }) => {
   const messagesEndRef = useRef(null);
-  const containerRef = useRef(null);
+  const listRef = useRef(null);
 
-  const scrollToBottom = () => {
-    // Scroll within the container only, not the entire page
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+  const scrollToBottom = (smooth = true) => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({
+        behavior: smooth ? "smooth" : "auto",
+        block: "end"
+      });
     }
   };
 
   useEffect(() => {
-    // Use requestAnimationFrame to ensure DOM is updated before scrolling
-    requestAnimationFrame(() => {
+    // Small delay to allow messages to render
+    const timer = setTimeout(() => {
       scrollToBottom();
-    });
+    }, 100);
+    return () => clearTimeout(timer);
   }, [messages]);
 
   const formatTime = (timeString) => {
@@ -29,8 +31,8 @@ const ChatMessages = ({ messages }) => {
   };
 
   return (
-    <div className={styles.messagesContainer}>
-      <div className={styles.messagesList} ref={containerRef}>
+    <div className={styles.messagesContainer} style={{ height: '100%' }}>
+      <div className={styles.messagesList} ref={listRef}>
         {messages.length === 0 ? (
           <div className={styles.emptyMessages}>
             <div className={styles.emptyContent}>
@@ -53,23 +55,24 @@ const ChatMessages = ({ messages }) => {
                 <div className={styles.messageContainer}>
                   {isReceived && showAvatar && (
                     <div className={styles.messageAvatar}>
-                      <Image
+                      <img
                         src="https://i.pinimg.com/1200x/88/68/d7/8868d7b09e6eff73db538eee5e077816.jpg"
-                        roundedCircle
-                        width={36}
-                        height={36}
+                        alt="User"
                         className={styles.avatarImage}
                       />
                     </div>
                   )}
 
                   <div className={styles.messageContent}>
+                    {isReceived && showAvatar && (
+                      <span className={styles.senderName}>{msg.sender}</span>
+                    )}
                     <div className={`${styles.messageBubble} ${isSent ? styles.sentBubble : styles.receivedBubble}`}>
                       {msg.text && msg.text.startsWith('data:image/') ? (
                         <div className={styles.messageImage}>
-                          <Image
+                          <img
                             src={msg.text}
-                            alt="Shared image"
+                            alt="Shared"
                             className={styles.sharedImage}
                             onClick={() => window.open(msg.text, '_blank')}
                           />
@@ -89,18 +92,22 @@ const ChatMessages = ({ messages }) => {
                         )}
                       </div>
                     </div>
-
-                    {isReceived && showAvatar && (
-                      <div className={styles.messageSpacer}></div>
-                    )}
                   </div>
                 </div>
               </div>
             );
           })
         )}
-        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} style={{ float: "left", clear: "both", height: '1px' }} />
       </div>
+
+      {/* <button
+        className={styles.scrollBottomBtn}
+        onClick={() => scrollToBottom(true)}
+        title="Scroll to bottom"
+      >
+        ↓
+      </button> */}
     </div>
   );
 };

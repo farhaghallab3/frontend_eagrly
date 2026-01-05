@@ -1,0 +1,104 @@
+.chatListContainer {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.chatList {
+    display: flex;
+    flex-direction: column;
+}
+
+.chatItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #EEEEEE;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #FFFFFF;
+    text-decoration: none;
+    color: inherit;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.chatItem:hover {
+    background: #F9F9F9;
+}
+
+.chatItem.active {
+    background: #FFF9E6;
+    border-left: 4px solid #FFB300;
+}
+
+.avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #F5F5F5;
+    border: 1px solid #EEEEEE;
+    flex-shrink: 0;
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+}
+
+.userName {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #111111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.timestamp {
+    font-size: 0.75rem;
+    color: #999999;
+    flex-shrink: 0;
+}
+
+.productTitle {
+    font-size: 0.85rem;
+    color: #666666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.unreadBadge {
+    background-color: #FFB300;
+    color: #FFFFFF;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 10px;
+    min-width: 20px;
+    text-align: center;
+    margin-left: 8px;
+}
+
+.emptyState {
+    padding: 40px 24px;
+    text-align: center;
+    color: #999999;
+}
+
+.emptyIcon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    display: block;
+}

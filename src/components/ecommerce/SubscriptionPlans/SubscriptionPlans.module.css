@@ -1,19 +1,25 @@
-/* Subscription Plans Section */
+/* Subscription Plans Section - Centered & Clean */
 .plansSection {
-  position: relative;
   padding: 100px 0;
-  background: transparent;
-  overflow: hidden;
-  color: var(--text-primary);
-  position: relative;
-  z-index: 2;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+}
+
+.sectionContainer {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Modal Variants */
 .plansSectionModal {
   padding: 40px 20px;
   background: transparent !important;
-  /* Let the modal handle bg */
 }
 
 .modalContainer {
@@ -22,255 +28,110 @@
   padding: 0;
 }
 
-.modalGrid {
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 20px !important;
-  display: grid;
-  display: grid;
-  overflow-visible: visible;
-  /* Changed from auto to visible to allow badges to overflow */
-  /* Just in case on vary small screens */
-}
-
-/* Background Effects */
-.sectionBackground {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.bgGlow1,
-.bgGlow2,
-.bgGlow3 {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(150px);
-  opacity: 0.3;
-  animation: bgFloat 12s ease-in-out infinite;
-}
-
-.bgGlow1 {
-  width: 600px;
-  height: 600px;
-  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
-  top: -200px;
-  left: -200px;
-  animation-delay: 0s;
-}
-
-.bgGlow2 {
-  width: 400px;
-  height: 400px;
-  background: linear-gradient(45deg, var(--accent-secondary), var(--accent-primary));
-  top: 60%;
-  right: -100px;
-  animation-delay: 4s;
-}
-
-.bgGlow3 {
-  width: 500px;
-  height: 500px;
-  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
-  bottom: -150px;
-  left: 60%;
-  animation-delay: 8s;
-}
-
-@keyframes bgFloat {
-
-  0%,
-  100% {
-    transform: translateY(0px) scale(1) rotate(0deg);
-  }
-
-  33% {
-    transform: translateY(-30px) scale(1.1) rotate(120deg);
-  }
-
-  66% {
-    transform: translateY(20px) scale(0.9) rotate(240deg);
-  }
-}
-
-/* Section Header */
+/* Header */
 .sectionHeader {
-  position: relative;
-  z-index: 2;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 70px;
 }
 
 .headerBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(100, 255, 218, 0.1);
-  border: 1px solid var(--border-color);
-  border-radius: 50px;
-  padding: 10px 20px;
+  display: inline-block;
+  background: transparent;
+  color: #FFB300;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
   margin-bottom: 24px;
-  backdrop-filter: blur(10px);
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--accent-primary);
-}
-
-.badgeIcon {
-  font-size: 1.1rem;
-  animation: badgePulse 2s ease-in-out infinite;
-}
-
-@keyframes badgePulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.1);
-  }
+  border: 1px solid rgba(255, 179, 0, 0.2);
 }
 
 .sectionTitle {
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 800;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.2;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #000;
+  margin-bottom: 18px;
+  letter-spacing: -2px;
+  line-height: 1.1;
 }
 
 .sectionSubtitle {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  max-width: 600px;
+  color: #666;
+  max-width: 550px;
   margin: 0 auto;
+  font-size: 1.1rem;
   line-height: 1.6;
 }
 
 /* Plans Grid */
 .plansGrid {
-  position: relative;
-  z-index: 2;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
+  gap: 32px;
   margin-bottom: 60px;
 }
 
 /* Plan Cards */
 .planCard {
-  background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #EEEEEE;
   padding: 40px 32px;
-  position: relative;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 32px var(--shadow-color);
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease;
   height: 100%;
 }
 
-.planCard::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(100, 255, 218, 0.05), rgba(0, 194, 255, 0.05));
-  border-radius: 24px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-}
-
-.planCard:hover::before {
-  opacity: 1;
+.planCardPopular {
+  border-color: #FFB300;
+  border-width: 2px;
 }
 
 .planCard:hover {
-  border-color: var(--accent-primary);
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    0 0 40px rgba(100, 255, 218, 0.2);
   transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
-/* Popular Badge */
 .popularBadge {
   position: absolute;
-  top: -12px;
+  top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-  color: #0a192f;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 20px rgba(100, 255, 218, 0.3);
-  z-index: 3;
-}
-
-.badgeStar {
-  font-size: 1rem;
-}
-
-/* Enterprise Badge */
-.enterpriseBadge {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
-  color: #0a192f;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
-  z-index: 3;
-}
-
-.badgeVerified {
-  font-size: 1rem;
+  background: #FFB300;
+  color: #000;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* Plan Header */
 .planHeader {
   text-align: center;
-  margin-bottom: 24px;
-  position: relative;
-  z-index: 2;
+  margin-bottom: 30px;
 }
 
 .planIcon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 16px auto;
-  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-  border-radius: 16px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px auto;
+  background: transparent;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0a192f;
-  box-shadow: 0 8px 24px rgba(100, 255, 218, 0.3);
+  color: #FFB300;
 }
 
 .planTitle {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #000;
   margin: 0;
 }
 
@@ -278,8 +139,6 @@
 .planPrice {
   text-align: center;
   margin-bottom: 32px;
-  position: relative;
-  z-index: 2;
 }
 
 .priceWrapper {
@@ -287,233 +146,102 @@
   align-items: baseline;
   justify-content: center;
   gap: 4px;
-  margin-bottom: 4px;
-}
-
-.currency {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--accent-primary);
 }
 
 .priceValue {
-  font-size: 3rem;
-  font-weight: 800;
-  color: var(--text-primary);
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #000;
   line-height: 1;
 }
 
-.pricePeriod {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  font-weight: 500;
+.currency {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #666;
 }
 
-/* Plan Divider */
+.pricePeriod {
+  display: block;
+  font-size: 0.95rem;
+  color: #999;
+  margin-top: 8px;
+}
+
 .planDivider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+  background: #EEEEEE;
   margin-bottom: 32px;
 }
 
-/* Features List */
+/* Features */
 .featuresList {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 40px 0;
   flex-grow: 1;
-  position: relative;
-  z-index: 2;
 }
 
 .featureItem {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
-  color: var(--text-secondary);
+  color: #444;
   margin-bottom: 16px;
-  transition: all 0.3s ease;
-}
-
-.featureItem:hover {
-  color: var(--accent-primary);
-  transform: translateX(4px);
+  font-size: 0.95rem;
 }
 
 .featureIcon {
-  color: var(--accent-primary);
+  color: #FFB300;
+  /* Keep green for positive confirmation */
   font-size: 1.2rem;
   flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.featureItem span {
-  line-height: 1.5;
 }
 
 .featureItem strong {
-  color: var(--text-primary);
-  font-weight: 600;
+  color: #000;
 }
 
 /* Choose Button */
 .chooseButton {
-  margin-top: auto;
-  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  width: 100%;
+  background: #000000;
+  color: #FFFFFF;
   border: none;
-  color: #0a192f;
-  font-weight: 600;
+  padding: 16px;
+  border-radius: 6px;
+  font-weight: 700;
   font-size: 1rem;
-  padding: 16px 24px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(100, 255, 218, 0.3);
-  position: relative;
-  z-index: 2;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .chooseButton:hover {
+  background: #222222;
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(100, 255, 218, 0.4);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .chooseButtonPopular {
-  background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+  background: #FFB300;
+  color: #000;
 }
 
-.chooseButtonEnterprise {
-  background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
-  color: #0a192f;
-}
-
-/* Guarantee Section */
-.guaranteeSection {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  padding-top: 40px;
-  border-top: 1px solid var(--border-color);
-}
-
-.guaranteeItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.guaranteeIcon {
-  color: var(--accent-primary);
-  font-size: 1.2rem;
-  flex-shrink: 0;
-}
-
-/* Loading State */
-.loadingState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 20px;
-  color: var(--text-secondary);
-}
-
-.loadingSpinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(100, 255, 218, 0.2);
-  border-top: 3px solid var(--accent-primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.noPlans {
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .plansGrid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-  }
+.chooseButtonPopular:hover {
+  background: #FFA000;
+  box-shadow: 0 10px 20px rgba(255, 179, 0, 0.2);
 }
 
 @media (max-width: 768px) {
-  .plansSection {
-    padding: 80px 0;
-  }
-
-  .sectionHeader {
-    margin-bottom: 40px;
-  }
-
   .sectionTitle {
     font-size: 2.5rem;
   }
 
-  .plansGrid {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-    margin-bottom: 40px;
-  }
-
-  .planCard {
-    padding: 32px 24px;
-  }
-
-  .guaranteeSection {
-    gap: 20px;
-  }
-}
-
-@media (max-width: 576px) {
   .plansGrid {
     grid-template-columns: 1fr;
-  }
-
-  .sectionTitle {
-    font-size: 2rem;
-  }
-
-  .planCard {
-    padding: 28px 20px;
-  }
-
-  .priceValue {
-    font-size: 2.5rem;
-  }
-
-  .guaranteeSection {
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .guaranteeItem {
-    justify-content: center;
+    gap: 40px;
   }
 }

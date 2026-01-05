@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaHeart, FaTrash, FaCheck } from "react-icons/fa";
 import { fetchWishlist, removeFromWishlist, clearLastAction } from "../../store/slices/wishlistSlice";
@@ -16,12 +15,10 @@ export default function Wishlist() {
     const [showFeedback, setShowFeedback] = useState(false);
 
     useEffect(() => {
-        // Scroll to top when page loads
         window.scrollTo(0, 0);
         dispatch(fetchWishlist());
     }, [dispatch]);
 
-    // Show feedback when item is removed
     useEffect(() => {
         if (lastAction?.type === 'removed') {
             setShowFeedback(true);
@@ -34,7 +31,6 @@ export default function Wishlist() {
 
     const handleRemoveFromWishlist = async (productId) => {
         setRemovingId(productId);
-        // Wait for animation before dispatching
         setTimeout(() => {
             dispatch(removeFromWishlist(productId));
             setRemovingId(null);
@@ -44,80 +40,77 @@ export default function Wishlist() {
     if (loading && safeWishlistItems.length === 0) {
         return (
             <div className={styles.wishlistPage}>
-                <Container>
-                    <div className={styles.loading}>Loading wishlist...</div>
-                </Container>
+                <div className={styles.container}>
+                    <div className={styles.loading}>Loading your favorites...</div>
+                </div>
             </div>
         );
     }
 
     return (
         <div className={styles.wishlistPage}>
-            <Container>
+            <div className={styles.container}>
                 <div className={styles.header}>
-                    <h1>My Wishlist</h1>
-                    <p>{safeWishlistItems.length} {safeWishlistItems.length === 1 ? 'item' : 'items'} in your wishlist</p>
+                    <h1>Wishlist</h1>
+                    <p>{safeWishlistItems.length} {safeWishlistItems.length === 1 ? 'Product' : 'Products'}</p>
                 </div>
 
-                {/* Inline feedback message */}
                 {showFeedback && (
                     <div className={styles.feedbackMessage}>
                         <FaCheck className={styles.feedbackIcon} />
-                        <span>Item removed from wishlist</span>
+                        <span>Removed from wishlist</span>
                     </div>
                 )}
 
                 {safeWishlistItems.length === 0 ? (
                     <div className={styles.emptyWishlist}>
-                        <FaHeart size={64} className={styles.emptyIcon} />
+                        <FaHeart size={48} className={styles.emptyIcon} />
                         <h3>Your wishlist is empty</h3>
-                        <p>Browse our marketplace and add items you love to your wishlist!</p>
-                        <Button as={Link} to="/marketplace" className={styles.browseButton}>
+                        <p>Discover something you love in our marketplace.</p>
+                        <Link to="/marketplace" className={styles.browseButton}>
                             Browse Marketplace
-                        </Button>
+                        </Link>
                     </div>
                 ) : (
-                    <Row className={styles.wishlistGrid}>
+                    <div className={styles.wishlistGrid}>
                         {safeWishlistItems.map((item) => (
-                            <Col
+                            <div
                                 key={item.id}
-                                xs={12} sm={6} md={4} lg={3}
                                 className={`${styles.wishlistCol} ${removingId === item.product_id ? styles.removing : ''}`}
                             >
-                                <Card className={styles.wishlistCard}>
+                                <div className={styles.wishlistCard}>
                                     <div className={styles.imageContainer}>
-                                        <Card.Img
-                                            variant="top"
+                                        <img
                                             src={item.product_image || '/placeholder-image.jpg'}
+                                            alt={item.product_title}
                                             className={styles.productImage}
                                         />
                                         <button
                                             className={styles.removeButton}
                                             onClick={() => handleRemoveFromWishlist(item.product_id)}
-                                            title="Remove from wishlist"
+                                            title="Remove"
                                             disabled={removingId === item.product_id}
                                         >
-                                            <FaTrash />
+                                            <FaTrash size={14} />
                                         </button>
                                     </div>
-                                    <Card.Body className={styles.cardBody}>
-                                        <Card.Title className={styles.productTitle}>
+                                    <div className={styles.cardBody}>
+                                        <h3 className={styles.productTitle}>
                                             {item.product_title}
-                                        </Card.Title>
-                                        <Card.Text className={styles.productPrice}>
+                                        </h3>
+                                        <div className={styles.productPrice}>
                                             {item.product_price} EGP
-                                        </Card.Text>
+                                        </div>
                                         <Link to={`/product/${item.product_id}`} className={styles.viewButton}>
-                                            <span className={styles.buttonText}>View Details</span>
+                                            View Details
                                         </Link>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
+                                    </div>
+                                </div>
+                            </div>
                         ))}
-                    </Row>
+                    </div>
                 )}
-            </Container>
+            </div>
         </div>
     );
 }
-

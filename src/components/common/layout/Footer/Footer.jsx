@@ -1,7 +1,7 @@
 // Footer.jsx
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { FaTwitter, FaLinkedin, FaFacebook, FaGithub, FaInstagram } from "react-icons/fa";
+import { FaTwitter, FaLinkedin, FaFacebook, FaGithub, FaInstagram, FaHeart } from "react-icons/fa";
 import { MdSchool, MdEmail, MdLocationOn, MdPhone } from "react-icons/md";
 import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
@@ -39,13 +39,12 @@ const Footer = () => {
     return (
         <footer className={styles.footer}>
             <div className={styles.footerContent}>
-                <Container>
-                    <Row>
-                        <Col lg={4} md={6} className={styles.footerSection}>
+                <div className={styles.container}>
+                    <div className={styles.footerGrid}>
+                        <div className={styles.footerSection}>
                             <div className={styles.brandSection}>
                                 <div className={styles.footerLogo}>
-                                    <MdSchool size={32} className={styles.logoIcon} />
-                                    <span className={styles.brandText}>Eagerly</span>
+                                    <span className={styles.brandText}>EAGERLY</span>
                                 </div>
                                 <p className={styles.brandDescription}>
                                     Your trusted marketplace for discovering amazing products and connecting with sellers worldwide.
@@ -66,9 +65,9 @@ const Footer = () => {
                                     </div>
                                 </div>
                             </div>
-                        </Col>
+                        </div>
 
-                        <Col lg={2} md={6} className={styles.footerSection}>
+                        <div className={styles.footerSection}>
                             <h6 className={styles.sectionTitle}>Platform</h6>
                             <ul className={styles.footerLinks}>
                                 {footerLinks.platform.map((link, index) => (
@@ -79,9 +78,9 @@ const Footer = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </Col>
+                        </div>
 
-                        <Col lg={2} md={6} className={styles.footerSection}>
+                        <div className={styles.footerSection}>
                             <h6 className={styles.sectionTitle}>Support</h6>
                             <ul className={styles.footerLinks}>
                                 {footerLinks.support.map((link, index) => (
@@ -92,9 +91,9 @@ const Footer = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </Col>
+                        </div>
 
-                        <Col lg={2} md={6} className={styles.footerSection}>
+                        <div className={styles.footerSection}>
                             <h6 className={styles.sectionTitle}>Company</h6>
                             <ul className={styles.footerLinks}>
                                 {footerLinks.company.map((link, index) => (
@@ -105,9 +104,9 @@ const Footer = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </Col>
+                        </div>
 
-                        <Col lg={2} md={6} className={styles.footerSection}>
+                        <div className={styles.footerSection}>
                             <h6 className={styles.sectionTitle}>Connect</h6>
                             <ul className={styles.footerLinks}>
                                 {footerLinks.connect.map((link, index) => (
@@ -118,8 +117,8 @@ const Footer = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
 
                     <div className={styles.footerBottom}>
                         <div className={styles.footerBottomContent}>
@@ -147,12 +146,12 @@ const Footer = () => {
                             <div className={styles.copyright}>
                                 <p>© {currentYear} Eagrely. All rights reserved.</p>
                                 <p className={styles.madeWith}>
-                                    Made with <span className={styles.heart}>❤️</span> for the community
+                                    Made with <FaHeart className={styles.heart} /> for the community
                                 </p>
                             </div>
                         </div>
                     </div>
-                </Container>
+                </div>
             </div>
         </footer>
     );

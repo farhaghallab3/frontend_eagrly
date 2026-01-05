@@ -1,204 +1,144 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-
+import { Container } from "react-bootstrap";
 import {
     FaRocket,
-    FaGlasses,
-    FaFlag,
-    FaUsers,
-    FaGlobe,
     FaLightbulb,
-    FaUserShield,
+    FaUsers,
+    FaShieldAlt,
     FaHandshake,
-    FaHeadset,
-    FaStar,
-    FaQuoteLeft,
-    FaArrowRight,
+    FaGraduationCap,
+    FaCode,
+    FaPalette,
+    FaCheckCircle
 } from "react-icons/fa";
 import styles from "./AboutUs.module.css";
 
 const AboutUs = () => {
+    const teamMembers = [
+        { name: "Ahmed", role: "Developer / ITI Student" },
+        { name: "Farha", role: "Developer / ITI Student" },
+        { name: "Kamel", role: "Developer / ITI Student" },
+        { name: "Kareem", role: "Developer / ITI Student" }
+    ];
+
+    const values = [
+        {
+            icon: <FaLightbulb />,
+            title: "Innovation",
+            text: "We leverage modern technologies to solve real-world problems for students."
+        },
+        {
+            icon: <FaUsers />,
+            title: "Community",
+            text: "Eagerly is built for students, by students, fostering a supportive academic ecosystem."
+        },
+        {
+            icon: <FaGraduationCap />,
+            title: "Education",
+            text: "Our project is a testament to the high-quality training provided by ITI."
+        },
+        {
+            icon: <FaHandshake />,
+            title: "Trust",
+            text: "We ensure a secure and transparent marketplace for all our university users."
+        }
+    ];
+
+    const journey = [
+        { icon: <FaLightbulb />, title: "Concept & Research", date: "Initial Phase" },
+        { icon: <FaPalette />, title: "Design & UX Strategy", date: "Design Phase" },
+        { icon: <FaCode />, title: "Full-Stack Development", date: "Implementation Phase" },
+        { icon: <FaRocket />, title: "Final Launch", date: "ITI Graduation" }
+    ];
+
     return (
         <div className={styles.aboutPage}>
+            {/* Page Header */}
+            <header className={styles.aboutHeader}>
+                <div className={styles.container}>
+                    <h1 className={styles.headerTitle}>About us.</h1>
+                </div>
+            </header>
 
-
-            {/* Hero Section */}
-            <section className={styles.hero}>
-                <div className={styles.heroContent}>
-                    <h1>Our Story: Engineering the Future of Remote Work.</h1>
-                    <h2>
-                        We're a team of innovators and creators dedicated to building
-                        seamless, powerful, and elegant hardware that empowers the modern
-                        remote workforce.
-                    </h2>
-                    <Button className={styles.primaryBtn}>Explore Products</Button>
+            {/* Intro Section */}
+            <section className={styles.introSection}>
+                <div className={styles.container}>
+                    <div className={styles.introContent}>
+                        <h2>Empowering Students, Fueling Futures.</h2>
+                        <p>
+                            Eagerly is an ITI Graduation Project developed with passion and precision.
+                            Our mission is to create a specialized, high-performance marketplace that
+                            caters specifically to the needs of university students across Egypt.
+                        </p>
+                    </div>
                 </div>
             </section>
 
-            {/* Mission & Vision */}
-            <Container className={styles.section}>
-                <h2>Our Mission and Vision</h2>
-                <p>
-                    We are driven by a core purpose and a forward-looking vision for the
-                    future of remote work.
-                </p>
-                <Row >
-                    <Col md={6}  >
-                        <Card className={styles.card}>
-                            <FaRocket className={styles.icon} />
-                            <div>
-                                <h3>Our Mission</h3>
-                                <p>
-                                    To empower professionals with innovative technology that makes
-                                    remote work more productive, connected, and inspiring.
-                                </p>
-                            </div>
-                        </Card>
-                    </Col>
-                    <Col md={6}>
-                        <Card className={styles.card}>
-                            <FaGlasses className={styles.icon} />
-                            <div>
-                                <h3>Our Vision</h3>
-                                <p>
-                                    A world where talent and opportunity are not limited by
-                                    location, supported by tools that bridge the distance
-                                    seamlessly.
-                                </p>
-                            </div>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
+            {/* The Project Section */}
+            <section className={styles.section}>
+                <div className={styles.container}>
+                    <h3>The Eagerly Project</h3>
+                    <p style={{ color: '#666', maxWidth: '800px', lineHeight: '1.8' }}>
+                        What started as a requirement for graduation at the Information Technology Institute (ITI)
+                        evolved into a full-scale e-commerce solution. We've focused on creating a seamless
+                        user experience that combines modern design with powerful functionality, ensuring
+                        that every student can find the resources they need with ease.
+                    </p>
+                </div>
+            </section>
 
-            {/* Timeline */}
-            <Container className={styles.section}>
-                <h2>Our Journey</h2>
-                <div className={styles.timeline}>
-                    <div className={styles.timelineItem}>
-                        <FaFlag className={styles.icon} />
-                        <div>
-                            <p className={styles.timelineTitle}>Company Founded</p>
-                            <p className={styles.timelineDate}>2018</p>
-                        </div>
-                    </div>
-                    <div className={styles.timelineItem}>
-                        <FaRocket className={styles.icon} />
-                        <div>
-                            <p className={styles.timelineTitle}>First Product Launch</p>
-                            <p className={styles.timelineDate}>2019</p>
-                        </div>
-                    </div>
-                    <div className={styles.timelineItem}>
-                        <FaUsers className={styles.icon} />
-                        <div>
-                            <p className={styles.timelineTitle}>Expanded to 100 Employees</p>
-                            <p className={styles.timelineDate}>2021</p>
-                        </div>
-                    </div>
-                    <div className={styles.timelineItem}>
-                        <FaGlobe className={styles.icon} />
-                        <div>
-                            <p className={styles.timelineTitle}>Opened International Office</p>
-                            <p className={styles.timelineDate}>2023</p>
-                        </div>
+            {/* Team Section */}
+            <section className={styles.section}>
+                <div className={styles.container}>
+                    <h3>Meet the Team</h3>
+                    <div className={styles.teamGrid}>
+                        {teamMembers.map((member, idx) => (
+                            <div key={idx} className={styles.teamCard}>
+                                <h4>{member.name}</h4>
+                                <p>{member.role}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
-            </Container>
+            </section>
 
-            {/* Team */}
-            <Container className={styles.section}>
-                <h2>Meet the Team</h2>
-                <p>
-                    The brilliant minds behind Eagerly, dedicated to pushing the boundaries
-                    of remote work technology.
-                </p>
-                <div className={styles.teamGrid}>
-                    {[
-                        {
-                            name: "Ahmed",
-                            role: "Team Member",
-                        },
-                        {
-                            name: "Farha",
-                            role: "Team Member",
-                        },
-                        {
-                            name: "Kamel",
-                            role: "Team Member",
-                        },
-                        {
-                            name: "Kareem",
-                            role: "Team Member",
-                        },
-                    ].map((member, idx) => (
-                        <div key={idx} className={styles.teamCard}>
-                            <h4>{member.name}</h4>
-                            <p>{member.role}</p>
-                        </div>
-                    ))}
+            {/* Values Section */}
+            <section className={styles.section}>
+                <div className={styles.container}>
+                    <h3>Our Values</h3>
+                    <div className={styles.valuesGrid}>
+                        {values.map((value, idx) => (
+                            <div key={idx} className={styles.valueCard}>
+                                <div className={styles.iconWrapper}>{value.icon}</div>
+                                <div className={styles.valueContent}>
+                                    <h4>{value.title}</h4>
+                                    <p>{value.text}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </Container>
+            </section>
 
-            {/* Values */}
-            <Container className={styles.section}>
-                <h2>Our Values</h2>
-                <p>The core principles that guide our culture, decisions, and innovation.</p>
-                <Row>
-                    <Col md={6}>
-                        <Card className={styles.valueCard}>
-                            <FaLightbulb className={styles.icon} />
-                            <div>
-                                <h3>Innovation</h3>
-                                <p>
-                                    We relentlessly pursue new ideas and technologies to solve the
-                                    challenges of remote work.
-                                </p>
+            {/* Journey Section */}
+            <section className={styles.section}>
+                <div className={styles.container}>
+                    <h3>Our Journey</h3>
+                    <div className={styles.timeline}>
+                        {journey.map((item, idx) => (
+                            <div key={idx} className={styles.timelineItem}>
+                                <div className={styles.timelineDot}>{item.icon}</div>
+                                <div className={styles.timelineContent}>
+                                    <h4>{item.title}</h4>
+                                    <span className={styles.timelineDate}>{item.date}</span>
+                                </div>
                             </div>
-                        </Card>
-                    </Col>
-                    <Col md={6}>
-                        <Card className={styles.valueCard}>
-                            <FaHeadset className={styles.icon} />
-                            <div>
-                                <h3>Customer-Centricity</h3>
-                                <p>
-                                    Our users are at the heart of everything we build. Their success
-                                    is our success.
-                                </p>
-                            </div>
-                        </Card>
-                    </Col>
-                    <Col md={6}>
-                        <Card className={styles.valueCard}>
-                            <FaUserShield className={styles.icon} />
-                            <div>
-                                <h3>Integrity</h3>
-                                <p>
-                                    We believe in transparency and honesty in our products, our
-                                    processes, and our communication.
-                                </p>
-                            </div>
-                        </Card>
-                    </Col>
-                    <Col md={6}>
-                        <Card className={styles.valueCard}>
-                            <FaHandshake className={styles.icon} />
-                            <div>
-                                <h3>Collaboration</h3>
-                                <p>
-                                    We champion teamwork and open communication, both within our
-                                    company and with our community.
-                                </p>
-                            </div>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <div style={{ height: '100px' }}></div>
         </div>
     );
 };

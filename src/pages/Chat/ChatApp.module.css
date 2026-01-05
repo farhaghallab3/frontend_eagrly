@@ -1,20 +1,25 @@
-/* Chat App Main Container */
+/* Chat App Main Container - Phizz Aesthetic */
 .chatContainer {
-  height: calc(100vh - 70px);
-  margin-top: 70px;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+  height: calc(100vh - 180px);
+  /* Leave plenty of room */
+  margin: 0 auto;
+  max-width: 1280px;
+  background-color: #FFFFFF;
   display: flex;
   position: relative;
   overflow: hidden;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', sans-serif;
+  color: #111111;
+  border: 1px solid #EEEEEE;
+  border-radius: 8px;
 }
 
 /* Sidebar for Chat List */
 .chatSidebar {
-  width: 320px;
-  min-width: 320px;
-  background: var(--bg-card);
-  border-right: 1px solid var(--border-color);
+  width: 380px;
+  min-width: 380px;
+  background: #FFFFFF;
+  border-right: 1px solid #EEEEEE;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -34,39 +39,34 @@
 }
 
 .sidebarHeader {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-color);
-  background: var(--bg-secondary);
+  padding: 24px;
+  border-bottom: 1px solid #EEEEEE;
+  background: #FFFFFF;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 60px;
 }
 
 .sidebarTitle {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  transition: opacity 0.2s ease;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #111111;
 }
 
 .sidebarContent {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  transition: opacity 0.2s ease;
-  /* Prevent extra scrolling */
-  max-height: calc(100% - 60px);
 }
 
 .toggleButton {
   background: transparent;
   border: none;
-  color: var(--text-secondary);
+  color: #999999;
   cursor: pointer;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,45 +74,8 @@
 }
 
 .toggleButton:hover {
-  background: var(--bg-secondary);
-  color: var(--accent-primary);
-  transform: scale(1.1);
-}
-
-.expandButton {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-left: none;
-  border-radius: 0 8px 8px 0;
-  padding: 12px 8px;
-  cursor: pointer;
-  color: var(--accent-primary);
-  box-shadow: 2px 0 8px var(--shadow-color);
-  transition: all 0.2s ease;
-  animation: slideIn 0.3s ease;
-}
-
-.expandButton:hover {
-  background: var(--accent-primary);
-  color: white;
-  padding-right: 12px;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-50%) translateX(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(-50%) translateX(0);
-  }
+  background: #F9F9F9;
+  color: #111111;
 }
 
 /* Main Chat Area */
@@ -121,23 +84,21 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
-  padding: 20px;
+  background: #FFFFFF;
   min-width: 0;
+  min-height: 0;
+  /* CRITICAL for flex scrolling */
 }
 
 .chatConversation {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: var(--bg-card);
+  background: #FFFFFF;
   position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
   width: 100%;
-  box-shadow: 0 4px 20px var(--shadow-color);
-  border-radius: 16px 16px 0 0;
-  overflow: hidden;
+  min-height: 0;
+  /* CRITICAL for flex scrolling */
 }
 
 /* Loading and Error States */
@@ -146,36 +107,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  color: var(--text-primary);
-}
-
-.loadingSpinner {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+  height: calc(100vh - 70px);
+  background: #FFFFFF;
+  color: #111111;
 }
 
 .errorAlert {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 12px;
-  padding: 20px;
-  color: #ef4444;
+  background: #FFF5F5;
+  border: 1px solid #FFEBEB;
+  border-radius: 8px;
+  padding: 24px;
+  color: #FF3B30;
   max-width: 400px;
   text-align: center;
+  font-weight: 500;
 }
-
-
 
 /* Empty State */
 .emptyState {
@@ -183,34 +129,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Explicit dark background */
-  background: linear-gradient(135deg, rgba(15, 26, 36, 0.95) 0%, #0f1627 100%);
+  background: #FFFFFF;
   padding: 40px;
 }
 
 .emptyContent {
   text-align: center;
-  color: rgba(255, 255, 255, 0.7);
+  color: #999999;
   max-width: 400px;
-  /* Explicit dark background */
-  background: rgba(15, 26, 36, 0.95);
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .emptyIcon {
-  color: var(--accent-primary);
+  color: #FFB300;
   margin-bottom: 24px;
-  font-size: 4rem;
-  opacity: 0.8;
+  opacity: 0.2;
 }
 
 .emptyContent h3 {
-  color: #ffffff;
-  font-weight: 600;
+  color: #111111;
+  font-weight: 900;
   margin-bottom: 12px;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
 }
 
 .emptyContent p {
@@ -219,17 +158,11 @@
   margin: 0;
 }
 
-/* Error Alert in Chat */
-.errorAlertChat {
-  border-top: 1px solid rgba(239, 68, 68, 0.2);
-  background: rgba(239, 68, 68, 0.05);
-}
-
 /* Responsive Design */
 @media (max-width: 992px) {
   .chatSidebar {
-    width: 280px;
-    min-width: 260px;
+    width: 320px;
+    min-width: 300px;
   }
 }
 
@@ -240,30 +173,12 @@
     top: 0;
     height: 100%;
     z-index: 100;
-    width: 300px;
+    width: 100%;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
   }
 
   .chatSidebar.open {
     transform: translateX(0);
-  }
-
-  .emptyContent {
-    padding: 20px;
-  }
-
-  .emptyContent h3 {
-    font-size: 1.25rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .emptyContent {
-    max-width: 250px;
-  }
-
-  .emptyContent h3 {
-    font-size: 1.1rem;
   }
 }

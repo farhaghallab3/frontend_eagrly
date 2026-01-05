@@ -8,7 +8,6 @@ import ChatList from "@components/ecommerce/Chat/ChatList";
 import { getChat, sendMessage } from "../../services/chatService";
 import { setSelectedChat, fetchChats } from "../../store/slices/chatSlice";
 import { useAuth } from "../../hooks/useAuth";
-import { Spinner, Alert } from "react-bootstrap";
 import { MdMessage, MdChevronLeft, MdChevronRight } from "react-icons/md";
 import styles from "./ChatApp.module.css";
 
@@ -26,6 +25,15 @@ const ChatApp = () => {
 
   useEffect(() => {
     dispatch(fetchChats());
+
+    // Only lock body scroll if we are on wide screens to avoid mobile bugs
+    if (window.innerWidth > 968) {
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, [dispatch]);
 
   const handleSelectChat = (id) => {
@@ -63,8 +71,6 @@ const ChatApp = () => {
     }
   }, [chatId, selectedChatId, dispatch]);
 
-
-
   const handleSend = async () => {
     if (!input.trim()) return;
     try {
@@ -82,7 +88,6 @@ const ChatApp = () => {
     try {
       setSendError(null);
       for (const file of files) {
-        // Convert file to base64 for sending
         const base64 = await new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result);
@@ -105,7 +110,7 @@ const ChatApp = () => {
       if (msg.timestamp) {
         const date = new Date(msg.timestamp);
         if (!isNaN(date.getTime())) {
-          timeStr = date.toISOString(); // Pass ISO string to child for consistent parsing
+          timeStr = date.toISOString();
         }
       }
 
@@ -121,7 +126,7 @@ const ChatApp = () => {
   if (loading) {
     return (
       <div className={styles.loadingState}>
-        <Spinner animation="border" variant="info" className={styles.loadingSpinner} />
+        <div className={styles.loadingSpinner}>Loading...</div>
       </div>
     );
   }
@@ -138,14 +143,12 @@ const ChatApp = () => {
 
   return (
     <div className={styles.chatContainer}>
-      {/* Sidebar with Chat List */}
       <div className={`${styles.chatSidebar} ${sidebarCollapsed ? styles.collapsed : ''}`}>
         <div className={styles.sidebarHeader}>
           <h3 className={styles.sidebarTitle}>Conversations</h3>
           <button
             className={styles.toggleButton}
             onClick={toggleSidebar}
-            title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {sidebarCollapsed ? <MdChevronRight size={24} /> : <MdChevronLeft size={24} />}
           </button>
@@ -155,28 +158,14 @@ const ChatApp = () => {
         </div>
       </div>
 
-      {/* Toggle button when collapsed (visible outside sidebar) */}
-      {sidebarCollapsed && (
-        <button
-          className={styles.expandButton}
-          onClick={toggleSidebar}
-          title="Expand conversations"
-        >
-          <MdChevronRight size={24} />
-        </button>
-      )}
-
-      {/* Main Chat Area */}
       <div className={styles.chatMain}>
         {selectedChatId ? (
           <div className={styles.chatConversation}>
             <Header chat={chat} />
             <ChatMessages messages={formattedMessages} />
             {sendError && (
-              <div className={styles.errorAlertChat}>
-                <Alert variant="danger" className="mb-0">
-                  {sendError}
-                </Alert>
+              <div className={styles.errorAlert}>
+                {sendError}
               </div>
             )}
             <MessageInput

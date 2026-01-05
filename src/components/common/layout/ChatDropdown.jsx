@@ -29,70 +29,70 @@ const ChatDropdown = ({ show, onToggle }) => {
     onToggle(false);
   };
 
+  if (!show) return null;
+
   return (
-    <Dropdown show={show} onToggle={onToggle} align="end">
-      <Dropdown.Menu className={styles.chatDropdown}>
-        <Dropdown.Header className={styles.dropdownHeader}>
-          <span>Messages</span>
-          {unreadCount > 0 && (
-            <span className={styles.unreadIndicator}>{unreadCount}</span>
-          )}
-        </Dropdown.Header>
+    <div className={styles.chatDropdown} onClick={(e) => e.stopPropagation()}>
+      <div className={styles.dropdownHeader}>
+        <span className={styles.dropdownTitle}>Messages</span>
+        {unreadCount > 0 && (
+          <span className={styles.chatUnreadBadge}>{unreadCount}</span>
+        )}
+      </div>
 
-        <div className={styles.chatListContainer}>
-          {loading ? (
-            <div className="d-flex justify-content-center p-3">
-              <Spinner animation="border" size="sm" />
-            </div>
-          ) : chats.length === 0 ? (
-            <div className="text-center p-3 text-muted">
-              No messages yet
-            </div>
-          ) : (
-            <>
-              {chats.slice(0, 5).map((chat) => {
-                const otherUser = user?.id === chat.buyer.id ? chat.seller : chat.buyer;
-                const hasUnread = chat.unread_count > 0;
+      <div className={styles.chatListContainer}>
+        {loading ? (
+          <div className="d-flex justify-content-center p-3">
+            <Spinner animation="border" size="sm" />
+          </div>
+        ) : chats.length === 0 ? (
+          <div className="text-center p-3 text-muted">
+            No messages yet
+          </div>
+        ) : (
+          <>
+            {chats.slice(0, 5).map((chat) => {
+              const otherUser = user?.id === chat.buyer.id ? chat.seller : chat.buyer;
+              const hasUnread = chat.unread_count > 0;
 
-                return (
-                  <Dropdown.Item
-                    key={chat.id}
-                    className={`${styles.chatItem} ${hasUnread ? styles.unreadChat : ''}`}
-                    onClick={() => handleChatSelect(chat.id)}
-                  >
-                    <div className={styles.chatItemContent}>
-                      <div className={styles.chatUser}>
-                        <strong>{otherUser.username}</strong>
-                        {hasUnread && (
-                          <span className={styles.chatUnreadBadge}>
-                            {chat.unread_count}
-                          </span>
-                        )}
-                      </div>
-                      <div className={styles.chatProduct}>
-                        {chat.product.title}
-                      </div>
-                      <small className={styles.chatDate}>
-                        {new Date(chat.created_at).toLocaleDateString()}
-                      </small>
-                    </div>
-                  </Dropdown.Item>
-                );
-              })}
-
-              {chats.length > 5 && (
-                <Dropdown.Item
-                  className={styles.viewAllButton}
-                  onClick={handleViewAll}
+              return (
+                <div
+                  key={chat.id}
+                  className={`${styles.chatItem} ${hasUnread ? styles.unreadChat : ''}`}
+                  onClick={() => handleChatSelect(chat.id)}
                 >
-                  View all messages
-                </Dropdown.Item>
-              )}
-            </>
-          )}
-        </div>
-      </Dropdown.Menu>
-    </Dropdown>
+                  <div className={styles.chatItemContent}>
+                    <div className={styles.chatUser}>
+                      <strong>{otherUser.username}</strong>
+                      {hasUnread && (
+                        <span className={styles.chatUnreadBadge}>
+                          {chat.unread_count}
+                        </span>
+                      )}
+                    </div>
+                    <div className={styles.chatProduct}>
+                      {chat.product.title}
+                    </div>
+                    <small className={styles.chatDate}>
+                      {new Date(chat.created_at).toLocaleDateString()}
+                    </small>
+                  </div>
+                </div>
+              );
+            })}
+
+            {chats.length > 5 && (
+              <div
+                className={styles.viewAllButton}
+                onClick={handleViewAll}
+              >
+                View all messages
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 
