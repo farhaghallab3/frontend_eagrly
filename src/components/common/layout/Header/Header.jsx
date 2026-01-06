@@ -162,7 +162,9 @@ export default function Header({ links }) {
                                 <div className={styles.userAvatar}>
                                     <MdPerson size={20} />
                                 </div>
-                                <span className={styles.userName}>{user?.username || "User"}</span>
+                                <span className={styles.userName}>
+                                    {`${user?.first_name || ''} ${user?.last_name || ''}`.trim() || user?.username || "User"}
+                                </span>
                             </div>
                             <div className={styles.userDropdown}>
                                 <Link to="/my-ads">My Ads</Link>
