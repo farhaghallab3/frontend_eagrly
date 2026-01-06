@@ -1,27 +1,32 @@
+/* ===========================================
+   SHARE MODAL - Theme-Aware Styling
+   =========================================== */
+
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--bg-overlay);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1050;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     animation: fadeIn 0.2s ease-out;
 }
 
 .modalContent {
-    background: rgba(30, 30, 40, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 24px;
+    background: var(--surface-modal);
+    border: 1px solid var(--border-primary);
+    border-radius: 20px;
+    padding: 28px;
     width: 90%;
-    max-width: 400px;
+    max-width: 420px;
     position: relative;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-xl);
     animation: slideUp 0.3s ease-out;
 }
 
@@ -29,24 +34,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-primary);
 }
 
 .title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #fff;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
     margin: 0;
 }
 
 .closeButton {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.5);
+    background: var(--surface-hover);
+    border: 1px solid var(--border-primary);
+    color: var(--text-secondary);
     cursor: pointer;
-    font-size: 1.2rem;
-    padding: 4px;
-    border-radius: 50%;
+    font-size: 1rem;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 10px;
     transition: all 0.2s;
     display: flex;
     align-items: center;
@@ -54,45 +63,59 @@
 }
 
 .closeButton:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    background-color: var(--error-light);
+    border-color: var(--error);
+    color: var(--error);
+    transform: rotate(90deg);
 }
 
 .socialGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
 
 .socialButton {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary);
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.2s;
     text-decoration: none;
     padding: 0;
 }
 
 .socialButton:hover {
-    transform: translateY(-2px);
-    color: #fff;
+    transform: translateY(-4px);
+    color: var(--text-primary);
 }
 
 .iconWrapper {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 26px;
     transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+/* Unified Gold Hover Effect */
+.socialButton:hover .iconWrapper {
+    background: var(--accent-primary) !important;
+    background-color: #FFB300 !important;
+    /* Fallback/Force */
+    color: #000000 !important;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px var(--accent-primary-glow);
+    border-color: var(--accent-primary);
 }
 
 .facebook .iconWrapper {
@@ -115,56 +138,99 @@
     color: #0a66c2;
 }
 
+/* Light mode adjustments for base state */
+:root .facebook .iconWrapper {
+    background: rgba(24, 119, 242, 0.1);
+}
+
+:root .twitter .iconWrapper {
+    background: rgba(29, 161, 242, 0.1);
+}
+
+:root .whatsapp .iconWrapper {
+    background: rgba(37, 211, 102, 0.1);
+}
+
+:root .linkedin .iconWrapper {
+    background: rgba(10, 102, 194, 0.1);
+}
+
 .buttonLabel {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
 .copySection {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 12px;
+    background: var(--surface-input);
+    border: 1px solid var(--border-primary);
+    border-radius: 16px;
+    padding: 0;
+    position: relative;
+    height: 56px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    transition: all 0.2s ease;
+    overflow: hidden;
+    /* Ensure nothing sticks out */
+}
+
+.copySection:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 4px var(--accent-primary-glow);
 }
 
 .linkInput {
     background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.6);
-    flex: 1;
-    font-size: 0.875rem;
+    border: none !important;
+    color: var(--text-secondary);
+    width: 100%;
+    height: 100%;
+    font-size: 0.95rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     outline: none;
+    font-family: inherit;
+    padding: 0 120px 0 16px;
+    /* Right padding for button space */
 }
 
 .copyButton {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    font-weight: 500;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    bottom: 6px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-primary);
+    color: var(--text-primary);
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     white-space: nowrap;
+    z-index: 2;
 }
 
 .copyButton:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #000000;
+    box-shadow: 0 2px 8px var(--accent-primary-glow);
 }
 
 .copied {
-    background-color: #10b981 !important;
-    color: #fff;
+    background: var(--success) !important;
+    border-color: var(--success) !important;
+    color: #fff !important;
+}
+
+.copied:hover {
+    box-shadow: none;
 }
 
 @keyframes fadeIn {
@@ -180,11 +246,28 @@
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(20px) scale(0.95);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
+}
+
+/* Light mode adjustments */
+:root .facebook .iconWrapper {
+    background: rgba(24, 119, 242, 0.1);
+}
+
+:root .twitter .iconWrapper {
+    background: rgba(29, 161, 242, 0.1);
+}
+
+:root .whatsapp .iconWrapper {
+    background: rgba(37, 211, 102, 0.1);
+}
+
+:root .linkedin .iconWrapper {
+    background: rgba(10, 102, 194, 0.1);
 }

@@ -184,6 +184,13 @@ export default function ProductDetails() {
                             >
                                 <FaHeart />
                             </button>
+                            <button
+                                className={styles.shareBtn}
+                                onClick={() => setShowShareModal(true)}
+                                title="Share Product"
+                            >
+                                <FaShare />
+                            </button>
                         </div>
 
                         {/* Seller Information (Moved to Left) */}

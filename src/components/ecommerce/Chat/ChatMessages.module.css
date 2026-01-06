@@ -70,16 +70,23 @@
 }
 
 .sentBubble {
-  background-color: var(--text-primary);
-  color: var(--bg-primary);
+  background: var(--accent-gradient);
+  color: #0a0f1a;
   border-bottom-right-radius: 2px;
+  font-weight: 500;
 }
 
 .receivedBubble {
-  background-color: var(--surface-input);
+  background-color: var(--surface-card);
   color: var(--text-primary);
   border-bottom-left-radius: 2px;
   border: 1px solid var(--border-primary);
+}
+
+/* Dark mode enhancements */
+[data-theme="dark"] .receivedBubble {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-secondary);
 }
 
 .messageText {

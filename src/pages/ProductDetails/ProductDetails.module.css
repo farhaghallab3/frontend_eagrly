@@ -491,6 +491,29 @@
   background: var(--accent-primary-light);
 }
 
+.shareBtn {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 1px solid var(--border-primary);
+  background: var(--surface-card);
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.shareBtn:hover {
+  border-color: var(--accent-primary);
+  background: var(--surface-hover);
+  color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
 
 
 .contactBtn:hover {

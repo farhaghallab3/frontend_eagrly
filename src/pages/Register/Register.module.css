@@ -12,15 +12,15 @@
     margin-top: 0.75rem;
     margin-bottom: 1rem;
     padding: 1rem;
-    border-radius: 4px;
-    background-color: #F9F9F9;
-    border: 1px solid #EEEEEE;
+    border-radius: 10px;
+    background-color: var(--surface-input);
+    border: 1px solid var(--border-primary);
 }
 
 .requirementsTitle {
     font-size: 0.85rem;
     font-weight: 500;
-    color: var(--text-secondary, #888);
+    color: var(--text-secondary);
     margin-bottom: 0.5rem;
 }
 
@@ -40,19 +40,19 @@
 }
 
 .requirementMet {
-    color: #22c55e;
+    color: var(--success);
 }
 
 .requirementUnmet {
-    color: var(--text-secondary, #888);
+    color: var(--text-tertiary);
 }
 
 .checkIcon {
-    color: #22c55e;
+    color: var(--success);
     font-size: 0.75rem;
 }
 
 .timesIcon {
-    color: #ef4444;
+    color: var(--error);
     font-size: 0.75rem;
 }

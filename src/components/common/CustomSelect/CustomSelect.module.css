@@ -1,0 +1,190 @@
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+/* Trigger Button */
+.trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.trigger:hover:not(.disabled) {
+    border-color: var(--accent-primary);
+    background: var(--surface-hover);
+}
+
+.trigger.open {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--accent-primary-light);
+}
+
+.trigger.error {
+    border-color: var(--error);
+}
+
+.trigger.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--bg-tertiary);
+}
+
+.value {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.placeholder {
+    color: var(--text-muted);
+}
+
+.arrow {
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.arrowOpen {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Panel */
+.dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: var(--surface-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    overflow: hidden;
+    animation: dropdownSlide 0.2s ease;
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.optionsList {
+    list-style: none;
+    margin: 0;
+    padding: 8px;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar for options */
+.optionsList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.optionsList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.optionsList::-webkit-scrollbar-thumb {
+    background: var(--border-primary);
+    border-radius: 3px;
+}
+
+.optionsList::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Option Item */
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.option:hover,
+.option.highlighted {
+    background: var(--surface-hover);
+}
+
+.option.selected {
+    background: var(--accent-primary-light);
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.option.selected:hover,
+.option.selected.highlighted {
+    background: var(--accent-primary-light);
+}
+
+.optionLabel {
+    flex: 1;
+}
+
+.checkIcon {
+    color: var(--accent-primary);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+/* Error Text */
+.errorText {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: var(--error);
+}
+
+/* Dark theme enhancements */
+[data-theme="dark"] .dropdown {
+    background: var(--surface-modal);
+    border-color: var(--border-secondary);
+}
+
+[data-theme="dark"] .trigger {
+    background: var(--surface-input);
+}
+
+[data-theme="dark"] .option:hover,
+[data-theme="dark"] .option.highlighted {
+    background: rgba(255, 179, 0, 0.1);
+}
+
+[data-theme="dark"] .option.selected {
+    background: rgba(255, 179, 0, 0.15);
+}
