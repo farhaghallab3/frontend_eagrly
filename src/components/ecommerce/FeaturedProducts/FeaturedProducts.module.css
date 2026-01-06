@@ -1,7 +1,11 @@
-/* Featured Products Section - Centered & Clean */
+/* ===========================================
+   FEATURED PRODUCTS - Dark Mode Support
+   =========================================== */
+
 .featuredSection {
   padding: 100px 0;
-  background-color: #FFFFFF;
+  /* Transparent to let global body background show through */
+  background: transparent;
   display: flex;
   justify-content: center;
 }
@@ -24,30 +28,29 @@
 
 .headerBadge {
   display: inline-block;
-  background: transparent;
-  /* Subtle orange tint */
-  color: #FFB300;
+  background: var(--accent-primary-light);
+  color: var(--accent-primary);
   padding: 10px 24px;
-  border-radius: 6px;
+  border-radius: 999px;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-bottom: 24px;
-  border: 1px solid rgba(255, 179, 0, 0.1);
+  border: 1px solid var(--accent-primary);
 }
 
 .sectionTitle {
-  font-size: 3.5rem;
-  font-weight: 500;
-  color: #000;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
   margin-bottom: 18px;
-  letter-spacing: -2px;
+  letter-spacing: -0.03em;
   line-height: 1.1;
 }
 
 .sectionSubtitle {
-  color: #666;
+  color: var(--text-secondary);
   max-width: 550px;
   margin: 0 auto;
   font-size: 1.1rem;
@@ -65,18 +68,19 @@
 
 /* Product Card */
 .productCard {
-  background: #FFFFFF;
-  border-radius: 12px;
-  border: 1px solid #EEEEEE;
+  background: var(--surface-card);
+  border-radius: 16px;
+  border: 1px solid var(--border-primary);
   padding: 24px;
   display: flex;
   flex-direction: column;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .productCard:hover {
-  border-color: #FFB300;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-lg), 0 0 30px var(--accent-primary-glow);
+  transform: translateY(-5px);
 }
 
 .cardImageContainer {
@@ -86,26 +90,40 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .cardImage {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.productCard:hover .cardImage {
+  transform: scale(1.05);
 }
 
 .cardContent {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  flex-grow: 1;
 }
 
 .productTitle {
   font-size: 1.15rem;
-  font-weight: 500;
-  color: #111;
+  font-weight: 600;
+  color: var(--text-primary);
   cursor: pointer;
   margin: 0;
+  transition: color 0.2s ease;
+}
+
+.productTitle:hover {
+  color: var(--accent-primary);
 }
 
 .priceRow {
@@ -114,8 +132,8 @@
 
 .productPrice {
   font-size: 1.25rem;
-  font-weight: 500;
-  color: #000;
+  font-weight: 700;
+  color: var(--accent-primary);
 }
 
 .cardActions {
@@ -125,19 +143,21 @@
 .addToCartBtn {
   width: 100%;
   padding: 12px;
-  background: #FFFFFF;
-  color: #000;
-  border: 1px solid #000;
-  border-radius: 6px;
-  font-weight: 500;
+  background: #111111;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .addToCartBtn:hover {
-  background: #000;
-  color: #FFF;
+  background: var(--accent-primary);
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--accent-primary-glow);
 }
 
 /* Section Footer - "View All" */
@@ -148,29 +168,31 @@
 }
 
 .viewAllBtn {
-  background: #000000;
+  background: #111111;
   color: #FFFFFF;
   padding: 14px 40px;
-  border-radius: 6px;
-  font-weight: 500;
+  border-radius: 10px;
+  font-weight: 600;
   font-size: 0.95rem;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 12px;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
 }
 
 .viewAllBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  background: #222222;
+  box-shadow: 0 8px 20px var(--accent-primary-glow);
+  background: var(--accent-primary);
+  color: #000000;
 }
 
 @media (max-width: 768px) {
   .sectionTitle {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
 
   .productsGrid {

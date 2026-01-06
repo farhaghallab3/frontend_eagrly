@@ -10,6 +10,7 @@ import { fetchUnreadCount } from "../../../../store/slices/notificationSlice";
 import { fetchWishlist } from "../../../../store/slices/wishlistSlice";
 import ChatDropdown from "../ChatDropdown";
 import NotificationsDropdown from "../NotificationsDropdown";
+import ThemeToggle from "../../ThemeToggle/ThemeToggle";
 import styles from "./Header.module.css";
 
 export default function Header({ links }) {
@@ -150,6 +151,8 @@ export default function Header({ links }) {
                                 <span className={styles.badge}>{safeWishlistItems.length > 99 ? '99+' : safeWishlistItems.length}</span>
                             )}
                         </Link>
+
+                        <ThemeToggle />
                     </div>
 
                     {/* Auth Section */}
@@ -164,7 +167,7 @@ export default function Header({ links }) {
                             <div className={styles.userDropdown}>
                                 <Link to="/my-ads">My Ads</Link>
                                 <Link to="/dashboard/profile">Profile</Link>
-                                <Link to="/dashboard">Dashboard</Link>
+
                                 <button onClick={logoutUser} className={styles.logoutBtn}>Logout</button>
                             </div>
                         </div>

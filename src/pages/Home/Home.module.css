@@ -1,12 +1,21 @@
+/* ===========================================
+   HOME PAGE - Content Wrapper with Dark Mode
+   =========================================== */
+
 .contentWrapper {
     position: relative;
-    background: #FFFFFF;
+    /* Transparent to let global body background show through */
+    background: transparent;
     overflow: hidden;
     min-height: 100vh;
 }
 
 .backgroundContainer {
-    display: none;
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .bgGlow1,
@@ -16,15 +25,14 @@
     border-radius: 50%;
     filter: blur(120px);
     opacity: 0.15;
-    /* Subtler */
     animation: bgFloat 20s ease-in-out infinite;
+    pointer-events: none;
 }
 
 .bgGlow1 {
     width: 800px;
     height: 800px;
-    background: var(--color-primary);
-    /* Neon Green */
+    background: var(--accent-primary);
     top: -200px;
     left: -100px;
     animation-delay: 0s;
@@ -33,7 +41,7 @@
 .bgGlow2 {
     width: 600px;
     height: 600px;
-    background: var(--color-accent-teal);
+    background: var(--accent-secondary);
     top: 30%;
     right: -200px;
     animation-delay: 5s;
@@ -42,7 +50,7 @@
 .bgGlow3 {
     width: 700px;
     height: 700px;
-    background: var(--color-accent-lime);
+    background: var(--accent-primary);
     bottom: -200px;
     left: 20%;
     animation-delay: 10s;

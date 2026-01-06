@@ -1,7 +1,7 @@
 .chatHeader {
   padding: 16px 24px;
-  background: #FFFFFF;
-  border-bottom: 1px solid #EEEEEE;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border-primary);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -22,7 +22,7 @@
 .backButton {
   background: transparent;
   border: none;
-  color: #111111;
+  color: var(--text-primary);
   cursor: pointer;
   padding: 8px;
   border-radius: 4px;
@@ -33,7 +33,7 @@
 }
 
 .backButton:hover {
-  background: #F9F9F9;
+  background: var(--surface-hover);
 }
 
 .userInfo {
@@ -53,7 +53,7 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid #EEEEEE;
+  border: 1px solid var(--border-secondary);
 }
 
 .onlineStatus {
@@ -62,8 +62,8 @@
   right: 0;
   width: 12px;
   height: 12px;
-  background-color: #4CAF50;
-  border: 2px solid #FFFFFF;
+  background-color: var(--success);
+  border: 2px solid var(--surface-card);
   border-radius: 50%;
 }
 
@@ -76,7 +76,7 @@
   margin: 0;
   font-size: 1.1rem;
   font-weight: 500;
-  color: #111111;
+  color: var(--text-primary);
 }
 
 .userStatus {
@@ -84,20 +84,20 @@
   align-items: center;
   gap: 6px;
   font-size: 0.8rem;
-  color: #999999;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .statusDot {
   width: 6px;
   height: 6px;
-  background-color: #4CAF50;
+  background-color: var(--success);
   border-radius: 50%;
 }
 
 .productInfoBar {
   padding-top: 12px;
-  border-top: 1px dashed #EEEEEE;
+  border-top: 1px dashed var(--border-secondary);
 }
 
 .productInfo {
@@ -108,11 +108,11 @@
 }
 
 .productLabel {
-  color: #999999;
+  color: var(--text-tertiary);
   font-weight: 500;
 }
 
 .productTitle {
-  color: #FFB300;
+  color: var(--accent-primary);
   font-weight: 500;
 }

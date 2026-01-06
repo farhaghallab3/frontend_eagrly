@@ -51,7 +51,6 @@ const ChatbotWidget = () => {
   }, [open]);
 
   const startRecording = async () => {
-    console.log("Start recording clicked");
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       alert("Audio recording is not supported in this browser or context (requires HTTPS or localhost).");
       return;
@@ -59,9 +58,7 @@ const ChatbotWidget = () => {
 
     setIsInitializingAudio(true);
     try {
-      console.log("Requesting microphone access...");
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      console.log("Microphone access granted");
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
@@ -82,7 +79,6 @@ const ChatbotWidget = () => {
 
       mediaRecorder.start();
       setIsRecording(true);
-      console.log("Recording started");
     } catch (err) {
       console.error("Error accessing microphone:", err);
       if (err.name === 'NotAllowedError') {
@@ -105,26 +101,20 @@ const ChatbotWidget = () => {
   const sendAudioMessage = async (audioBlob) => {
     setLoading(true);
 
-    // Create audio URL for playback
-    const audioUrl = URL.createObjectURL(audioBlob);
+    // Create a temporary ID to identify this message for replacement
+    const tempId = Date.now();
 
-    // Add temporary message with audio
+    // Add temporary message "Transcribing..."
     setMessages(prev => [...prev, {
+      id: tempId,
       role: "user",
-      content: "Voice Message",
-      isAudio: true,
-      audioUrl: audioUrl,
-      duration: 0 // We'll calculate this later
+      content: "🎤 Transcribing...",
+      isTemp: true
     }]);
 
     try {
       const formData = new FormData();
       formData.append('audio', audioBlob, 'voice_message.webm');
-
-      // Use axios directly or update chatService to support FormData
-      // Here we assume we call the API directly or a modified service
-      // For simplicity/compatibility, let's use a direct axios call if service doesn't support specific config easily
-      // But let's try to stick to existing service pattern if possible, or modify it inline
 
       const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
       const token = localStorage.getItem("token");
@@ -137,10 +127,24 @@ const ChatbotWidget = () => {
       const res = await axios.post(`${API_URL}/chatbot/`, formData, { headers });
       const response = res.data;
 
+      // Replace the temp message with the transcribed text
+      if (response.user_text) {
+        setMessages(prev => prev.map(msg =>
+          msg.id === tempId ? { role: "user", content: response.user_text } : msg
+        ));
+      } else {
+        // Fallback if no text returned (shouldn't happen with our backend update)
+        setMessages(prev => prev.map(msg =>
+          msg.id === tempId ? { role: "user", content: "Voice Message (No transcription)" } : msg
+        ));
+      }
+
       handleBotResponse(response);
 
     } catch (err) {
       console.error("Error sending voice message:", err);
+      // Remove temp message or show error
+      setMessages(prev => prev.filter(msg => msg.id !== tempId));
       setMessages(prev => [...prev, {
         role: "bot",
         content: "Sorry, I couldn't process your voice message."
@@ -261,7 +265,6 @@ const ChatbotWidget = () => {
               >
                 <div
                   className={styles.productTitle}
-                  style={{ color: '#007bff', textDecoration: 'underline' }}
                 >
                   {product.title}
                 </div>

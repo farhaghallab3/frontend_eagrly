@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { productService } from "../../services/productService";
-import { FaUser, FaMapMarkerAlt, FaPhone, FaEnvelope, FaTag, FaBuilding, FaGraduationCap, FaHeart, FaShare, FaChevronRight } from "react-icons/fa";
+import { FaUser, FaMapMarkerAlt, FaPhone, FaEnvelope, FaTag, FaBuilding, FaGraduationCap, FaHeart, FaShare, FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import styles from "./ProductDetails.module.css";
 import ShareModal from "@components/common/ShareModal/ShareModal";
 
@@ -17,7 +17,7 @@ export default function ProductDetails() {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showShareModal, setShowShareModal] = useState(false);
-    const [activeImage, setActiveImage] = useState(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const navigate = useNavigate();
     const { user } = useAuth();
     const { openAuthModal } = useAuthModal();
@@ -68,7 +68,8 @@ export default function ProductDetails() {
             try {
                 const data = await productService.getProductDetails(id);
                 setProduct(data);
-                setActiveImage(data.image || data.images?.[0] || '/placeholder-image.jpg');
+                // Reset image index when product changes
+                setCurrentImageIndex(0);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -77,6 +78,18 @@ export default function ProductDetails() {
         };
         fetchProduct();
     }, [id]);
+
+    const handleNextImage = (e) => {
+        e.stopPropagation();
+        if (uniqueImages.length <= 1) return;
+        setCurrentImageIndex((prev) => (prev + 1) % uniqueImages.length);
+    };
+
+    const handlePrevImage = (e) => {
+        e.stopPropagation();
+        if (uniqueImages.length <= 1) return;
+        setCurrentImageIndex((prev) => (prev - 1 + uniqueImages.length) % uniqueImages.length);
+    };
 
     if (loading) return (
         <div className={styles.productPage} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -94,6 +107,7 @@ export default function ProductDetails() {
     const allImages = [product.image, ...(product.images || [])].filter(Boolean);
     // Remove duplicates if any
     const uniqueImages = [...new Set(allImages)];
+    const activeImage = uniqueImages[currentImageIndex] || '/placeholder-image.jpg';
 
     return (
         <div className={styles.productPage}>
@@ -116,21 +130,91 @@ export default function ProductDetails() {
                     <div className={styles.gallerySection}>
                         <div className={styles.mainImageWrapper}>
                             <img src={activeImage} alt={product.title} className={styles.mainImage} />
+
+                            {/* Slider Controls */}
+                            {uniqueImages.length > 1 && (
+                                <>
+                                    <button className={`${styles.sliderArrow} ${styles.arrowLeft}`} onClick={handlePrevImage}>
+                                        <FaChevronLeft />
+                                    </button>
+                                    <button className={`${styles.sliderArrow} ${styles.arrowRight}`} onClick={handleNextImage}>
+                                        <FaChevronRight />
+                                    </button>
+
+                                    {/* Dots Indicator */}
+                                    <div className={styles.sliderDots}>
+                                        {uniqueImages.map((_, index) => (
+                                            <span
+                                                key={index}
+                                                className={`${styles.sliderDot} ${index === currentImageIndex ? styles.activeDot : ''}`}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setCurrentImageIndex(index);
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
+                                </>
+                            )}
                         </div>
 
-                        {uniqueImages.length > 1 && (
-                            <div className={styles.thumbnailColumn}>
-                                {uniqueImages.map((img, i) => (
-                                    <div
-                                        key={i}
-                                        className={`${styles.thumbnailWrapper} ${activeImage === img ? styles.active : ''}`}
-                                        onClick={() => setActiveImage(img)}
-                                    >
-                                        <img src={img} alt={`${product.title} thumbnail ${i}`} className={styles.thumbnailImage} />
+                        {/* Product Gallery Thumbnails */}
+                        <div className={styles.thumbnailColumn}>
+                            {uniqueImages.map((img, i) => (
+                                <div
+                                    key={i}
+                                    className={`${styles.thumbnailWrapper} ${i === currentImageIndex ? styles.active : ''}`}
+                                    onClick={() => setCurrentImageIndex(i)}
+                                >
+                                    <img src={img} alt={`${product.title} thumbnail ${i}`} className={styles.thumbnailImage} />
+                                </div>
+                            ))}
+                        </div>
+
+
+                        {/* Product Actions */}
+                        <div className={styles.productActions}>
+                            <button className={styles.contactBtn} onClick={handleContactSeller}>
+                                Contact Seller
+                            </button>
+                            <button
+                                className={`${styles.wishlistBtn} ${isInWishlist ? styles.wishlistActive : ''}`}
+                                onClick={handleWishlistToggle}
+                                title={isInWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
+                            >
+                                <FaHeart />
+                            </button>
+                        </div>
+
+                        {/* Seller Information (Moved to Left) */}
+                        <div className={styles.sellerSection}>
+                            <div className={styles.sellerCard}>
+                                <div className={styles.sellerHeader}>
+                                    <div className={styles.sellerAvatar}>
+                                        <FaUser />
                                     </div>
-                                ))}
+                                    <h4>Seller Information</h4>
+                                </div>
+                                <div className={styles.sellerInfoGrid}>
+                                    <div className={styles.infoItem}>
+                                        <FaUser />
+                                        <span>{product.seller?.first_name || 'Seller'}</span>
+                                    </div>
+                                    <div className={styles.infoItem}>
+                                        <FaMapMarkerAlt />
+                                        <span>{product.university || 'Location N/A'}</span>
+                                    </div>
+                                    <div className={styles.infoItem}>
+                                        <FaPhone />
+                                        <span>{product.seller?.phone || 'Private'}</span>
+                                    </div>
+                                    <div className={styles.infoItem}>
+                                        <FaEnvelope />
+                                        <span>{product.seller?.email || 'Private'}</span>
+                                    </div>
+                                </div>
                             </div>
-                        )}
+                        </div>
                     </div>
 
                     {/* Right: Product Details */}
@@ -170,60 +254,12 @@ export default function ProductDetails() {
                             </div>
                         </div>
 
-                        {/* Seller Information */}
-                        <div className={styles.sellerSection}>
-                            <div className={styles.sellerCard}>
-                                <div className={styles.sellerHeader}>
-                                    <div className={styles.sellerAvatar}>
-                                        <FaUser />
-                                    </div>
-                                    <h4>Seller Information</h4>
-                                </div>
-                                <div className={styles.sellerInfoGrid}>
-                                    <div className={styles.infoItem}>
-                                        <FaUser />
-                                        <span>{product.seller?.first_name || 'Seller'}</span>
-                                    </div>
-                                    <div className={styles.infoItem}>
-                                        <FaMapMarkerAlt />
-                                        <span>{product.university || 'Location N/A'}</span>
-                                    </div>
-                                    <div className={styles.infoItem}>
-                                        <FaPhone />
-                                        <span>{product.seller?.phone || 'Private'}</span>
-                                    </div>
-                                    <div className={styles.infoItem}>
-                                        <FaEnvelope />
-                                        <span>{product.seller?.email || 'Private'}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
 
-            {/* Sticky Action Bar */}
-            <div className={styles.stickyBar}>
-                <div className={styles.stickyContainer}>
-                    <div className={styles.stickyLeft}>
-                        <span className={styles.stickyTitle}>{product.title}</span>
-                        <span className={styles.stickyPrice}>{product.price} EGP</span>
-                    </div>
-                    <div className={styles.stickyActions}>
-                        <button
-                            className={`${styles.wishlistBtn} ${isInWishlist ? styles.wishlistActive : ''}`}
-                            onClick={handleWishlistToggle}
-                            title={isInWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
-                        >
-                            <FaHeart />
-                        </button>
-                        <button className={styles.contactBtn} onClick={handleContactSeller}>
-                            Contact Seller
-                        </button>
-                    </div>
-                </div>
-            </div>
+
 
             {/* Share Modal */}
             <ShareModal

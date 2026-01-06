@@ -1,9 +1,9 @@
 .checkoutPage {
     min-height: 100vh;
-    background-color: #FFFFFF;
+    background-color: var(--bg-primary);
     padding: 120px 0 80px;
     font-family: 'Inter', sans-serif;
-    color: #111111;
+    color: var(--text-primary);
 }
 
 .container {
@@ -18,7 +18,7 @@
     gap: 8px;
     background: transparent;
     border: none;
-    color: #666666;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
@@ -30,7 +30,7 @@
 }
 
 .backButton:hover {
-    color: #FFB300;
+    color: var(--accent-primary);
 }
 
 .checkoutRow {
@@ -46,8 +46,8 @@
 
 /* Section Card */
 .sectionCard {
-    background: #FFFFFF;
-    border: 1px solid #EEEEEE;
+    background: var(--surface-card);
+    border: 1px solid var(--border-primary);
     border-radius: 8px;
     padding: 32px;
 }
@@ -55,14 +55,14 @@
 .sectionTitle {
     font-size: 1.8rem;
     font-weight: 500;
-    color: #111111;
+    color: var(--text-primary);
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: -0.02em;
 }
 
 .sectionSubtitle {
-    color: #666666;
+    color: var(--text-secondary);
     font-size: 0.95rem;
     margin-bottom: 32px;
     line-height: 1.5;
@@ -80,8 +80,8 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
-    background: #FFFFFF;
-    border: 1px solid #EEEEEE;
+    background: var(--surface-card);
+    border: 1px solid var(--border-primary);
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -89,13 +89,13 @@
 }
 
 .paymentMethod:hover:not(.disabled) {
-    border-color: #FFB300;
-    background: #FAFAFA;
+    border-color: var(--accent-primary);
+    background: var(--surface-hover);
 }
 
 .paymentMethod.selected {
-    border-color: #FFB300;
-    background: rgba(255, 179, 0, 0.03);
+    border-color: var(--accent-primary);
+    background: var(--accent-primary-light);
 }
 
 .paymentMethod.disabled {
@@ -106,37 +106,37 @@
 .methodRadio {
     width: 20px;
     height: 20px;
-    border: 2px solid #DDDDDD;
+    border: 2px solid var(--border-secondary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #FFFFFF;
+    color: var(--text-inverse);
     font-size: 10px;
     flex-shrink: 0;
 }
 
 .paymentMethod.selected .methodRadio {
-    background: #FFB300;
-    border-color: #FFB300;
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
 }
 
 .methodIcon {
     width: 44px;
     height: 44px;
-    background: #F5F5F5;
+    background: var(--bg-tertiary);
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #111111;
+    color: var(--text-primary);
     font-size: 1.4rem;
     flex-shrink: 0;
 }
 
 .paymentMethod.selected .methodIcon {
-    background: #111111;
-    color: #FFB300;
+    background: var(--text-primary);
+    color: var(--accent-primary);
 }
 
 .methodInfo {
@@ -146,14 +146,14 @@
 .methodInfo h4 {
     font-size: 1rem;
     font-weight: 500;
-    color: #111111;
+    color: var(--text-primary);
     margin: 0 0 4px 0;
     text-transform: uppercase;
 }
 
 .methodInfo p {
     font-size: 0.85rem;
-    color: #666666;
+    color: var(--text-secondary);
     margin: 0;
 }
 
@@ -165,7 +165,7 @@
 
 .brandIcon {
     font-size: 1.8rem;
-    color: #999999;
+    color: var(--text-tertiary);
 }
 
 .walletLogos {
@@ -176,8 +176,8 @@
 }
 
 .walletBadge {
-    background: #F0F0F0;
-    color: #666666;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 0.7rem;
@@ -189,8 +189,8 @@
     position: absolute;
     top: 12px;
     right: 12px;
-    background: #EEEEEE;
-    color: #999999;
+    background: var(--bg-tertiary);
+    color: var(--text-tertiary);
     padding: 4px 10px;
     border-radius: 4px;
     font-size: 0.65rem;
@@ -202,22 +202,22 @@
 .bankDetails {
     margin-top: 24px;
     padding: 24px;
-    background: #F9F9F9;
-    border: 1px solid #EEEEEE;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
     border-radius: 8px;
 }
 
 .bankDetails h4 {
     font-weight: 500;
-    color: #111111;
+    color: var(--text-primary);
     margin-bottom: 20px;
     text-transform: uppercase;
     font-size: 1.1rem;
 }
 
 .bankInfo {
-    background: #FFFFFF;
-    border: 1px solid #EEEEEE;
+    background: var(--surface-card);
+    border: 1px solid var(--border-primary);
     border-radius: 6px;
     padding: 16px;
     margin-bottom: 24px;
@@ -227,7 +227,7 @@
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid #FAFAFA;
+    border-bottom: 1px solid var(--border-secondary);
 }
 
 .bankRow:last-child {
@@ -235,18 +235,18 @@
 }
 
 .bankRow span {
-    color: #666666;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 500;
 }
 
 .bankRow strong {
-    color: #111111;
+    color: var(--text-primary);
     font-weight: 500;
 }
 
 .bankNote {
-    color: #666666;
+    color: var(--text-secondary);
     font-size: 0.85rem;
     margin-bottom: 20px;
     line-height: 1.4;
@@ -254,8 +254,8 @@
 
 /* Order Summary */
 .orderSummary {
-    background: #FFFFFF;
-    border: 1px solid #EEEEEE;
+    background: var(--surface-card);
+    border: 1px solid var(--border-primary);
     border-radius: 8px;
     padding: 32px;
     position: sticky;
@@ -265,7 +265,7 @@
 .summaryTitle {
     font-size: 1.3rem;
     font-weight: 500;
-    color: #111111;
+    color: var(--text-primary);
     margin-bottom: 24px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -285,14 +285,14 @@
 .packageHeader h4 {
     font-size: 1.4rem;
     font-weight: 500;
-    color: #111111;
+    color: var(--text-primary);
     margin: 0;
     text-transform: uppercase;
 }
 
 .popularBadge {
-    background: #FFB300;
-    color: #000000;
+    background: var(--accent-primary);
+    color: var(--text-inverse);
     padding: 4px 10px;
     border-radius: 4px;
     font-size: 0.65rem;
@@ -301,14 +301,14 @@
 }
 
 .packageDesc {
-    color: #666666;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin: 0;
 }
 
 .summaryDivider {
     height: 1px;
-    background: #EEEEEE;
+    background: var(--border-primary);
     margin: 24px 0;
 }
 
@@ -323,12 +323,12 @@
     align-items: center;
     gap: 12px;
     padding: 8px 0;
-    color: #444444;
+    color: var(--text-secondary);
     font-size: 0.95rem;
 }
 
 .checkIcon {
-    color: #FFB300;
+    color: var(--accent-primary);
     font-size: 0.9rem;
 }
 
@@ -341,22 +341,22 @@
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
-    color: #666666;
+    color: var(--text-secondary);
     font-size: 1rem;
 }
 
 .totalRow {
-    border-top: 1px solid #111111;
+    border-top: 1px solid var(--text-primary);
     padding-top: 16px;
     margin-top: 8px;
     font-weight: 500;
-    color: #111111;
+    color: var(--text-primary);
     text-transform: uppercase;
 }
 
 .totalPrice {
     font-size: 1.8rem;
-    color: #111111;
+    color: var(--text-primary);
     font-weight: 950;
 }
 
@@ -381,7 +381,7 @@
 }
 
 .payButton:hover:not(:disabled) {
-    background: #FFB300;
+    background: var(--accent-primary);
     color: #000000;
 }
 
@@ -396,7 +396,7 @@
     justify-content: center;
     gap: 8px;
     margin-top: 16px;
-    color: #999999;
+    color: var(--text-tertiary);
     font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;

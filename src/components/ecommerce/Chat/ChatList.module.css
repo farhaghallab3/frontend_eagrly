@@ -13,24 +13,25 @@
     align-items: center;
     gap: 16px;
     padding: 20px 24px;
-    border-bottom: 1px solid #EEEEEE;
+    border-bottom: 1px solid var(--border-secondary);
     cursor: pointer;
     transition: all 0.2s ease;
-    background: #FFFFFF;
+    background: transparent;
     text-decoration: none;
     color: inherit;
     border: none;
     width: 100%;
     text-align: left;
+    border-bottom: 1px solid var(--border-secondary);
 }
 
 .chatItem:hover {
-    background: #F9F9F9;
+    background: var(--surface-hover);
 }
 
 .chatItem.active {
-    background: #FFF9E6;
-    border-left: 4px solid #FFB300;
+    background: var(--accent-primary-light);
+    border-left: 4px solid var(--accent-primary);
 }
 
 .avatar {
@@ -38,8 +39,8 @@
     height: 56px;
     border-radius: 50%;
     object-fit: cover;
-    background: #F5F5F5;
-    border: 1px solid #EEEEEE;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-secondary);
     flex-shrink: 0;
 }
 
@@ -58,7 +59,7 @@
 .userName {
     font-weight: 500;
     font-size: 1rem;
-    color: #111111;
+    color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -66,13 +67,13 @@
 
 .timestamp {
     font-size: 0.75rem;
-    color: #999999;
+    color: var(--text-tertiary);
     flex-shrink: 0;
 }
 
 .productTitle {
     font-size: 0.85rem;
-    color: #666666;
+    color: var(--text-secondary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -80,8 +81,8 @@
 }
 
 .unreadBadge {
-    background-color: #FFB300;
-    color: #FFFFFF;
+    background-color: var(--accent-primary);
+    color: var(--text-inverse);
     font-size: 0.7rem;
     font-weight: 500;
     padding: 4px 8px;
@@ -94,7 +95,7 @@
 .emptyState {
     padding: 40px 24px;
     text-align: center;
-    color: #999999;
+    color: var(--text-tertiary);
 }
 
 .emptyIcon {

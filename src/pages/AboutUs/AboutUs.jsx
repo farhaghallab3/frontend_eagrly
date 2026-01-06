@@ -78,7 +78,7 @@ const AboutUs = () => {
             <section className={styles.section}>
                 <div className={styles.container}>
                     <h3>The Eagerly Project</h3>
-                    <p style={{ color: '#666', maxWidth: '800px', lineHeight: '1.8' }}>
+                    <p>
                         What started as a requirement for graduation at the Information Technology Institute (ITI)
                         evolved into a full-scale e-commerce solution. We've focused on creating a seamless
                         user experience that combines modern design with powerful functionality, ensuring

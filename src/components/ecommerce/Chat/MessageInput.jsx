@@ -53,32 +53,30 @@ const MessageInput = ({ input, setInput, handleSend, onPhotosSelect }) => {
       )}
 
       <div className={styles.inputWrapper}>
-        <div className={styles.textInputWrapper}>
-          <span className={styles.inputLabel}>Message:</span>
-          <textarea
-            rows={1}
-            placeholder="Type a message..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className={styles.textarea}
-          />
+        <button
+          className={styles.attachBtn}
+          onClick={() => setShowOptions(!showOptions)}
+          title="Attach files"
+        >
+          <MdAttachFile size={24} />
+        </button>
 
-          <button
-            className={styles.attachBtn}
-            onClick={() => setShowOptions(!showOptions)}
-          >
-            <MdAttachFile size={20} />
-          </button>
-        </div>
+        <textarea
+          rows={1}
+          placeholder="Type a message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={handleKeyPress}
+          className={styles.textarea}
+        />
 
         <button
           className={styles.sendBtn}
           onClick={handleSend}
           disabled={!input.trim()}
+          title="Send message"
         >
-          <span>Send</span>
-          <MdSend size={18} />
+          <MdSend size={20} />
         </button>
       </div>
     </div>

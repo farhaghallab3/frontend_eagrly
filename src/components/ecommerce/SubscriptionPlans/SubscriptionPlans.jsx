@@ -56,20 +56,17 @@ export default function SubscriptionPlans({ isModal, onClose }) {
             {/* Background elements moved to Home wrapper */}
 
             <Container id="plans" className={`${styles.sectionContainer} ${isModal ? styles.modalContainer : ''}`}>
-                <div className={styles.sectionHeader}>
-                    {!isModal && (
+                {!isModal && (
+                    <div className={styles.sectionHeader}>
                         <div className={styles.headerBadge}>
                             <span>Featured Collection</span>
                         </div>
-                    )}
-
-                    <h2 className={styles.sectionTitle}>
-                        {isModal ? "Upgrade to Continue" : "Pricing Plans"}
-                    </h2>
-                    <p className={styles.sectionSubtitle}>
-                        {isModal ? "You've reached your ad limit. Subscribe to post more ads." : "Join our community with a plan that suits your needs. Upgrade, downgrade, or cancel anytime."}
-                    </p>
-                </div>
+                        <h2 className={styles.sectionTitle}>Pricing Plans</h2>
+                        <p className={styles.sectionSubtitle}>
+                            Join our community with a plan that suits your needs. Upgrade, downgrade, or cancel anytime.
+                        </p>
+                    </div>
+                )}
 
                 <div className={`${styles.plansGrid} ${isModal ? styles.modalGrid : ''}`}>
                     {packages.map((pkg) => {
@@ -143,16 +140,15 @@ export default function SubscriptionPlans({ isModal, onClose }) {
                                     )}
                                 </ul>
 
-                                <Button
+                                <button
                                     className={`${styles.chooseButton} ${isPopular ? styles.chooseButtonPopular : ""}`}
-                                    size="lg"
                                     onClick={() => handleSubscribe(pkg.id)}
                                 >
                                     Choose Plan
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="ms-2">
                                         <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
-                                </Button>
+                                </button>
                             </div>
                         );
                     })}

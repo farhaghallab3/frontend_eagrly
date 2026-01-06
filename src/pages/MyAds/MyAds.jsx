@@ -5,6 +5,7 @@ import ProductForm from "../../components/common/forms/ProductForm/ProductForm";
 import { useProduct } from "../../hooks/useProducts";
 import { productService } from "../../services/productService";
 import SubscriptionRequiredModal from "../../components/ecommerce/SubscriptionPlans/SubscriptionRequiredModal";
+import SuccessAnimation from "../../components/common/feedback/SuccessAnimation";
 
 export default function MyAds() {
     const { myProducts: reduxMyProducts, loading, error, getMyProducts, removeProduct } = useProduct();
@@ -16,6 +17,7 @@ export default function MyAds() {
     const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
     const [daysUntilReset, setDaysUntilReset] = useState(30);
     const [isRepublishing, setIsRepublishing] = useState(false);
+    const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
 
     const formatDate = (dateString) => {
         if (!dateString) return '—';
@@ -91,8 +93,12 @@ export default function MyAds() {
     };
 
     const handleFormClose = () => setShowForm(false);
+
     const handleFormSuccess = () => {
         setShowForm(false);
+        // Trigger Success Animation
+        setShowSuccessAnimation(true);
+        setTimeout(() => setShowSuccessAnimation(false), 2000);
         fetchProducts();
     };
 
@@ -149,6 +155,16 @@ export default function MyAds() {
                             </button>
                         </div>
                     </div>
+
+                    {showSuccessAnimation && (
+                        <SuccessAnimation
+                            message={
+                                editingProduct
+                                    ? (isRepublishing ? "Ad Republished!" : "Ad Updated Successfully!")
+                                    : "Ad Posted Successfully!"
+                            }
+                        />
+                    )}
 
                     {loading ? (
                         <div className={styles.loadingState}>
@@ -213,7 +229,7 @@ export default function MyAds() {
                                                         <span className={styles.detailLabel}>Price</span>
                                                         <span className={styles.detailValue}>{product.price} EGP</span>
                                                     </div>
-                                                    {product.status === 'active' && product.expires_at && (
+                                                    {product.is_active && product.expires_at && (
                                                         <div className={styles.detailItem}>
                                                             <span className={styles.detailLabel}>Expiry Date</span>
                                                             <div className={styles.expiryDetail}>
@@ -221,7 +237,7 @@ export default function MyAds() {
                                                                     {formatDate(product.expires_at)}
                                                                 </span>
                                                                 <span className={`${styles.daysLeftBadge} ${daysRemaining <= 5 ? styles.daysLeftUrgent : ''}`}>
-                                                                    {daysRemaining}d left
+                                                                    {daysRemaining} Days Left
                                                                 </span>
                                                             </div>
                                                         </div>

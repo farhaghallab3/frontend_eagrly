@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaUpload, FaImage, FaTimes, FaCheck, FaExclamationTriangle, FaMapMarkerAlt } from "react-icons/fa";
 import SubscriptionModal from "../../../ecommerce/SubscriptionPlans/SubscriptionModal";
-import SuccessAnimation from "../../feedback/SuccessAnimation";
 
 // Egypt governorates list
 const EGYPT_GOVERNORATES = [
@@ -24,9 +23,6 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
     const { categories } = useCategories();
     const { addProduct, editProduct } = useProduct();
     const [preview, setPreview] = useState(product?.image || "");
-    const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
-    const [successMessage, setSuccessMessage] = useState("Success!");
-
     const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
 
     const {
@@ -49,7 +45,7 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
         },
     });
 
-    // عند تعديل منتج، نحط القيم القديمة
+    // Load existing product data for editing
     useEffect(() => {
         if (product) {
             setValue("title", product.title || "");
@@ -65,18 +61,15 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
         }
     }, [product, setValue]);
 
-    // حفظ المنتج
     const onSubmit = async (data) => {
         const formData = new FormData();
 
         Object.entries(data).forEach(([key, value]) => {
             if (key === "image") {
-                // فقط إذا تم اختيار صورة جديدة
                 if (value && typeof value !== "string") {
                     formData.append("image", value[0]);
                 }
             } else if (key === "status" && !product) {
-                // For new products, force draft status
                 formData.append("status", "draft");
                 formData.append("is_active", "false");
             } else {
@@ -86,46 +79,31 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
 
         try {
             if (product) {
-                // تحديث المنتج (PATCH أفضل لتجنب مسح الحقول غير المرسلة)
                 await editProduct(product.id, formData);
-                if (isRepublishing) {
-                    setSuccessMessage("Ad republished! Waiting for admin approval.");
-                } else {
-                    setSuccessMessage("Product updated successfully!");
-                }
             } else {
                 await addProduct(formData);
-                setSuccessMessage("Product created! Waiting for admin approval.");
             }
-            // toast.success("Product updated successfully!"); // Removed in favor of animation
-            setShowSuccessAnimation(true);
 
-            refetchMyProducts(); // تحديث المنتجات
+            refetchMyProducts();
 
-            // Delay closing to show animation
-            setTimeout(() => {
-                setShowSuccessAnimation(false);
-                if (onClose) onClose(); // إغلاق الفورم
-                if (onSuccess) onSuccess(); // تحديث عند النجاح
-            }, 3000); // 3 seconds display
+            // Redundant success animation removed. Parent MyAds handles it.
+            if (onSuccess) onSuccess(); // Signal success to parent
+            if (onClose) onClose(); // Close form immediately
 
         } catch (error) {
             if (error.response?.data?.code === 'ad_limit_exceeded') {
-                // toast.error('You cannot add products until you pay for a package.');
                 setShowSubscriptionModal(true);
             } else {
-                // Handle other validation errors
                 console.error("Error saving product:", error);
                 toast.error("Failed to save product. Please try again.");
             }
         }
     };
 
-    // معاينة الصورة
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setValue("image", e.target.files); // تحديث قيمة الفورم
+            setValue("image", e.target.files);
             const reader = new FileReader();
             reader.onload = () => setPreview(reader.result);
             reader.readAsDataURL(file);
@@ -134,12 +112,10 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
 
     return (
         <div className={styles.formContainer}>
-            {showSuccessAnimation && <SuccessAnimation message={successMessage} />}
             <h1 className={styles.formTitle}>
                 {isRepublishing ? "Republish Ad" : (product ? "Edit Product" : "Add New Product")}
             </h1>
 
-            {/* Progress Indicator */}
             <div className={styles.progressIndicator}>
                 <div className={styles.progressStep}></div>
                 <div className={styles.progressStep}></div>
@@ -147,14 +123,12 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-                {/* Basic Information Section */}
                 <div className={styles.formSections}>
                     <div className={styles.sectionHeader}>
                         <FaCheck className={styles.sectionIcon} />
                         <h2 className={styles.sectionTitle}>Basic Information</h2>
                     </div>
 
-                    {/* Title */}
                     <div className={styles.formGroup}>
                         <label>Product Title</label>
                         <input
@@ -166,7 +140,6 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                         {errors.title && <p className={styles.error}>{errors.title.message}</p>}
                     </div>
 
-                    {/* Description */}
                     <div className={styles.formGroup}>
                         <label>Product Description</label>
                         <textarea
@@ -180,7 +153,6 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                         )}
                     </div>
 
-                    {/* Price */}
                     <div className={styles.formGroup}>
                         <label>Price ($)</label>
                         <input
@@ -196,7 +168,6 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                         {errors.price && <p className={styles.error}>{errors.price.message}</p>}
                     </div>
 
-                    {/* Category - REQUIRED */}
                     <div className={styles.formGroup}>
                         <label>Category <span style={{ color: '#ef4444', fontSize: '1.2em' }}>*</span></label>
                         <select
@@ -218,7 +189,6 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                         )}
                     </div>
 
-                    {/* Condition */}
                     <div className={styles.formGroup}>
                         <label>Product Condition</label>
                         <select
@@ -235,14 +205,12 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                     </div>
                 </div>
 
-                {/* Academic Information Section */}
                 <div className={styles.formSections}>
                     <div className={styles.sectionHeader}>
                         <FaExclamationTriangle className={styles.sectionIcon} />
                         <h2 className={styles.sectionTitle}>Academic Information</h2>
                     </div>
 
-                    {/* University */}
                     <div className={styles.formGroup}>
                         <label>University</label>
                         <input
@@ -256,7 +224,6 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                         )}
                     </div>
 
-                    {/* Faculty */}
                     <div className={styles.formGroup}>
                         <label>Faculty/Department</label>
                         <input
@@ -271,14 +238,12 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                     </div>
                 </div>
 
-                {/* Location Information Section */}
                 <div className={styles.formSections}>
                     <div className={styles.sectionHeader}>
                         <FaMapMarkerAlt className={styles.sectionIcon} />
                         <h2 className={styles.sectionTitle}>Location Information</h2>
                     </div>
 
-                    {/* Governorate */}
                     <div className={styles.formGroup}>
                         <label>Governorate <span style={{ color: '#ef4444', fontSize: '1.2em' }}>*</span></label>
                         <select
@@ -304,14 +269,12 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                     </div>
                 </div>
 
-                {/* Media Section */}
                 <div className={styles.formSections}>
                     <div className={styles.sectionHeader}>
                         <FaImage className={styles.sectionIcon} />
                         <h2 className={styles.sectionTitle}>Product Images</h2>
                     </div>
 
-                    {/* Image Upload */}
                     <div className={styles.formGroup}>
                         <label>Product Image</label>
                         <div className={styles.imageUpload}>
@@ -337,7 +300,6 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                     </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className={styles.actions}>
                     <button type="button" className={styles.cancelBtn} onClick={onClose}>
                         <FaTimes />

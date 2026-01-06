@@ -1,10 +1,15 @@
-/* Header Wrapper - Positions the pill */
+/* ===========================================
+   HEADER - Premium Floating Navbar
+   Supports Light/Dark Mode via CSS Variables
+   =========================================== */
+
+/* Header Wrapper */
 .headerWrapper {
   position: fixed;
-  top: 24px;
+  top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: var(--z-fixed);
   display: flex;
   justify-content: center;
   padding: 0 24px;
@@ -13,24 +18,24 @@
 /* Floating Pill Navbar */
 .navbar {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1280px;
   height: 64px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-primary);
   border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px 0 32px;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-smooth);
 }
 
 .navbar:hover {
-  border-color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.12);
+  border-color: var(--accent-primary-light);
+  box-shadow: var(--shadow-xl);
 }
 
 /* Brand/Logo */
@@ -42,8 +47,8 @@
 
 .brandText {
   font-size: 1.4rem;
-  font-weight: 500;
-  color: #111111;
+  font-weight: 600;
+  color: var(--text-primary);
   letter-spacing: -0.04em;
   text-transform: uppercase;
 }
@@ -60,22 +65,22 @@
 
 .navLink {
   text-decoration: none;
-  color: #666666;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   font-weight: 500;
   padding: 8px 16px;
   border-radius: 999px;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
 }
 
 .navLink:hover {
-  color: #111111;
-  background: rgba(0, 0, 0, 0.03);
+  color: #000000;
+  background: var(--accent-primary);
 }
 
 .activeLink {
-  color: #111111;
-  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary);
+  background: var(--accent-primary-light);
 }
 
 /* Actions Area */
@@ -90,7 +95,7 @@
   align-items: center;
   gap: 4px;
   padding-right: 12px;
-  border-right: 1px solid #EEEEEE;
+  border-right: 1px solid var(--border-primary);
 }
 
 .iconWrapper {
@@ -103,29 +108,29 @@
   border-radius: 50%;
   border: none;
   background: transparent;
-  color: #666666;
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   text-decoration: none;
   position: relative;
 }
 
 .iconBtn:hover {
-  background: #F5F5F5;
-  color: #111111;
+  background: var(--surface-hover);
+  color: var(--text-primary);
 }
 
 .badge {
   position: absolute;
   top: 4px;
   right: 4px;
-  background: #FFB300;
-  color: #000000;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   font-size: 0.65rem;
-  font-weight: 500;
+  font-weight: 600;
   min-width: 16px;
   height: 16px;
   border-radius: 99px;
@@ -133,40 +138,53 @@
   align-items: center;
   justify-content: center;
   padding: 0 4px;
-  border: 2px solid #FFFFFF;
+  border: 2px solid var(--bg-primary);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 /* Dropdown Containers */
 .notificationsDropdown,
 .chatDropdown {
   width: 360px;
-  background: #FFFFFF;
-  border: 1px solid #EEEEEE;
-  border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  background: var(--surface-card);
+  border: 1px solid var(--border-primary);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xl);
   position: absolute;
   top: calc(100% + 16px);
   right: 0;
-  z-index: 1001;
+  z-index: var(--z-dropdown);
   overflow: hidden;
-  animation: slideUp 0.3s ease;
+  animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(10px) scale(0.98);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 .dropdownHeader {
   padding: 20px 24px;
-  border-bottom: 1px solid #F5F5F5;
+  border-bottom: 1px solid var(--border-secondary);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -174,15 +192,15 @@
 
 .dropdownTitle {
   font-size: 0.95rem;
-  font-weight: 500;
-  color: #111111;
+  font-weight: 600;
+  color: var(--text-primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .chatUnreadBadge {
-  background: #111111;
-  color: #FFB300;
+  background: var(--text-primary);
+  color: var(--accent-primary);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 2px 8px;
@@ -192,14 +210,21 @@
 .markAllReadBtn {
   background: transparent;
   border: none;
-  color: #FFB300;
+  color: var(--accent-primary);
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
 .markAllReadBtn:hover {
   text-decoration: underline;
+}
+
+/* Dropdown content containers */
+.dropdownContent,
+.chatListContainer {
+  display: block;
 }
 
 .dropdownList {
@@ -214,18 +239,18 @@
   display: flex;
   gap: 16px;
   cursor: pointer;
-  transition: background 0.2s ease;
-  border-bottom: 1px solid #FAFAFA;
+  transition: background var(--transition-fast);
+  border-bottom: 1px solid var(--border-secondary);
 }
 
 .chatItem:hover,
 .notificationItem:hover {
-  background: #F9F9F9;
+  background: var(--surface-hover);
 }
 
 .unreadChat,
 .unreadItem {
-  background: rgba(255, 179, 0, 0.02);
+  background: var(--accent-primary-light);
 }
 
 .itemIcon {
@@ -233,7 +258,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #F5F5F5;
+  background: var(--bg-tertiary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -241,15 +266,15 @@
 }
 
 .iconSuccess {
-  color: #2E7D32;
+  color: var(--success);
 }
 
 .iconError {
-  color: #C62828;
+  color: var(--error);
 }
 
 .iconInfo {
-  color: #FFB300;
+  color: var(--accent-primary);
 }
 
 .itemContent,
@@ -262,7 +287,7 @@
 .chatUserName {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #111111;
+  color: var(--text-primary);
   margin-bottom: 4px;
   display: flex;
   align-items: center;
@@ -272,7 +297,7 @@
 .itemMessage,
 .chatProduct {
   font-size: 0.85rem;
-  color: #666666;
+  color: var(--text-secondary);
   line-height: 1.4;
   margin-bottom: 4px;
   white-space: nowrap;
@@ -283,7 +308,7 @@
 .itemTime,
 .chatDate {
   font-size: 0.75rem;
-  color: #999999;
+  color: var(--text-tertiary);
   font-weight: 500;
 }
 
@@ -291,7 +316,7 @@
 .unreadIndicator {
   width: 8px;
   height: 8px;
-  background: #FFB300;
+  background: var(--accent-primary);
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -300,21 +325,21 @@
 .viewAllButton {
   width: 100%;
   padding: 16px;
-  background: #FFFFFF;
+  background: var(--bg-secondary);
   border: none;
-  border-top: 1px solid #F5F5F5;
-  color: #111111;
+  border-top: 1px solid var(--border-secondary);
+  color: var(--text-primary);
   font-size: 0.85rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
 }
 
 .viewAllButton:hover {
-  background: #F5F5F5;
-  color: #FFB300;
+  background: var(--surface-hover);
+  color: var(--accent-primary);
 }
 
 /* States */
@@ -325,7 +350,7 @@
 }
 
 .emptyState p {
-  color: #999999;
+  color: var(--text-tertiary);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -333,8 +358,8 @@
 .loadingSpinner {
   width: 24px;
   height: 24px;
-  border: 2px solid #F5F5F5;
-  border-top-color: #FFB300;
+  border: 2px solid var(--border-primary);
+  border-top-color: var(--accent-primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 0 auto;
@@ -343,17 +368,6 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
-  }
-}
-
-@media (max-width: 576px) {
-
-  .notificationsDropdown,
-  .chatDropdown {
-    width: calc(100vw - 48px);
-    right: 0;
-    left: 0;
-    margin: 0 auto;
   }
 }
 
@@ -366,28 +380,34 @@
 
 .loginLink {
   text-decoration: none;
-  color: #111111;
+  color: var(--text-primary);
   font-size: 0.9rem;
   font-weight: 500;
   padding: 0 16px;
+  transition: color var(--transition-fast);
+}
+
+.loginLink:hover {
+  color: var(--accent-primary);
 }
 
 .ctaButton {
   text-decoration: none;
-  background: #111111;
-  color: #FFFFFF;
+  background: var(--text-primary);
+  color: var(--bg-primary);
   font-size: 0.9rem;
   font-weight: 500;
   padding: 10px 24px;
   border-radius: 999px;
-  transition: all 0.2s ease;
+  transition: all var(--transition-smooth);
   white-space: nowrap;
 }
 
 .ctaButton:hover {
-  background: #FFB300;
-  color: #000000;
-  transform: translateY(-1px);
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
 }
 
 /* Authenticated User Menu */
@@ -401,27 +421,32 @@
   align-items: center;
   gap: 10px;
   padding: 4px 16px 4px 6px;
-  background: #F5F5F5;
+  background: var(--surface-hover);
   border-radius: 999px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
+}
+
+.userInfo:hover {
+  background: var(--accent-primary-light);
 }
 
 .userAvatar {
   width: 32px;
   height: 32px;
-  background: #111111;
-  color: #FFB300;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.9rem;
 }
 
 .userName {
   font-size: 0.85rem;
   font-weight: 500;
-  color: #111111;
+  color: var(--text-primary);
 }
 
 .userDropdown {
@@ -429,17 +454,17 @@
   top: calc(100% + 12px);
   right: 0;
   width: 200px;
-  background: #FFFFFF;
-  border: 1px solid #EEEEEE;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  background: var(--surface-card);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
   padding: 8px;
   display: flex;
   flex-direction: column;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-8px);
-  transition: all 0.2s ease;
+  transition: all var(--transition-smooth);
 }
 
 .userMenu:hover .userDropdown {
@@ -451,12 +476,12 @@
 .userDropdown a,
 .logoutBtn {
   text-decoration: none;
-  color: #666666;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   font-weight: 500;
   padding: 10px 16px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  border-radius: 8px;
+  transition: all var(--transition-fast);
   border: none;
   background: transparent;
   text-align: left;
@@ -466,13 +491,13 @@
 
 .userDropdown a:hover,
 .logoutBtn:hover {
-  background: #F9F9F9;
-  color: #111111;
+  background: var(--accent-primary);
+  color: #000000;
 }
 
 .logoutBtn {
-  color: #C62828;
-  border-top: 1px solid #F5F5F5;
+  color: var(--error);
+  border-top: 1px solid var(--border-secondary);
   margin-top: 4px;
   padding-top: 12px;
 }
@@ -482,7 +507,7 @@
   display: none;
   background: transparent;
   border: none;
-  color: #111111;
+  color: var(--text-primary);
   cursor: pointer;
   padding: 8px;
 }
@@ -491,20 +516,20 @@
 @media (max-width: 992px) {
   .navCenter {
     display: none;
-    /* Hide desktop nav */
     flex-direction: column;
     position: fixed;
-    top: 100px;
+    top: 64px;
     left: 24px;
     right: 24px;
-    background: #FFFFFF;
+    background: var(--surface-card);
     border-radius: 24px;
     padding: 24px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    border: 1px solid #EEEEEE;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border-primary);
     transform: translateY(-20px);
     opacity: 0;
     pointer-events: none;
+    transition: all var(--transition-smooth);
   }
 
   .navActive {
@@ -530,7 +555,7 @@
   .mobileAuth {
     margin-top: 16px;
     padding-top: 16px;
-    border-top: 1px solid #EEEEEE;
+    border-top: 1px solid var(--border-primary);
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -539,7 +564,7 @@
 
   .mobileNavLink {
     text-decoration: none;
-    color: #111111;
+    color: var(--text-primary);
     font-size: 1.1rem;
     font-weight: 500;
     text-align: center;
@@ -547,13 +572,19 @@
 
   .mobileCta {
     text-decoration: none;
-    background: #111111;
-    color: #FFFFFF;
+    background: var(--accent-primary);
+    color: var(--text-inverse);
     font-size: 1.1rem;
     font-weight: 500;
     padding: 16px;
     border-radius: 12px;
     text-align: center;
+    transition: all var(--transition-base);
+  }
+
+  .mobileCta:hover {
+    background: var(--accent-primary-hover);
+    transform: scale(1.02);
   }
 }
 
@@ -564,10 +595,17 @@
 
   .iconActions {
     display: none;
-    /* Hide icons on very small screens to fit brand + auth */
   }
 
   .brandText {
     font-size: 1.2rem;
+  }
+
+  .notificationsDropdown,
+  .chatDropdown {
+    width: calc(100vw - 48px);
+    right: 0;
+    left: 0;
+    margin: 0 auto;
   }
 }

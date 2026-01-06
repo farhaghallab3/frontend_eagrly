@@ -1,25 +1,25 @@
 /* Chat App Main Container - Phizz Aesthetic */
 .chatContainer {
-  height: calc(100vh - 180px);
-  /* Leave plenty of room */
-  margin: 0 auto;
+  height: calc(100vh - 140px);
+  margin: 100px auto 20px;
   max-width: 1280px;
-  background-color: #FFFFFF;
+  background-color: var(--surface-card);
   display: flex;
   position: relative;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
-  color: #111111;
-  border: 1px solid #EEEEEE;
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
   border-radius: 8px;
+  box-shadow: var(--shadow-xl);
 }
 
 /* Sidebar for Chat List */
 .chatSidebar {
   width: 380px;
   min-width: 380px;
-  background: #FFFFFF;
-  border-right: 1px solid #EEEEEE;
+  background: var(--surface-card);
+  border-right: 1px solid var(--border-primary);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -27,31 +27,47 @@
 }
 
 .chatSidebar.collapsed {
-  width: 0;
-  min-width: 0;
-  border-right: none;
+  width: 60px;
+  min-width: 60px;
 }
 
-.chatSidebar.collapsed .sidebarContent,
-.chatSidebar.collapsed .sidebarTitle {
-  opacity: 0;
-  visibility: hidden;
+.chatSidebar.collapsed .sidebarTitle,
+.chatSidebar.collapsed .sidebarContent {
+  display: none;
 }
 
 .sidebarHeader {
   padding: 24px;
-  border-bottom: 1px solid #EEEEEE;
-  background: #FFFFFF;
+  height: 80px;
+  border-bottom: 1px solid var(--border-primary);
+  background: var(--surface-card);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  white-space: nowrap;
+}
+
+.chatSidebar.collapsed .sidebarHeader {
+  padding: 0;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.chatSidebar.collapsed .toggleButton {
+  margin: 0;
+  background: var(--accent-primary);
+  color: #000000;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-primary-glow);
 }
 
 .sidebarTitle {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 500;
-  color: #111111;
+  color: var(--text-primary);
 }
 
 .sidebarContent {
@@ -63,7 +79,7 @@
 .toggleButton {
   background: transparent;
   border: none;
-  color: #999999;
+  color: var(--text-secondary);
   cursor: pointer;
   padding: 8px;
   border-radius: 4px;
@@ -74,8 +90,8 @@
 }
 
 .toggleButton:hover {
-  background: #F9F9F9;
-  color: #111111;
+  background: var(--surface-hover);
+  color: var(--text-primary);
 }
 
 /* Main Chat Area */
@@ -84,21 +100,19 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  background: #FFFFFF;
+  background: var(--bg-primary);
   min-width: 0;
   min-height: 0;
-  /* CRITICAL for flex scrolling */
 }
 
 .chatConversation {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #FFFFFF;
+  background: var(--bg-primary);
   position: relative;
   width: 100%;
   min-height: 0;
-  /* CRITICAL for flex scrolling */
 }
 
 /* Loading and Error States */
@@ -108,16 +122,16 @@
   justify-content: center;
   align-items: center;
   height: calc(100vh - 70px);
-  background: #FFFFFF;
-  color: #111111;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .errorAlert {
-  background: #FFF5F5;
-  border: 1px solid #FFEBEB;
+  background: var(--bg-secondary);
+  border: 1px solid var(--error-light);
   border-radius: 8px;
   padding: 24px;
-  color: #FF3B30;
+  color: var(--error);
   max-width: 400px;
   text-align: center;
   font-weight: 500;
@@ -129,24 +143,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #FFFFFF;
+  background: var(--bg-primary);
   padding: 40px;
 }
 
 .emptyContent {
   text-align: center;
-  color: #999999;
+  color: var(--text-secondary);
   max-width: 400px;
 }
 
 .emptyIcon {
-  color: #FFB300;
+  color: var(--accent-primary);
   margin-bottom: 24px;
   opacity: 0.2;
 }
 
 .emptyContent h3 {
-  color: #111111;
+  color: var(--text-primary);
   font-weight: 500;
   margin-bottom: 12px;
   font-size: 1.75rem;

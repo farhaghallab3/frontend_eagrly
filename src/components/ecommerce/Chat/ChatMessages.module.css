@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: #FFFFFF;
+  background-color: var(--bg-primary);
   min-height: 0;
 }
 
@@ -45,7 +45,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid #EEEEEE;
+  border: 1px solid var(--border-secondary);
 }
 
 .messageContent {
@@ -57,7 +57,7 @@
 .senderName {
   font-size: 0.75rem;
   font-weight: 500;
-  color: #999999;
+  color: var(--text-tertiary);
   margin-bottom: 2px;
 }
 
@@ -70,16 +70,16 @@
 }
 
 .sentBubble {
-  background-color: #111111;
-  color: #FFFFFF;
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
   border-bottom-right-radius: 2px;
 }
 
 .receivedBubble {
-  background-color: #F5F5F5;
-  color: #111111;
+  background-color: var(--surface-input);
+  color: var(--text-primary);
   border-bottom-left-radius: 2px;
-  border: 1px solid #EEEEEE;
+  border: 1px solid var(--border-primary);
 }
 
 .messageText {
@@ -125,7 +125,7 @@
 
 .emptyContent {
   text-align: center;
-  color: #999999;
+  color: var(--text-tertiary);
 }
 
 .emptyIcon {
@@ -140,15 +140,15 @@
   right: 20px;
   width: 40px;
   height: 40px;
-  background: #111111;
-  color: #FFFFFF;
+  background: var(--text-primary);
+  color: var(--bg-primary);
   border: none;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
   font-size: 1.2rem;
   font-weight: 500;
   z-index: 10;
@@ -156,6 +156,7 @@
 }
 
 .scrollBottomBtn:hover {
-  background: #FFB300;
+  background: var(--accent-primary);
+  color: #000000;
   transform: translateY(-2px);
 }

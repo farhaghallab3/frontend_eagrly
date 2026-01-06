@@ -33,15 +33,7 @@ const SubscriptionRequiredModal = ({ show, onClose, daysUntilReset = 30 }) => {
                     <span className={styles.orText}>or</span>
                 </div>
 
-                <div className={styles.upgradeSection}>
-                    <div className={styles.crownIcon}>
-                        <FaCrown />
-                    </div>
-                    <h3 className={styles.upgradeTitle}>Upgrade to Premium</h3>
-                    <p className={styles.upgradeMessage}>
-                        Subscribe to one of our plans below and start posting ads immediately!
-                    </p>
-                </div>
+
 
                 <div className={styles.modalBody}>
                     <SubscriptionPlans isModal={true} onClose={onClose} />

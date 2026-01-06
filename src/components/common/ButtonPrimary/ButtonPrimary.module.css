@@ -1,18 +1,22 @@
+/* ===========================================
+   BUTTON PRIMARY - Unified Dark → Gold Style
+   =========================================== */
+
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   padding: 14px 28px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-radius: 8px;
-  border: 1px solid transparent;
+  border-radius: 10px;
+  border: none;
   width: 100%;
 }
 
@@ -21,25 +25,28 @@
   cursor: not-allowed;
 }
 
-/* Luxury Filled Button (Standard is Deep Black) */
+/* Filled Button - Dark with Gold Hover */
 .filled {
   background-color: #111111;
   color: #FFFFFF;
 }
 
 .filled:hover:not(:disabled) {
-  background-color: #FFB300;
+  background-color: var(--accent-primary);
   color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--accent-primary-glow);
 }
 
-/* Luxury Outline Button */
+/* Outline Button */
 .outline {
   background-color: transparent;
-  color: #111111;
-  border-color: #EEEEEE;
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
 }
 
 .outline:hover:not(:disabled) {
-  border-color: #111111;
-  background-color: #F9F9F9;
+  border-color: var(--accent-primary);
+  background-color: var(--accent-primary);
+  color: #000000;
 }

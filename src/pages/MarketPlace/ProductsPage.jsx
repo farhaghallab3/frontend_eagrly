@@ -9,6 +9,16 @@ import { productService } from '../../services/productService.js';
 import { useCategories } from '../../hooks/useCategories.js';
 import styles from './ProductsPage.module.css';
 
+// Egyptian Governorates
+const GOVERNORATES = [
+  "Cairo", "Giza", "Alexandria", "Dakahlia", "Red Sea", "Beheira", "Fayoum",
+  "Gharbia", "Ismailia", "Menofia", "Minya", "Qalyubia", "New Valley", "Suez",
+  "Aswan", "Asyut", "Beni Suef", "Port Said", "Damietta", "Sharqia", "South Sinai",
+  "Kafr El Sheikh", "Matruh", "Luxor", "Qena", "North Sinai", "Sohag"
+].sort();
+
+const MAX_PRICE = 10000;
+
 const ProductsPage = () => {
   const [searchParams] = useSearchParams();
   const categoryFromUrl = searchParams.get('category');
@@ -19,10 +29,10 @@ const ProductsPage = () => {
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     category: categoryFromUrl || "",
-    university: "",
-    faculty: "",
     governorate: "",
-    priceRange: [0, 100000],
+    faculty: "",
+    priceMin: 0,
+    priceMax: MAX_PRICE,
     inStock: false,
     features: []
   });
@@ -60,17 +70,18 @@ const ProductsPage = () => {
     if (!product) return false;
 
     const prodCategory = String(product.category_name || product.category?.name || product.category || '').trim();
-    const prodUniversity = String(product.university || '').trim();
     const prodFaculty = String(product.faculty || '').trim();
     const prodGovernorate = String(product.governorate || '').trim();
     const prodPrice = Number(product.price || 0);
     const prodStatus = String(product.status || '').trim();
 
     if (filters.category && prodCategory.toLowerCase() !== String(filters.category || '').trim().toLowerCase()) return false;
-    if (filters.university && prodUniversity.toLowerCase() !== String(filters.university || '').trim().toLowerCase()) return false;
     if (filters.faculty && prodFaculty.toLowerCase() !== String(filters.faculty || '').trim().toLowerCase()) return false;
     if (filters.governorate && prodGovernorate.toLowerCase() !== String(filters.governorate || '').trim().toLowerCase()) return false;
-    if (prodPrice < filters.priceRange[0] || prodPrice > filters.priceRange[1]) return false;
+
+    // Price range filter
+    if (prodPrice < filters.priceMin || prodPrice > filters.priceMax) return false;
+
     if (filters.inStock && prodStatus.toLowerCase() !== 'active' && prodStatus.toLowerCase() !== 'available') return false;
 
     return true;
@@ -84,22 +95,38 @@ const ProductsPage = () => {
     )].sort();
   };
 
-  const universities = getUniqueValues('university');
   const faculties = getUniqueValues('faculty');
 
   const handleFilterChange = (field, value) => {
     setFilters(prev => ({ ...prev, [field]: value }));
   };
 
+  const handlePriceMinChange = (e) => {
+    const value = Math.min(Number(e.target.value), filters.priceMax - 100);
+    setFilters(prev => ({ ...prev, priceMin: value }));
+  };
+
+  const handlePriceMaxChange = (e) => {
+    const value = Math.max(Number(e.target.value), filters.priceMin + 100);
+    setFilters(prev => ({ ...prev, priceMax: value }));
+  };
+
   const clearAllFilters = () => setFilters({
     category: "",
-    university: "",
-    faculty: "",
     governorate: "",
-    priceRange: [0, 100000],
+    faculty: "",
+    priceMin: 0,
+    priceMax: MAX_PRICE,
     inStock: false,
     features: []
   });
+
+  const hasActiveFilters = filters.category || filters.governorate || filters.faculty ||
+    filters.priceMin > 0 || filters.priceMax < MAX_PRICE;
+
+  // Calculate percentage for slider fill
+  const minPercent = (filters.priceMin / MAX_PRICE) * 100;
+  const maxPercent = (filters.priceMax / MAX_PRICE) * 100;
 
   return (
     <div className={styles.marketplacePage}>
@@ -135,17 +162,17 @@ const ProductsPage = () => {
                 </select>
               </div>
 
-              {/* University Filter */}
+              {/* Governorate Filter */}
               <div className={styles.filterItem}>
-                <span className={styles.filterLabel}>University</span>
+                <span className={styles.filterLabel}>Governorate</span>
                 <select
                   className={styles.filterSelect}
-                  value={filters.university}
-                  onChange={(e) => handleFilterChange('university', e.target.value)}
+                  value={filters.governorate}
+                  onChange={(e) => handleFilterChange('governorate', e.target.value)}
                 >
-                  <option value="">All Universities</option>
-                  {universities.map(uni => (
-                    <option key={uni} value={uni}>{uni}</option>
+                  <option value="">All Governorates</option>
+                  {GOVERNORATES.map(gov => (
+                    <option key={gov} value={gov}>{gov}</option>
                   ))}
                 </select>
               </div>
@@ -165,16 +192,50 @@ const ProductsPage = () => {
                 </select>
               </div>
 
-              {/* Sort Filter */}
-              {/* <div className={styles.filterItem}>
-                <span className={styles.filterLabel}>Sort By</span>
-                <select className={styles.filterSelect}>
-                  <option>Our Suggestions</option>
-                  <option>Newest</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                </select>
-              </div> */}
+              {/* Inline Price Slider */}
+              <div className={styles.filterItem}>
+                <span className={styles.filterLabel}>Price</span>
+                <div className={styles.inlineSlider}>
+                  <span className={styles.priceValue}>{filters.priceMin.toLocaleString()}</span>
+                  <div className={styles.sliderWrapper}>
+                    <div className={styles.sliderTrack}>
+                      <div
+                        className={styles.sliderRange}
+                        style={{
+                          left: `${minPercent}%`,
+                          width: `${maxPercent - minPercent}%`
+                        }}
+                      />
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max={MAX_PRICE}
+                      step="100"
+                      value={filters.priceMin}
+                      onChange={handlePriceMinChange}
+                      className={styles.sliderInput}
+                    />
+                    <input
+                      type="range"
+                      min="0"
+                      max={MAX_PRICE}
+                      step="100"
+                      value={filters.priceMax}
+                      onChange={handlePriceMaxChange}
+                      className={styles.sliderInput}
+                    />
+                  </div>
+                  <span className={styles.priceValue}>{filters.priceMax.toLocaleString()}</span>
+                </div>
+              </div>
+
+              {/* Clear Filters Button */}
+              {hasActiveFilters && (
+                <button className={styles.clearFiltersBtn} onClick={clearAllFilters}>
+                  Clear
+                </button>
+              )}
             </div>
           </div>
 

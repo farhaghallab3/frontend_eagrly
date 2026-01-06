@@ -1,0 +1,93 @@
+.toggleButton {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: var(--surface-hover);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.toggleButton:hover {
+    background: var(--accent-primary-light);
+    transform: rotate(15deg);
+}
+
+.toggleButton:active {
+    transform: scale(0.95) rotate(15deg);
+}
+
+.iconWrapper {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.iconContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.rotateIn {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.rotateOut {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+.sunIcon {
+    font-size: 22px;
+    color: var(--accent-primary);
+}
+
+.moonIcon {
+    font-size: 22px;
+    color: var(--accent-primary);
+}
+
+/* Glow effect on hover */
+.toggleButton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.toggleButton:hover::before {
+    opacity: 0.1;
+}
+
+/* Ripple effect on click */
+.toggleButton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    opacity: 0;
+    transform: scale(0);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.toggleButton:active::after {
+    opacity: 0.2;
+    transform: scale(1);
+}

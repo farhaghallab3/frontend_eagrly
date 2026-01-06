@@ -1,140 +1,155 @@
 .messageInputContainer {
-    padding: 16px 24px;
-    background: #FFFFFF;
-    border-top: 1px solid #EEEEEE;
+    padding: 24px 32px;
+    background: transparent;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .inputWrapper {
     display: flex;
     align-items: center;
     gap: 12px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 99px;
+    padding: 6px 6px 6px 16px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
 }
 
-.textInputWrapper {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    background: #F5F5F5;
-    border: 1px solid #EEEEEE;
-    border-radius: 8px;
-    padding: 8px 16px;
-    transition: all 0.2s;
-    gap: 12px;
-}
-
-.inputLabel {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #111111;
-    white-space: nowrap;
-    letter-spacing: -0.02em;
-}
-
-.textInputWrapper:focus-within {
-    border-color: #FFB300;
-    background: #FFFFFF;
+.inputWrapper:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .textarea {
     flex: 1;
     background: transparent;
-    border: none;
-    color: #111111;
-    font-size: 0.95rem;
-    padding: 8px 0;
+    border: none !important;
+    outline: none !important;
+    color: var(--text-primary);
+    font-size: 1rem;
+    padding: 12px 0;
     resize: none;
     max-height: 120px;
-    outline: none;
     font-family: inherit;
+    line-height: 1.5;
+    box-shadow: none !important;
 }
 
 .textarea::placeholder {
-    color: #999999;
+    color: var(--text-tertiary);
 }
 
 .attachBtn {
     background: transparent;
     border: none;
-    color: #999999;
+    color: var(--text-secondary);
     cursor: pointer;
     padding: 8px;
-    border-radius: 4px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
 }
 
 .attachBtn:hover {
-    color: #111111;
-    background: #EEEEEE;
+    color: var(--text-primary);
+    background: var(--surface-hover);
 }
 
 .sendBtn {
-    background: #111111;
-    color: #FFFFFF;
+    background: var(--text-primary);
+    color: var(--bg-primary);
     border: none;
-    border-radius: 4px;
-    padding: 0 20px;
-    height: 48px;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     flex-shrink: 0;
-    font-weight: 500;
-    font-size: 0.9rem;
+}
+
+.sendBtn:not(:disabled) {
+    background: var(--accent-primary);
+    color: #000000;
+    box-shadow: 0 4px 12px var(--accent-primary-glow);
 }
 
 .sendBtn:hover:not(:disabled) {
-    opacity: 0.8;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px var(--accent-primary-glow);
 }
 
 .sendBtn:disabled {
-    background: #EEEEEE;
-    color: #999999;
+    background: var(--bg-secondary);
+    color: var(--text-tertiary);
     cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.5;
 }
 
 .attachmentMenu {
     position: absolute;
-    bottom: 80px;
-    left: 24px;
-    background: #FFFFFF;
-    border: 1px solid #EEEEEE;
-    border-radius: 12px;
-    padding: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    bottom: 90px;
+    left: 32px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: var(--shadow-xl);
     display: flex;
     gap: 8px;
     z-index: 100;
+    animation: fadeUp 0.2s ease-out;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .menuItem {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    color: #666666;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--text-secondary);
     background: transparent;
     border: none;
     cursor: pointer;
     transition: all 0.2s;
+    min-width: 80px;
 }
 
 .menuItem:hover {
-    background: #F9F9F9;
-    color: #FFB300;
+    background: var(--surface-hover);
+    color: var(--accent-primary);
+    transform: translateY(-2px);
 }
 
 .menuItem span {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }

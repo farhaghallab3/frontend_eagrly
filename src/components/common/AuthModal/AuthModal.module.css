@@ -1,16 +1,20 @@
+/* ===========================================
+   AUTH MODAL - Premium Design with Dark Mode
+   =========================================== */
+
 /* Modal Overlay */
 .modalOverlay {
     position: fixed;
     inset: 0;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--bg-overlay);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10000;
+    z-index: var(--z-modal-backdrop);
     padding: 24px;
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.3s ease-out;
 }
 
 @keyframes fadeIn {
@@ -25,17 +29,17 @@
 
 /* Modal Container */
 .modal {
-    background: #FFFFFF;
-    border: 1px solid #EEEEEE;
+    background: var(--surface-modal);
+    border: 1px solid var(--border-primary);
     border-radius: 24px;
-    max-width: 500px;
+    max-width: 480px;
     width: 100%;
     max-height: 85vh;
     overflow-y: auto;
     position: relative;
-    z-index: 10001;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-    animation: modalPop 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: var(--z-modal);
+    box-shadow: var(--shadow-xl);
+    animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes modalPop {
@@ -54,8 +58,12 @@
     width: 4px;
 }
 
+.modal::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+}
+
 .modal::-webkit-scrollbar-thumb {
-    background: #EEEEEE;
+    background: var(--border-primary);
     border-radius: 10px;
 }
 
@@ -64,30 +72,31 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 36px;
-    height: 36px;
-    background: #F5F5F5;
-    border: none;
+    width: 40px;
+    height: 40px;
+    background: var(--surface-hover);
+    border: 1px solid var(--border-primary);
     border-radius: 50%;
-    color: #999999;
+    color: var(--text-tertiary);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
 }
 
 .closeButton:hover {
-    background: #111111;
-    color: #FFFFFF;
+    background: var(--error-light);
+    border-color: var(--error);
+    color: var(--error);
     transform: rotate(90deg);
 }
 
 /* Tab Container */
 .tabContainer {
     display: flex;
-    background: #F9F9F9;
+    background: var(--bg-tertiary);
     padding: 6px;
     margin: 32px 32px 0 32px;
     border-radius: 12px;
@@ -102,7 +111,7 @@
     padding: 12px;
     background: transparent;
     border: none;
-    color: #666666;
+    color: var(--text-secondary);
     font-weight: 500;
     font-size: 0.9rem;
     cursor: pointer;
@@ -111,18 +120,18 @@
 }
 
 .tab:hover {
-    color: #111111;
+    color: var(--text-primary);
 }
 
 .activeTab {
-    background: #FFFFFF;
-    color: #111111;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background: var(--surface-card);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
 }
 
 /* Modal Content */
 .modalContent {
-    padding: 0 40px 48px 40px;
+    padding: 32px 40px 48px 40px;
 }
 
 .modalHeader {
@@ -131,29 +140,32 @@
 }
 
 .modalTitle {
-    font-size: 1.8rem;
-    font-weight: 500;
-    color: #111111;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
     letter-spacing: -0.02em;
     margin-bottom: 8px;
 }
 
 .modalSubtitle {
-    color: #666666;
+    color: var(--text-secondary);
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 /* Error Container */
 .errorMessage {
-    background: #FFF5F5;
-    border: 1px solid #FFEBEB;
-    border-radius: 8px;
+    background: var(--error-light);
+    border: 1px solid var(--error);
+    border-radius: 12px;
     padding: 12px 16px;
     margin-bottom: 24px;
-    color: #C62828;
+    color: var(--error);
     font-size: 0.85rem;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 /* Social Section */
@@ -171,10 +183,10 @@
     gap: 12px;
     width: 100%;
     padding: 14px;
-    border: 1px solid #EEEEEE;
+    border: 1px solid var(--border-primary);
     border-radius: 12px;
-    background: #FFFFFF;
-    color: #111111;
+    background: var(--surface-card);
+    color: var(--text-primary);
     font-weight: 500;
     font-size: 0.95rem;
     cursor: pointer;
@@ -182,12 +194,12 @@
 }
 
 .socialButton:hover {
-    border-color: #111111;
-    background: #F9F9F9;
+    border-color: var(--accent-primary);
+    background: var(--accent-primary-light);
 }
 
 .socialIcon {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 /* Divider */
@@ -201,11 +213,11 @@
 .dividerLine {
     flex: 1;
     height: 1px;
-    background: #EEEEEE;
+    background: var(--border-primary);
 }
 
 .dividerText {
-    color: #999999;
+    color: var(--text-tertiary);
     font-size: 0.8rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -226,7 +238,7 @@
 .sectionTitle {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #999999;
+    color: var(--text-tertiary);
     margin-bottom: 16px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -245,20 +257,21 @@
 }
 
 .forgotPasswordLink {
-    color: #666666;
+    color: var(--text-secondary);
     font-size: 0.85rem;
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.2s ease;
 }
 
 .forgotPasswordLink:hover {
-    color: #FFB300;
+    color: var(--accent-primary);
 }
 
 /* Switch Text */
 .switchText {
     text-align: center;
-    color: #666666;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin-top: 24px;
 }
@@ -266,10 +279,11 @@
 .switchLink {
     background: none;
     border: none;
-    color: #FFB300;
+    color: var(--accent-primary);
     font-weight: 600;
     cursor: pointer;
     padding: 0 4px;
+    transition: all 0.2s ease;
 }
 
 .switchLink:hover {

@@ -1,5 +1,9 @@
+/* ===========================================
+   MARKETPLACE PAGE - Dark Mode Support
+   =========================================== */
+
 .marketplacePage {
-  background-color: #FFFFFF;
+  background-color: var(--bg-primary);
   min-height: 100vh;
 }
 
@@ -11,16 +15,16 @@
 
 .marketplaceHeader {
   padding: 120px 0 40px 0;
-  background-color: #FFFFFF;
+  background-color: var(--bg-primary);
 }
 
 .headerTitle {
-  font-size: 3.25rem;
-  /* ~20px */
-  font-weight: 400;
-  color: #FFB300;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  color: var(--accent-primary);
   text-transform: none;
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
 /* Horizontal Filter Bar */
@@ -30,55 +34,175 @@
   align-items: center;
   padding-bottom: 30px;
   margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-primary);
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .resultsCount {
   font-size: 1.25rem;
-  font-weight: 200;
-  color: #111111;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .filterActions {
   display: flex;
   align-items: center;
   gap: 24px;
-  /* Space between filter items */
   flex-wrap: wrap;
-  /* Handle many filters on smaller screens */
 }
 
 .filterItem {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .filterLabel {
-  font-size: 0.85rem;
-  color: #676D75;
-  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 600;
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .filterSelect {
   border: none;
-  border-bottom: 1px solid #EEEEEE;
+  border-bottom: 2px solid var(--border-primary);
   background-color: transparent;
-  padding: 4px 24px 4px 4px;
+  padding: 6px 28px 6px 8px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #111111;
+  color: var(--text-primary);
   cursor: pointer;
   outline: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23111' d='M0 3l5 5 5-5z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23FFB300' d='M0 3l5 5 5-5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right center;
+  background-position: right 4px center;
   appearance: none;
-  min-width: 140px;
+  min-width: 130px;
+  transition: all 0.2s ease;
 }
 
 .filterSelect:focus {
-  border-bottom-color: #FFB300;
+  border-bottom-color: var(--accent-primary);
+}
+
+.filterSelect option {
+  background: var(--surface-card);
+  color: var(--text-primary);
+}
+
+/* Clear Filters Button */
+.clearFiltersBtn {
+  background: transparent;
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.clearFiltersBtn:hover {
+  border-color: var(--error);
+  color: var(--error);
+  background: var(--error-light);
+}
+
+/* =============================================
+   INLINE PRICE SLIDER 
+   ============================================= */
+.inlineSlider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.priceValue {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  min-width: 45px;
+  text-align: center;
+}
+
+/* Slider Wrapper */
+.sliderWrapper {
+  position: relative;
+  width: 140px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+/* Track Background */
+.sliderTrack {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: var(--border-primary);
+  border-radius: 2px;
+}
+
+/* Active Range Fill */
+.sliderRange {
+  position: absolute;
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 2px;
+}
+
+/* Range Inputs */
+.sliderInput {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Thumb styling */
+.sliderInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--accent-primary);
+  border: 2px solid var(--bg-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.sliderInput::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.sliderInput::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--accent-primary);
+  border: 2px solid var(--bg-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.sliderInput::-moz-range-thumb:hover {
+  transform: scale(1.2);
 }
 
 /* Main Content Area */
@@ -97,14 +221,14 @@
   align-items: center;
   padding: 5rem 0;
   gap: 20px;
-  color: #666666;
+  color: var(--text-secondary);
 }
 
 .loadingSpinner {
   width: 40px;
   height: 40px;
-  border: 3px solid #F3F3F3;
-  border-top: 3px solid #FFB300;
+  border: 3px solid var(--border-primary);
+  border-top: 3px solid var(--accent-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -125,36 +249,61 @@
 }
 
 .errorAlert {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: var(--error-light);
+  border: 1px solid var(--error);
   border-radius: 12px;
   padding: 24px;
-  color: #fca5a5;
+  color: var(--error);
   max-width: 500px;
   margin: 0 auto;
 }
 
 .retryButton {
-  background: #000;
+  background: var(--text-primary);
   border: none;
-  color: white;
+  color: var(--bg-primary);
   padding: 12px 24px;
-  border-radius: 6px;
-  font-weight: 500;
+  border-radius: 10px;
+  font-weight: 600;
   cursor: pointer;
   margin-top: 16px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .retryButton:hover {
-  background: #222;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .filterBar {
     flex-direction: column;
     align-items: flex-start;
-    gap: 15px;
+  }
+
+  .filterActions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .filterActions {
+    gap: 16px;
+  }
+
+  .filterItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .filterSelect {
+    min-width: 100%;
+  }
+
+  .sliderWrapper {
+    width: 120px;
   }
 }

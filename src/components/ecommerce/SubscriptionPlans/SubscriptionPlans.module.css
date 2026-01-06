@@ -1,9 +1,29 @@
-/* Subscription Plans Section - Centered & Clean */
+/* ===========================================
+   SUBSCRIPTION PLANS - Premium Design
+   =========================================== */
+
 .plansSection {
   padding: 100px 0;
-  background-color: #FFFFFF;
+  /* Transparent to let global body background show through */
+  background: transparent;
   display: flex;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background decoration */
+.plansSection::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--accent-primary-glow) 0%, transparent 70%);
+  top: -200px;
+  right: -100px;
+  opacity: 0.3;
+  filter: blur(100px);
+  pointer-events: none;
 }
 
 .sectionContainer {
@@ -14,12 +34,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 /* Modal Variants */
 .plansSectionModal {
-  padding: 40px 20px;
+  padding: 0;
   background: transparent !important;
+  overflow: visible !important;
+}
+
+.plansSectionModal::before {
+  display: none;
 }
 
 .modalContainer {
@@ -28,37 +55,92 @@
   padding: 0;
 }
 
+/* Compact Modal Cards */
+.plansSectionModal .planCard {
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.plansSectionModal .planHeader {
+  margin-bottom: 12px;
+}
+
+.plansSectionModal .planIcon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+.plansSectionModal .planIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.plansSectionModal .planTitle {
+  font-size: 1.1rem;
+}
+
+.plansSectionModal .planPrice {
+  margin-bottom: 12px;
+}
+
+.plansSectionModal .priceValue {
+  font-size: 1.8rem;
+}
+
+.plansSectionModal .planDivider {
+  margin-bottom: 12px;
+}
+
+.plansSectionModal .featuresList {
+  margin-bottom: 16px;
+}
+
+.plansSectionModal .featureItem {
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  gap: 8px;
+}
+
+.plansSectionModal .chooseButton {
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+
+
 /* Header */
 .sectionHeader {
   text-align: center;
-  margin-bottom: 70px;
+  margin-bottom: 60px;
 }
 
 .headerBadge {
   display: inline-block;
-  background: transparent;
-  color: #FFB300;
+  background: var(--accent-primary-light);
+  color: var(--accent-primary);
   padding: 10px 24px;
-  border-radius: 6px;
+  border-radius: 999px;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-bottom: 24px;
-  border: 1px solid rgba(255, 179, 0, 0.2);
+  border: 1px solid var(--accent-primary);
 }
 
 .sectionTitle {
-  font-size: 3.5rem;
-  font-weight: 500;
-  color: #000;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
   margin-bottom: 18px;
-  letter-spacing: -2px;
+  letter-spacing: -0.03em;
   line-height: 1.1;
 }
 
 .sectionSubtitle {
-  color: #666;
+  color: var(--text-secondary);
   max-width: 550px;
   margin: 0 auto;
   font-size: 1.1rem;
@@ -68,70 +150,115 @@
 /* Plans Grid */
 .plansGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
   margin-bottom: 60px;
+  width: 100%;
+}
+
+.modalGrid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 
 /* Plan Cards */
 .planCard {
-  background: #FFFFFF;
-  border-radius: 12px;
-  border: 1px solid #EEEEEE;
+  background: var(--surface-card);
+  border-radius: 20px;
+  border: 1px solid var(--border-primary);
   padding: 40px 32px;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
-.planCardPopular {
-  border-color: #FFB300;
-  border-width: 2px;
+.planCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--accent-primary-light) 0%, transparent 40%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .planCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-xl), 0 0 40px var(--accent-primary-glow);
+  border-color: var(--accent-primary);
+}
+
+.planCard:hover::before {
+  opacity: 1;
+}
+
+/* Modal Card Hover Overrides */
+.plansSectionModal .planCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.planCardPopular {
+  border-color: var(--accent-primary);
+  border-width: 2px;
+  background: linear-gradient(180deg, var(--accent-primary-light) 0%, var(--surface-card) 30%);
 }
 
 .popularBadge {
   position: absolute;
-  top: -14px;
+  top: -1px;
   left: 50%;
   transform: translateX(-50%);
-  background: #FFB300;
-  color: #000;
-  padding: 6px 16px;
-  border-radius: 6px;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  padding: 8px 20px;
+  border-radius: 0 0 12px 12px;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badgeStar {
+  font-size: 1rem;
 }
 
 /* Plan Header */
 .planHeader {
   text-align: center;
   margin-bottom: 30px;
+  position: relative;
+  z-index: 2;
 }
 
 .planIcon {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   margin: 0 auto 20px auto;
-  background: transparent;
-  border-radius: 12px;
+  background: var(--accent-primary-light);
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFB300;
+  color: var(--accent-primary);
+  transition: all 0.3s ease;
+}
+
+.planCard:hover .planIcon {
+  transform: scale(1.1) rotate(5deg);
+  background: var(--accent-primary);
+  color: var(--text-inverse);
 }
 
 .planTitle {
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: #000;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
   margin: 0;
 }
 
@@ -139,6 +266,8 @@
 .planPrice {
   text-align: center;
   margin-bottom: 32px;
+  position: relative;
+  z-index: 2;
 }
 
 .priceWrapper {
@@ -149,28 +278,28 @@
 }
 
 .priceValue {
-  font-size: 3.5rem;
-  font-weight: 500;
-  color: #000;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-primary);
   line-height: 1;
 }
 
 .currency {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .pricePeriod {
   display: block;
   font-size: 0.95rem;
-  color: #999;
+  color: var(--text-tertiary);
   margin-top: 8px;
 }
 
 .planDivider {
   height: 1px;
-  background: #EEEEEE;
+  background: var(--border-primary);
   margin-bottom: 32px;
 }
 
@@ -180,68 +309,118 @@
   padding: 0;
   margin: 0 0 40px 0;
   flex-grow: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .featureItem {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #444;
+  color: var(--text-secondary);
   margin-bottom: 16px;
   font-size: 0.95rem;
 }
 
 .featureIcon {
-  color: #FFB300;
-  /* Keep green for positive confirmation */
+  color: var(--success);
   font-size: 1.2rem;
   flex-shrink: 0;
 }
 
 .featureItem strong {
-  color: #000;
+  color: var(--text-primary);
 }
 
 /* Choose Button */
 .chooseButton {
   width: 100%;
-  background: #000000;
-  color: #FFFFFF;
-  border: none;
+  background: #111111 !important;
+  color: #FFFFFF !important;
+  border: none !important;
   padding: 16px;
-  border-radius: 6px;
-  font-weight: 500;
+  border-radius: 12px;
+  font-weight: 600;
   font-size: 1rem;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
 }
 
 .chooseButton:hover {
-  background: #222222;
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  background: var(--accent-primary) !important;
+  color: #000000 !important;
+  box-shadow: 0 8px 20px var(--accent-primary-glow);
 }
 
 .chooseButtonPopular {
-  background: #FFB300;
-  color: #000;
+  background: #111111 !important;
+  color: #FFFFFF !important;
 }
 
 .chooseButtonPopular:hover {
-  background: #FFA000;
-  box-shadow: 0 10px 20px rgba(255, 179, 0, 0.2);
+  background: var(--accent-primary) !important;
+  color: #000000 !important;
+  box-shadow: 0 8px 20px var(--accent-primary-glow);
+}
+
+/* Loading */
+.loadingState {
+  padding: 60px;
+  text-align: center;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-primary);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.noPlans {
+  color: var(--text-tertiary);
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .plansGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
 }
 
 @media (max-width: 768px) {
-  .sectionTitle {
-    font-size: 2.5rem;
+  .plansSection {
+    padding: 60px 0;
   }
 
-  .plansGrid {
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .plansGrid,
+  .modalGrid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 24px;
+  }
+
+  .planCard {
+    padding: 32px 24px;
   }
 }

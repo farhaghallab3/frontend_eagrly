@@ -13,16 +13,17 @@
 }
 
 .modalContent {
-    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f0f1a 100%);
+    background: var(--surface-modal);
     border-radius: 16px;
     width: 80%;
     max-width: 1200px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
-    padding: 40px 20px 20px 20px;
+    padding: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-primary);
+    color: var(--text-primary);
 }
 
 .closeButton {
@@ -51,37 +52,37 @@
 
 .header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .iconWrapper {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.2) 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
+    margin: 0 auto 10px;
     border: 2px solid rgba(251, 191, 36, 0.3);
 }
 
 .clockIcon {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #fbbf24;
 }
 
 .title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 500;
-    color: #fff;
-    margin-bottom: 10px;
+    color: var(--text-primary);
+    margin-bottom: 5px;
 }
 
 .message {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
 }
 
 .countdown {
@@ -92,7 +93,7 @@
 }
 
 .days {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 500;
     background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
     -webkit-background-clip: text;
@@ -103,7 +104,7 @@
 
 .daysLabel {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -112,7 +113,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 25px 0;
+    margin: 8px 0;
     position: relative;
 }
 
@@ -126,7 +127,7 @@
 
 .orText {
     padding: 0 20px;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -146,13 +147,13 @@
 .upgradeTitle {
     font-size: 1.3rem;
     font-weight: 500;
-    color: #fff;
+    color: var(--text-primary);
     margin-bottom: 8px;
 }
 
 .upgradeMessage {
     font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary);
     max-width: 500px;
     margin: 0 auto;
 }
