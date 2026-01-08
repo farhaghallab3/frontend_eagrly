@@ -181,7 +181,7 @@ const AuthModal = () => {
                                 </>
                             ) : (
                                 <>
-                                    <h2 className={styles.modalTitle}>Join Eagerly</h2>
+                                    <h2 className={styles.modalTitle}>Join Stuplies</h2>
                                     <p className={styles.modalSubtitle}>Create an account to start selling your university gear</p>
                                 </>
                             )}

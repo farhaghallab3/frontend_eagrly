@@ -168,7 +168,7 @@ const CheckoutPage = () => {
                                         </div>
                                         <div className={styles.bankRow}>
                                             <span>Account:</span>
-                                            <strong>Eagerly Marketplace</strong>
+                                            <strong>Stuplies Marketplace</strong>
                                         </div>
                                         <div className={styles.bankRow}>
                                             <span>Number:</span>

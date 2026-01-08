@@ -9,7 +9,7 @@ const ShareModal = ({ show, onHide, productUrl, productName }) => {
     if (!show) return null;
 
     const encodedUrl = encodeURIComponent(productUrl);
-    const encodedText = encodeURIComponent(`Check out ${productName} on Eagerly!`);
+    const encodedText = encodeURIComponent(`Check out ${productName} on Stuplies!`);
 
     const shareLinks = [
         {

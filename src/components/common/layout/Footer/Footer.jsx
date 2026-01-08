@@ -44,7 +44,7 @@ const Footer = () => {
                         <div className={styles.footerSection}>
                             <div className={styles.brandSection}>
                                 <div className={styles.footerLogo}>
-                                    <span className={styles.brandText}>EAGERLY</span>
+                                    <span className={styles.brandText}>Stuplies</span>
                                 </div>
                                 <p className={styles.brandDescription}>
                                     Your trusted marketplace for discovering amazing products and connecting with sellers worldwide.
@@ -53,7 +53,7 @@ const Footer = () => {
                                 <div className={styles.contactInfo}>
                                     <div className={styles.contactItem}>
                                         <MdEmail className={styles.contactIcon} />
-                                        <span>support@eagerly.com</span>
+                                        <span>support@Stuplies.com</span>
                                     </div>
                                     <div className={styles.contactItem}>
                                         <MdPhone className={styles.contactIcon} />

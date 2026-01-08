@@ -74,7 +74,7 @@ export default function Header({ links }) {
             <div className={styles.navbar}>
                 {/* Brand */}
                 <Link to="/" className={styles.brand}>
-                    <span className={styles.brandText}>EAGERLY</span>
+                    <span className={styles.brandText}>Stuplies</span>
                 </Link>
 
                 {/* Mobile Toggle */}

@@ -30,7 +30,7 @@ const AboutUs = () => {
         {
             icon: <FaUsers />,
             title: "Community",
-            text: "Eagerly is built for students, by students, fostering a supportive academic ecosystem."
+            text: "Stuplies is built for students, by students, fostering a supportive academic ecosystem."
         },
         {
             icon: <FaGraduationCap />,
@@ -66,7 +66,7 @@ const AboutUs = () => {
                     <div className={styles.introContent}>
                         <h2>Empowering Students, Fueling Futures.</h2>
                         <p>
-                            Eagerly is an ITI Graduation Project developed with passion and precision.
+                            Stuplies is an ITI Graduation Project developed with passion and precision.
                             Our mission is to create a specialized, high-performance marketplace that
                             caters specifically to the needs of university students across Egypt.
                         </p>
@@ -77,7 +77,7 @@ const AboutUs = () => {
             {/* The Project Section */}
             <section className={styles.section}>
                 <div className={styles.container}>
-                    <h3>The Eagerly Project</h3>
+                    <h3>The Stuplies Project</h3>
                     <p>
                         What started as a requirement for graduation at the Information Technology Institute (ITI)
                         evolved into a full-scale e-commerce solution. We've focused on creating a seamless

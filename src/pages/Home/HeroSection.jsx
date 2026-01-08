@@ -42,7 +42,7 @@ export default function HeroSection() {
                         <h1 className={styles.heroTitle}>
                             <span className={styles.titleLine}>Quality is Good.</span>
                             <span className={styles.titleLine}>
-                                <span className={styles.highlight}>Eagerly</span> Makes it Better.
+                                <span className={styles.highlight}>Stuplies</span> Makes it Better.
                             </span>
                         </h1>
 
