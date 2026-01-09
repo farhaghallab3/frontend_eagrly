@@ -185,7 +185,7 @@
 }
 
 .planCard:hover {
-  transform: translateY(-12px);
+  /* transform handled by Framer Motion */
   box-shadow: var(--shadow-xl), 0 0 40px var(--accent-primary-glow);
   border-color: var(--accent-primary);
 }

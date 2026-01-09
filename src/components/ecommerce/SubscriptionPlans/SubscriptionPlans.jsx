@@ -71,12 +71,17 @@ export default function SubscriptionPlans({ isModal, onClose }) {
     };
 
     const cardVariants = {
-        hidden: { opacity: 0, y: 50, scale: 0.95 },
+        hidden: { opacity: 0, y: 60, scale: 0.9 },
         visible: {
             opacity: 1,
             y: 0,
             scale: 1,
-            transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+            transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 15,
+                mass: 1
+            }
         }
     };
 
@@ -117,6 +122,12 @@ export default function SubscriptionPlans({ isModal, onClose }) {
                             <motion.div
                                 key={pkg.id}
                                 variants={cardVariants}
+                                whileHover={{
+                                    y: -10,
+                                    scale: 1.02,
+                                    transition: { duration: 0.3, ease: "easeOut" }
+                                }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 <div className={`${styles.planCard} ${isPopular ? styles.planCardPopular : ""}`}>
                                     {isPopular && (

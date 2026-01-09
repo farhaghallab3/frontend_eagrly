@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaCreditCard, FaMobileAlt, FaUniversity, FaPaypal, FaLock, FaArrowLeft, FaCheck } from 'react-icons/fa';
 import { SiVisa, SiMastercard } from 'react-icons/si';
+import { motion } from 'framer-motion';
+import SEO from '@components/common/SEO/SEO';
 import styles from './CheckoutPage.module.css';
 import { packageService } from '../../services/package';
 import { toast } from 'react-toastify';
@@ -121,16 +123,48 @@ const CheckoutPage = () => {
 
     if (!packageData) return null;
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, ease: "easeOut" }
+        }
+    };
+
     return (
         <div className={styles.checkoutPage}>
-            <div className={styles.container}>
-                <button className={styles.backButton} onClick={() => navigate('/packages')}>
+            <SEO
+                title={packageData ? `Checkout - ${packageData.name}` : 'Checkout'}
+                description="Securely complete your subscription upgrade."
+                url={`/checkout/${packageId}`}
+            />
+            <motion.div
+                className={styles.container}
+                initial="hidden"
+                animate="visible"
+                variants={containerVariants}
+            >
+                <motion.button
+                    className={styles.backButton}
+                    onClick={() => navigate('/packages')}
+                    whileHover={{ x: -5 }}
+                    variants={itemVariants}
+                >
                     <FaArrowLeft /> Back
-                </button>
+                </motion.button>
 
                 <div className={styles.checkoutRow}>
                     <div className={styles.mainCol}>
-                        <div className={styles.sectionCard}>
+                        <motion.div className={styles.sectionCard} variants={itemVariants}>
                             <h2 className={styles.sectionTitle}>Payment</h2>
                             <p className={styles.sectionSubtitle}>Select your preferred payment method below.</p>
 
@@ -243,11 +277,11 @@ const CheckoutPage = () => {
                                     />
                                 </div>
                             )}
-                        </div>
+                        </motion.div>
                     </div>
 
                     <div className={styles.sidebarCol}>
-                        <div className={styles.orderSummary}>
+                        <motion.div className={styles.orderSummary} variants={itemVariants}>
                             <h3 className={styles.summaryTitle}>Summary</h3>
 
                             <div className={styles.packageInfo}>
@@ -284,29 +318,31 @@ const CheckoutPage = () => {
                                 </div>
                             </div>
 
-                            <button
+                            <motion.button
                                 className={styles.payButton}
                                 onClick={handlePayment}
                                 disabled={processing}
+                                whileHover={{ scale: 1.02, boxShadow: "0 5px 15px rgba(255, 215, 0, 0.2)" }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 {processing ? 'Processing...' :
                                     selectedMethod === 'bank' ? 'View Details' :
                                         selectedMethod === 'wallet' ? 'View Numbers' :
                                             `Subscribe Now`}
-                            </button>
+                            </motion.button>
 
                             <p className={styles.secureNote}>
                                 <FaLock size={12} /> Secure 256-bit Encryption
                             </p>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
-            </div>
+            </motion.div >
 
             {showSuccess && (
                 <SuccessAnimation message="Subscription requested! We'll notify you once verified." />
             )}
-        </div>
+        </div >
     );
 };
 
