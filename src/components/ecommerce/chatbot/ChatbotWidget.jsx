@@ -1,7 +1,7 @@
 // ChatbotWidget.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaRobot, FaTimes, FaPaperPlane, FaMicrophone, FaStop, FaSpinner, FaPlay, FaPause } from "react-icons/fa";
+import { FaRobot, FaTimes, FaPaperPlane, FaMicrophone, FaStop, FaSpinner, FaPlay, FaPause, FaImage, FaCheck } from "react-icons/fa";
 import { MdSmartToy } from "react-icons/md";
 import { sendMessageToBot } from "../../../services/chatService";
 
@@ -22,6 +22,16 @@ const ChatbotWidget = () => {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioRefs = useRef({});
+
+  // Transcription Preview States
+  const [transcribedText, setTranscribedText] = useState("");
+  const [showTranscriptionPreview, setShowTranscriptionPreview] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
+
+  // Image Upload States
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const imageInputRef = useRef(null);
 
   const navigate = useNavigate();
   // Auth is optional now
@@ -48,6 +58,7 @@ const ChatbotWidget = () => {
         audio: null
       }]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const startRecording = async () => {
@@ -74,7 +85,7 @@ const ChatbotWidget = () => {
 
       mediaRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-        sendAudioMessage(audioBlob);
+        transcribeAudio(audioBlob);
 
         // Stop all tracks
         stream.getTracks().forEach(track => track.stop());
@@ -102,29 +113,14 @@ const ChatbotWidget = () => {
     }
   };
 
-  const sendAudioMessage = async (audioBlob) => {
-    setLoading(true);
-
-    // Create audio URL for playback
-    const audioUrl = URL.createObjectURL(audioBlob);
-
-    // Add temporary message with audio
-    setMessages(prev => [...prev, {
-      role: "user",
-      content: "Voice Message",
-      isAudio: true,
-      audioUrl: audioUrl,
-      duration: 0 // We'll calculate this later
-    }]);
+  // Transcribe audio and show preview for editing
+  const transcribeAudio = async (audioBlob) => {
+    setIsTranscribing(true);
 
     try {
       const formData = new FormData();
       formData.append('audio', audioBlob, 'voice_message.webm');
-
-      // Use axios directly or update chatService to support FormData
-      // Here we assume we call the API directly or a modified service
-      // For simplicity/compatibility, let's use a direct axios call if service doesn't support specific config easily
-      // But let's try to stick to existing service pattern if possible, or modify it inline
+      formData.append('transcribe_only', 'true');
 
       const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
       const token = localStorage.getItem("token");
@@ -137,29 +133,108 @@ const ChatbotWidget = () => {
       const res = await axios.post(`${API_URL}/chatbot/`, formData, { headers });
       const response = res.data;
 
-      handleBotResponse(response);
-
+      if (response.transcription) {
+        setTranscribedText(response.transcription);
+        setShowTranscriptionPreview(true);
+      } else {
+        // Fallback if transcription failed
+        setMessages(prev => [...prev, {
+          role: "bot",
+          content: "Sorry, I couldn't transcribe your voice message. Please try again or type your message."
+        }]);
+      }
     } catch (err) {
-      console.error("Error sending voice message:", err);
+      console.error("Error transcribing voice message:", err);
       setMessages(prev => [...prev, {
         role: "bot",
         content: "Sorry, I couldn't process your voice message."
       }]);
     } finally {
-      setLoading(false);
+      setIsTranscribing(false);
     }
   };
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+  // Handle canceling transcription preview
+  const cancelTranscription = () => {
+    setTranscribedText("");
+    setShowTranscriptionPreview(false);
+  };
 
-    const newMessage = { role: "user", content: input };
+  // Handle sending transcribed text
+  const sendTranscribedMessage = () => {
+    if (!transcribedText.trim()) return;
+    setInput(transcribedText);
+    setShowTranscriptionPreview(false);
+    setTranscribedText("");
+    // Use setTimeout to allow state to update before sending
+    setTimeout(() => {
+      sendMessageWithText(transcribedText.trim());
+    }, 0);
+  };
+
+  // Image upload handlers
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+    // Reset input so same file can be selected again
+    e.target.value = '';
+  };
+
+  const removeImage = () => {
+    setSelectedImage(null);
+    setImagePreview(null);
+  };
+
+  // Core message sending function that handles both text and images
+  const sendMessageWithText = async (messageText) => {
+    if (!messageText.trim() && !selectedImage) return;
+
+    const userContent = messageText.trim() || (selectedImage ? "[Image attached]" : "");
+    const newMessage = {
+      role: "user",
+      content: userContent,
+      hasImage: !!selectedImage,
+      imagePreview: imagePreview
+    };
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
     setLoading(true);
 
     try {
-      const response = await sendMessageToBot(input);
+      const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
+      const token = localStorage.getItem("token");
+
+      let response;
+
+      if (selectedImage) {
+        // Send with image
+        const formData = new FormData();
+        formData.append('message', messageText.trim());
+        formData.append('image', selectedImage);
+
+        const headers = {
+          'Content-Type': 'multipart/form-data',
+        };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const res = await axios.post(`${API_URL}/chatbot/`, formData, { headers });
+        response = res.data;
+
+        // Clear image after sending
+        setSelectedImage(null);
+        setImagePreview(null);
+      } else {
+        // Send text only
+        response = await sendMessageToBot(messageText.trim());
+      }
+
       handleBotResponse(response);
     } catch (err) {
       console.error("Chatbot error:", err);
@@ -170,6 +245,10 @@ const ChatbotWidget = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const sendMessage = async () => {
+    sendMessageWithText(input);
   };
 
   const handleBotResponse = (response) => {
@@ -315,6 +394,11 @@ const ChatbotWidget = () => {
                 key={idx}
                 className={`${styles.message} ${msg.role === "user" ? styles.user : styles.bot}`}
               >
+                {msg.hasImage && msg.imagePreview && (
+                  <div className={styles.messageImage}>
+                    <img src={msg.imagePreview} alt="Attached" />
+                  </div>
+                )}
                 {msg.isAudio ? renderVoiceMessage(msg, idx) : (msg.role === "user" ? msg.content : renderBotMessage(msg))}
               </div>
             ))}
@@ -329,28 +413,98 @@ const ChatbotWidget = () => {
             )}
           </div>
 
+          {/* Transcription Preview */}
+          {showTranscriptionPreview && (
+            <div className={styles.transcriptionPreview}>
+              <div className={styles.transcriptionLabel}>Edit your message:</div>
+              <textarea
+                className={styles.transcriptionInput}
+                value={transcribedText}
+                onChange={(e) => setTranscribedText(e.target.value)}
+                rows={3}
+                autoFocus
+              />
+              <div className={styles.transcriptionButtons}>
+                <button
+                  className={styles.cancelBtn}
+                  onClick={cancelTranscription}
+                >
+                  Cancel
+                </button>
+                <button
+                  className={styles.sendBtn}
+                  onClick={sendTranscribedMessage}
+                  disabled={!transcribedText.trim()}
+                >
+                  <FaCheck /> Send
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Transcribing Indicator */}
+          {isTranscribing && (
+            <div className={styles.transcribingIndicator}>
+              <FaSpinner className={styles.spinnerIcon} />
+              <span>Transcribing...</span>
+            </div>
+          )}
+
+          {/* Image Preview */}
+          {imagePreview && (
+            <div className={styles.imagePreviewContainer}>
+              <img src={imagePreview} alt="Selected" className={styles.imagePreviewImg} />
+              <button
+                className={styles.imagePreviewClose}
+                onClick={removeImage}
+                title="Remove image"
+              >
+                <FaTimes />
+              </button>
+            </div>
+          )}
+
           <div className={styles.chatInput}>
+            {/* Hidden file input for image upload */}
+            <input
+              type="file"
+              ref={imageInputRef}
+              onChange={handleImageSelect}
+              accept="image/*"
+              style={{ display: 'none' }}
+            />
+
             <input
               type="text"
-              placeholder={isRecording ? "Listening..." : "Type a message..."}
+              placeholder={isRecording ? "Listening..." : (isTranscribing ? "Transcribing..." : "Type a message...")}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              disabled={isRecording}
+              disabled={isRecording || isTranscribing || showTranscriptionPreview}
               className={styles.textInput}
             />
+
+            {/* Image Upload Button */}
+            <button
+              onClick={() => imageInputRef.current?.click()}
+              className={styles.imageButton}
+              title="Attach image"
+              disabled={isRecording || isTranscribing || showTranscriptionPreview}
+            >
+              <FaImage />
+            </button>
 
             {/* Mic / Stop Button */}
             <button
               onClick={isRecording ? stopRecording : startRecording}
               className={`${styles.micButton} ${isRecording ? styles.recording : ''}`}
               title={isRecording ? "Stop Recording" : "Voice Message"}
-              disabled={isInitializingAudio}
+              disabled={isInitializingAudio || isTranscribing || showTranscriptionPreview}
             >
               {isInitializingAudio ? <FaSpinner className="animate-spin" /> : (isRecording ? <FaStop /> : <FaMicrophone />)}
             </button>
 
-            <button onClick={sendMessage} disabled={isRecording || !input.trim()}>
+            <button onClick={sendMessage} disabled={isRecording || isTranscribing || showTranscriptionPreview || (!input.trim() && !selectedImage)}>
               <FaPaperPlane />
             </button>
           </div>

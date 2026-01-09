@@ -1,13 +1,49 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import styles from "./ProductsGrid.module.css";
 import ProductCard from "../ProductCard/ProductCard";
 
 const ProductsGrid = ({ products, allProductsCount, filters = {}, onFilterChange, categoryName }) => {
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, delayChildren: 0.1 }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
+    }
+  };
+
+  const emptyVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+    }
+  };
+
   return (
     <div className={styles.productsGrid}>
       {/* Active Filters Summary */}
-      <div className={styles.filtersSummary}>
+      <motion.div
+        className={styles.filtersSummary}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
         <div className={styles.activeFilters}>
           {filters.category && (
             <div className={styles.filterTag}>
@@ -22,18 +58,31 @@ const ProductsGrid = ({ products, allProductsCount, filters = {}, onFilterChange
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
 
       {/* Products Grid Content */}
-      <div className={styles.gridContainer}>
+      <motion.div
+        className={styles.gridContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.05 }}
+        variants={containerVariants}
+      >
         {Array.isArray(products) && products.length > 0 ? (
           <>
             {products.map((product, index) => (
-              <ProductCard key={product.id || product._id || index} product={product} />
+              <motion.div key={product.id || product._id || index} variants={cardVariants}>
+                <ProductCard product={product} />
+              </motion.div>
             ))}
           </>
         ) : (
-          <div className={styles.emptyState}>
+          <motion.div
+            className={styles.emptyState}
+            variants={emptyVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <div className={styles.emptyIcon}>
               <FaSearch />
             </div>
@@ -58,9 +107,9 @@ const ProductsGrid = ({ products, allProductsCount, filters = {}, onFilterChange
                 Clear All Filters
               </button>
             )}
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };

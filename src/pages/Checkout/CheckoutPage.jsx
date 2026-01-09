@@ -191,7 +191,7 @@ const CheckoutPage = () => {
                                                 await packageService.confirmManualPayment(packageId, 'bank');
                                                 setShowSuccess(true);
                                                 setTimeout(() => navigate('/'), 2500);
-                                            } catch (error) {
+                                            } catch {
                                                 toast.error('Failed to confirm. Try again.');
                                             } finally {
                                                 setConfirmingManualPayment(false);
@@ -234,7 +234,7 @@ const CheckoutPage = () => {
                                                 await packageService.confirmManualPayment(packageId, 'wallet');
                                                 setShowSuccess(true);
                                                 setTimeout(() => navigate('/'), 2500);
-                                            } catch (error) {
+                                            } catch {
                                                 toast.error('Failed to confirm. Try again.');
                                             } finally {
                                                 setConfirmingManualPayment(false);

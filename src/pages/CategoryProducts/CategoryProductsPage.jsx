@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Container, Col, Spinner, Alert, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,7 +18,7 @@ const CategoryProductsPage = () => {
   const [category, setCategory] = useState(null);
 
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -31,28 +31,26 @@ const CategoryProductsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [categoryId]);
 
-  const fetchCategory = async () => {
+  const fetchCategory = useCallback(async () => {
     try {
       const data = await getCategory(categoryId);
       setCategory(data);
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [categoryId]);
 
   useEffect(() => {
     if (categoryId) {
       fetchProducts();
       fetchCategory();
     }
-  }, [categoryId]);
+  }, [categoryId, fetchProducts, fetchCategory]);
 
 
-  const featuredProducts = Array.isArray(products)
-    ? products.filter(p => p.is_featured).slice(0, 6)
-    : [];
+
 
   const [selectedUniversity, setSelectedUniversity] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("");

@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import styles from "./FormWrapper.module.css";
 
 const FormWrapper = ({
@@ -11,49 +13,116 @@ const FormWrapper = ({
     footerLinkText = "",
     footerLinkTo = ""
 }) => {
+    // Animation variants
+    const containerVariants = {
+        hidden: { opacity: 0, y: 30, scale: 0.98 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const headerVariants = {
+        hidden: { opacity: 0, y: -20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.4, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const contentVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.08, delayChildren: 0.2 }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 15 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
     return (
         <div className={styles.wrapper}>
-            <div className={styles.form}>
-                <div className={styles.formHeader}>
+            <motion.div
+                className={styles.form}
+                initial="hidden"
+                animate="visible"
+                variants={containerVariants}
+            >
+                <motion.div
+                    className={styles.formHeader}
+                    variants={headerVariants}
+                >
                     <h1 className={styles.title}>{title}</h1>
                     {subtitle && (
                         <p className={styles.formSubtitle}>{subtitle}</p>
                     )}
-                </div>
+                </motion.div>
 
                 {/* Social Login Section */}
                 {socialButtons.length > 0 && (
-                    <div className={styles.socialSection}>
+                    <motion.div
+                        className={styles.socialSection}
+                        variants={contentVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
                         <div className={styles.socialButtons}>
                             {socialButtons.map((button, index) => (
-                                <button
+                                <motion.button
                                     key={index}
                                     className={styles.socialButton}
                                     onClick={button.onClick}
                                     type="button"
+                                    variants={itemVariants}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
                                 >
                                     {button.icon && <button.icon className={styles.socialIcon} />}
                                     {button.text}
-                                </button>
+                                </motion.button>
                             ))}
                         </div>
 
-                        <div className={styles.socialDivider}>
+                        <motion.div
+                            className={styles.socialDivider}
+                            variants={itemVariants}
+                        >
                             <div className={styles.dividerLine}></div>
                             <span className={styles.dividerText}>or continue with email</span>
                             <div className={styles.dividerLine}></div>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
                 )}
 
                 {/* Form */}
-                <form onSubmit={onSubmit} className={styles.formFields}>
+                <motion.form
+                    onSubmit={onSubmit}
+                    className={styles.formFields}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                >
                     {children}
-                </form>
+                </motion.form>
 
                 {/* Footer */}
                 {(footerText || footerLinkText) && (
-                    <div className={styles.formFooter}>
+                    <motion.div
+                        className={styles.formFooter}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.4, delay: 0.4 }}
+                    >
                         <p className={styles.footerText}>
                             {footerText}
                             {footerLinkTo && footerLinkText && (
@@ -62,9 +131,9 @@ const FormWrapper = ({
                                 </Link>
                             )}
                         </p>
-                    </div>
+                    </motion.div>
                 )}
-            </div>
+            </motion.div>
         </div>
     );
 };

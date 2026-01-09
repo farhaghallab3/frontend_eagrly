@@ -10,7 +10,6 @@ import { toast } from 'react-toastify';
 const PaymentStatusPage = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const statusParam = searchParams.get('success'); // 'true' or 'false'
     const transactionId = searchParams.get('id');
 
     // States: 'loading', 'success', 'failure'

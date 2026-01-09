@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getChats, sendMessage, getChat } from "../../services/chatService";
+import { getChats, sendMessage } from "../../services/chatService";
 
 // Async thunk for fetching chats
 export const fetchChats = createAsyncThunk(

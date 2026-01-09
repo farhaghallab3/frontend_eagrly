@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import { productService } from "../../services/productService";
 import { FaUser, FaMapMarkerAlt, FaPhone, FaEnvelope, FaTag, FaBuilding, FaGraduationCap, FaHeart, FaShare, FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import styles from "./ProductDetails.module.css";
 import ShareModal from "@components/common/ShareModal/ShareModal";
+import SEO from "@components/common/SEO/SEO";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useAuthModal } from "../../context/AuthModalContext";
@@ -109,10 +112,41 @@ export default function ProductDetails() {
     const uniqueImages = [...new Set(allImages)];
     const activeImage = uniqueImages[currentImageIndex] || '/placeholder-image.jpg';
 
+    // Animation variants
+    const galleryVariants = {
+        hidden: { opacity: 0, x: -40 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const infoVariants = {
+        hidden: { opacity: 0, x: 40 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
     return (
         <div className={styles.productPage}>
+            <SEO
+                title={product.title}
+                description={product.description.substring(0, 150) + '...'}
+                image={activeImage}
+                url={`/product/${product.id}`}
+                keywords={`${product.category_name}, ${product.university}, student marketplace, buy and sell`}
+            />
             {/* Breadcrumb Navigation */}
-            <div className={styles.breadcrumbContainer}>
+            <motion.div
+                className={styles.breadcrumbContainer}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+            >
                 <div className={styles.container}>
                     <nav className={styles.breadcrumb}>
                         <Link to="/">Home</Link>
@@ -122,12 +156,17 @@ export default function ProductDetails() {
                         <span className={styles.currentPath}>{product.title}</span>
                     </nav>
                 </div>
-            </div>
+            </motion.div>
 
             <div className={styles.container}>
                 <div className={styles.productGrid}>
                     {/* Left: Product Gallery */}
-                    <div className={styles.gallerySection}>
+                    <motion.div
+                        className={styles.gallerySection}
+                        initial="hidden"
+                        animate="visible"
+                        variants={galleryVariants}
+                    >
                         <div className={styles.mainImageWrapper}>
                             <img src={activeImage} alt={product.title} className={styles.mainImage} />
 
@@ -222,10 +261,15 @@ export default function ProductDetails() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Right: Product Details */}
-                    <div className={styles.infoSection}>
+                    <motion.div
+                        className={styles.infoSection}
+                        initial="hidden"
+                        animate="visible"
+                        variants={infoVariants}
+                    >
                         <div className={styles.productHeader}>
                             <span className={styles.categoryLabel}>{product.category_name}</span>
                             <h1 className={styles.productTitle}>{product.title}</h1>
@@ -262,7 +306,7 @@ export default function ProductDetails() {
                         </div>
 
 
-                    </div>
+                    </motion.div>
                 </div>
             </div>
 

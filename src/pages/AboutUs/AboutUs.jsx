@@ -1,5 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import {
     FaRocket,
     FaLightbulb,
@@ -12,8 +14,10 @@ import {
     FaCheckCircle
 } from "react-icons/fa";
 import styles from "./AboutUs.module.css";
+import SEO from "@components/common/SEO/SEO";
 
 const AboutUs = () => {
+
     const teamMembers = [
         { name: "Ahmed", role: "Developer / ITI Student" },
         { name: "Farha", role: "Developer / ITI Student" },
@@ -51,17 +55,79 @@ const AboutUs = () => {
         { icon: <FaRocket />, title: "Final Launch", date: "ITI Graduation" }
     ];
 
+    // Animation variants
+    const headerVariants = {
+        hidden: { opacity: 0, y: -40 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const sectionVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.12, delayChildren: 0.2 }
+        }
+    };
+
+    const cardVariants = {
+        hidden: { opacity: 0, y: 30, scale: 0.95 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const timelineVariants = {
+        hidden: { opacity: 0, x: -30 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
     return (
         <div className={styles.aboutPage}>
+            <SEO
+                title="About Us"
+                description="Learn about Stuplies, the platform built by ITI students for students. Our mission is to empower university students."
+                url="/about-us"
+            />
             {/* Page Header */}
-            <header className={styles.aboutHeader}>
+            <motion.header
+                className={styles.aboutHeader}
+                initial="hidden"
+                animate="visible"
+                variants={headerVariants}
+            >
                 <div className={styles.container}>
                     <h1 className={styles.headerTitle}>About us.</h1>
                 </div>
-            </header>
+            </motion.header>
 
             {/* Intro Section */}
-            <section className={styles.introSection}>
+            <motion.section
+                className={styles.introSection}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={sectionVariants}
+            >
                 <div className={styles.container}>
                     <div className={styles.introContent}>
                         <h2>Empowering Students, Fueling Futures.</h2>
@@ -72,10 +138,16 @@ const AboutUs = () => {
                         </p>
                     </div>
                 </div>
-            </section>
+            </motion.section>
 
             {/* The Project Section */}
-            <section className={styles.section}>
+            <motion.section
+                className={styles.section}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={sectionVariants}
+            >
                 <div className={styles.container}>
                     <h3>The Stuplies Project</h3>
                     <p>
@@ -85,56 +157,95 @@ const AboutUs = () => {
                         that every student can find the resources they need with ease.
                     </p>
                 </div>
-            </section>
+            </motion.section>
 
             {/* Team Section */}
             <section className={styles.section}>
                 <div className={styles.container}>
-                    <h3>Meet the Team</h3>
-                    <div className={styles.teamGrid}>
+                    <motion.h3
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        Meet the Team
+                    </motion.h3>
+                    <motion.div
+                        className={styles.teamGrid}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        variants={containerVariants}
+                    >
                         {teamMembers.map((member, idx) => (
-                            <div key={idx} className={styles.teamCard}>
+                            <motion.div key={idx} className={styles.teamCard} variants={cardVariants}>
                                 <h4>{member.name}</h4>
                                 <p>{member.role}</p>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Values Section */}
             <section className={styles.section}>
                 <div className={styles.container}>
-                    <h3>Our Values</h3>
-                    <div className={styles.valuesGrid}>
+                    <motion.h3
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        Our Values
+                    </motion.h3>
+                    <motion.div
+                        className={styles.valuesGrid}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        variants={containerVariants}
+                    >
                         {values.map((value, idx) => (
-                            <div key={idx} className={styles.valueCard}>
+                            <motion.div key={idx} className={styles.valueCard} variants={cardVariants}>
                                 <div className={styles.iconWrapper}>{value.icon}</div>
                                 <div className={styles.valueContent}>
                                     <h4>{value.title}</h4>
                                     <p>{value.text}</p>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Journey Section */}
             <section className={styles.section}>
                 <div className={styles.container}>
-                    <h3>Our Journey</h3>
-                    <div className={styles.timeline}>
+                    <motion.h3
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        Our Journey
+                    </motion.h3>
+                    <motion.div
+                        className={styles.timeline}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        variants={containerVariants}
+                    >
                         {journey.map((item, idx) => (
-                            <div key={idx} className={styles.timelineItem}>
+                            <motion.div key={idx} className={styles.timelineItem} variants={timelineVariants}>
                                 <div className={styles.timelineDot}>{item.icon}</div>
                                 <div className={styles.timelineContent}>
                                     <h4>{item.title}</h4>
                                     <span className={styles.timelineDate}>{item.date}</span>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 

@@ -1,9 +1,10 @@
-// src/components/ecommerce/SubscriptionPlans/SubscriptionPlans.jsx
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckCircle, AiOutlineCrown, AiOutlineStar } from "react-icons/ai";
 import { MdBolt, MdVerified } from "react-icons/md";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import styles from "./SubscriptionPlans.module.css";
 import { packageService } from "../../../services/package";
 
@@ -51,13 +52,47 @@ export default function SubscriptionPlans({ isModal, onClose }) {
         </section>
     );
 
+    // Animation variants
+    const headerVariants = {
+        hidden: { opacity: 0, y: 40 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+        }
+    };
+
+    const cardVariants = {
+        hidden: { opacity: 0, y: 50, scale: 0.95 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
     return (
         <section className={`${styles.plansSection} ${isModal ? styles.plansSectionModal : ''}`}>
             {/* Background elements moved to Home wrapper */}
 
             <Container id="plans" className={`${styles.sectionContainer} ${isModal ? styles.modalContainer : ''}`}>
                 {!isModal && (
-                    <div className={styles.sectionHeader}>
+                    <motion.div
+                        className={styles.sectionHeader}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        variants={headerVariants}
+                    >
                         <div className={styles.headerBadge}>
                             <span>Featured Collection</span>
                         </div>
@@ -65,97 +100,105 @@ export default function SubscriptionPlans({ isModal, onClose }) {
                         <p className={styles.sectionSubtitle}>
                             Join our community with a plan that suits your needs. Upgrade, downgrade, or cancel anytime.
                         </p>
-                    </div>
+                    </motion.div>
                 )}
 
-                <div className={`${styles.plansGrid} ${isModal ? styles.modalGrid : ''}`}>
+                <motion.div
+                    className={`${styles.plansGrid} ${isModal ? styles.modalGrid : ''}`}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={containerVariants}
+                >
                     {packages.map((pkg) => {
                         const isPopular = pkg.popular;
 
                         return (
-                            <div
+                            <motion.div
                                 key={pkg.id}
-                                className={`${styles.planCard} ${isPopular ? styles.planCardPopular : ""}`}
+                                variants={cardVariants}
                             >
-                                {isPopular && (
-                                    <div className={styles.popularBadge}>
-                                        <AiOutlineStar className={styles.badgeStar} />
-                                        <span>Most Popular</span>
-                                    </div>
-                                )}
-
-                                <div className={styles.planHeader}>
-                                    <div className={styles.planIcon}>
-                                        {isPopular ? (
-                                            <AiOutlineCrown size={32} />
-                                        ) : (
-                                            <MdBolt size={32} />
-                                        )}
-                                    </div>
-                                    <h3 className={styles.planTitle}>{pkg.name}</h3>
-                                </div>
-
-                                <div className={styles.planPrice}>
-                                    <div className={styles.priceWrapper}>
-                                        <span className={styles.priceValue}>{pkg.price}</span>
-                                        <span className={styles.currency}> EGP</span>
-                                    </div>
-                                    <span className={styles.pricePeriod}>
-                                        / {pkg.duration_in_days} days
-                                    </span>
-                                </div>
-
-                                <div className={styles.planDivider}></div>
-
-                                <ul className={styles.featuresList}>
-                                    <li className={styles.featureItem}>
-                                        <AiOutlineCheckCircle className={styles.featureIcon} />
-                                        <span><strong>{pkg.ad_limit >= 999 ? "Unlimited" : pkg.ad_limit}</strong> Ad postings</span>
-                                    </li>
-                                    {pkg.featured_ad_limit !== null && (
-                                        <li className={styles.featureItem}>
-                                            <AiOutlineCheckCircle className={styles.featureIcon} />
-                                            <span><strong>{pkg.featured_ad_limit}</strong> Featured ads</span>
-                                        </li>
-                                    )}
-                                    {pkg.description && (
-                                        <li className={styles.featureItem}>
-                                            <AiOutlineCheckCircle className={styles.featureIcon} />
-                                            <span>{pkg.description}</span>
-                                        </li>
-                                    )}
-                                    <li className={styles.featureItem}>
-                                        <AiOutlineCheckCircle className={styles.featureIcon} />
-                                        <span>Priority support</span>
-                                    </li>
-                                    <li className={styles.featureItem}>
-                                        <AiOutlineCheckCircle className={styles.featureIcon} />
-                                        <span>Analytics dashboard</span>
-                                    </li>
+                                <div className={`${styles.planCard} ${isPopular ? styles.planCardPopular : ""}`}>
                                     {isPopular && (
+                                        <div className={styles.popularBadge}>
+                                            <AiOutlineStar className={styles.badgeStar} />
+                                            <span>Most Popular</span>
+                                        </div>
+                                    )}
+
+                                    <div className={styles.planHeader}>
+                                        <div className={styles.planIcon}>
+                                            {isPopular ? (
+                                                <AiOutlineCrown size={32} />
+                                            ) : (
+                                                <MdBolt size={32} />
+                                            )}
+                                        </div>
+                                        <h3 className={styles.planTitle}>{pkg.name}</h3>
+                                    </div>
+
+                                    <div className={styles.planPrice}>
+                                        <div className={styles.priceWrapper}>
+                                            <span className={styles.priceValue}>{pkg.price}</span>
+                                            <span className={styles.currency}> EGP</span>
+                                        </div>
+                                        <span className={styles.pricePeriod}>
+                                            / {pkg.duration_in_days} days
+                                        </span>
+                                    </div>
+
+                                    <div className={styles.planDivider}></div>
+
+                                    <ul className={styles.featuresList}>
                                         <li className={styles.featureItem}>
                                             <AiOutlineCheckCircle className={styles.featureIcon} />
-                                            <span>Advanced analytics</span>
+                                            <span><strong>{pkg.ad_limit >= 999 ? "Unlimited" : pkg.ad_limit}</strong> Ad postings</span>
                                         </li>
-                                    )}
-                                </ul>
+                                        {pkg.featured_ad_limit !== null && (
+                                            <li className={styles.featureItem}>
+                                                <AiOutlineCheckCircle className={styles.featureIcon} />
+                                                <span><strong>{pkg.featured_ad_limit}</strong> Featured ads</span>
+                                            </li>
+                                        )}
+                                        {pkg.description && (
+                                            <li className={styles.featureItem}>
+                                                <AiOutlineCheckCircle className={styles.featureIcon} />
+                                                <span>{pkg.description}</span>
+                                            </li>
+                                        )}
+                                        <li className={styles.featureItem}>
+                                            <AiOutlineCheckCircle className={styles.featureIcon} />
+                                            <span>Priority support</span>
+                                        </li>
+                                        <li className={styles.featureItem}>
+                                            <AiOutlineCheckCircle className={styles.featureIcon} />
+                                            <span>Analytics dashboard</span>
+                                        </li>
+                                        {isPopular && (
+                                            <li className={styles.featureItem}>
+                                                <AiOutlineCheckCircle className={styles.featureIcon} />
+                                                <span>Advanced analytics</span>
+                                            </li>
+                                        )}
+                                    </ul>
 
-                                <button
-                                    className={`${styles.chooseButton} ${isPopular ? styles.chooseButtonPopular : ""}`}
-                                    onClick={() => handleSubscribe(pkg.id)}
-                                >
-                                    Choose Plan
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="ms-2">
-                                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                </button>
-                            </div>
+                                    <button
+                                        className={`${styles.chooseButton} ${isPopular ? styles.chooseButtonPopular : ""}`}
+                                        onClick={() => handleSubscribe(pkg.id)}
+                                    >
+                                        Choose Plan
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="ms-2">
+                                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </motion.div>
                         );
                     })}
-                </div>
+                </motion.div>
 
 
             </Container>
-        </section >
+        </section>
     );
 }

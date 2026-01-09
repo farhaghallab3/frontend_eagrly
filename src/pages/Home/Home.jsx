@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '@components/common/SEO/SEO';
 import HeroSection from './HeroSection';
 import FeaturedProducts from '@components/ecommerce/FeaturedProducts/FeaturedProducts';
 import CategoriesSection from '@components/ecommerce/Categories/CategoriesSection';
@@ -20,6 +21,10 @@ export default function Home() {
 
     return (
         <>
+            <SEO
+                title="Home"
+                description="The premier marketplace for university students to buy, sell, and exchange pre-owned items."
+            />
             <HeroSection />
 
             <div className={styles.contentWrapper}>

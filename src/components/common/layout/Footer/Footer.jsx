@@ -144,7 +144,7 @@ const Footer = () => {
                             </div>
 
                             <div className={styles.copyright}>
-                                <p>© {currentYear} Eagrely. All rights reserved.</p>
+                                <p>© {currentYear} Stuplies. All rights reserved.</p>
                                 <p className={styles.madeWith}>
                                     Made with <FaHeart className={styles.heart} /> for the community
                                 </p>

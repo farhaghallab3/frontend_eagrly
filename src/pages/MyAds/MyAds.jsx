@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import { FaPlusCircle, FaEdit, FaTrash, FaBox, FaEye, FaCalendarAlt, FaRedo, FaClock, FaExclamationTriangle } from "react-icons/fa";
 import styles from "./MyAds.module.css";
 import ProductForm from "../../components/common/forms/ProductForm/ProductForm";
@@ -29,13 +31,13 @@ export default function MyAds() {
         });
     };
 
-    const fetchProducts = async () => {
+    const fetchProducts = useCallback(async () => {
         await getMyProducts();
-    };
+    }, [getMyProducts]);
 
     useEffect(() => {
         fetchProducts();
-    }, []);
+    }, [fetchProducts]);
 
     useEffect(() => {
         setMyProducts(reduxMyProducts || []);
@@ -53,6 +55,7 @@ export default function MyAds() {
                 setShowSubscriptionModal(true);
             }
         } catch (error) {
+            console.error('Eligibility check failed:', error);
             setEditingProduct(null);
             setIsRepublishing(false);
             setShowForm(true);
@@ -102,11 +105,52 @@ export default function MyAds() {
         fetchProducts();
     };
 
+    // Animation variants
+    const heroVariants = {
+        hidden: { opacity: 0, y: -30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const statsVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+        }
+    };
+
+    const cardVariants = {
+        hidden: { opacity: 0, y: 30, scale: 0.95 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const productContainerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.08, delayChildren: 0.3 }
+        }
+    };
+
     return (
         <div className={styles.dashboardPage}>
             <div className={styles.container}>
                 {/* Hero Section */}
-                <section className={styles.dashboardHero}>
+                <motion.section
+                    className={styles.dashboardHero}
+                    initial="hidden"
+                    animate="visible"
+                    variants={heroVariants}
+                >
                     <div className={styles.heroContent}>
                         <div className={styles.heroHeader}>
                             <FaBox className={styles.heroIcon} />
@@ -114,25 +158,35 @@ export default function MyAds() {
                             <p className={styles.heroSubtitle}>Manage your products and track your performance</p>
                         </div>
                         <div className={styles.heroActions}>
-                            <button className={styles.primaryButton} onClick={handleAdd}>
+                            <motion.button
+                                className={styles.primaryButton}
+                                onClick={handleAdd}
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
+                            >
                                 <FaPlusCircle />
                                 <span>List New Product</span>
-                            </button>
+                            </motion.button>
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Stats Section */}
-                <section className={styles.statsSection}>
+                <motion.section
+                    className={styles.statsSection}
+                    initial="hidden"
+                    animate="visible"
+                    variants={statsVariants}
+                >
                     <div className={styles.statsGrid}>
-                        <div className={styles.statCard}>
+                        <motion.div className={styles.statCard} variants={cardVariants}>
                             <div className={styles.statIcon}><FaBox /></div>
                             <div className={styles.statContent}>
                                 <span className={styles.statNumber}>{myProducts.length}</span>
                                 <span className={styles.statLabel}>Total Products</span>
                             </div>
-                        </div>
-                        <div className={styles.statCard}>
+                        </motion.div>
+                        <motion.div className={styles.statCard} variants={cardVariants}>
                             <div className={styles.statIcon}><FaEye /></div>
                             <div className={styles.statContent}>
                                 <span className={styles.statNumber}>
@@ -140,9 +194,9 @@ export default function MyAds() {
                                 </span>
                                 <span className={styles.statLabel}>Active Listings</span>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Main Content */}
                 <section className={styles.dashboardContent}>
@@ -177,7 +231,12 @@ export default function MyAds() {
                             <button className={styles.primaryButton} onClick={fetchProducts}>Retry</button>
                         </div>
                     ) : (
-                        <div className={styles.productsGrid}>
+                        <motion.div
+                            className={styles.productsGrid}
+                            initial="hidden"
+                            animate="visible"
+                            variants={productContainerVariants}
+                        >
                             {myProducts.length === 0 ? (
                                 <div className={styles.emptyState}>
                                     <FaBox className={styles.emptyIcon} />
@@ -192,7 +251,6 @@ export default function MyAds() {
                                 </div>
                             ) : (
                                 myProducts.map((product) => {
-                                    // Calculate days remaining manually if backend doesn't provide it
                                     let daysRemaining = product.days_remaining;
                                     if (daysRemaining === undefined && product.expires_at) {
                                         const expiry = new Date(product.expires_at);
@@ -204,7 +262,7 @@ export default function MyAds() {
                                     const isExpired = product.status === 'expired' ||
                                         (product.expires_at && new Date(product.expires_at) < new Date());
                                     return (
-                                        <div key={product.id} className={styles.productCard}>
+                                        <motion.div key={product.id} className={styles.productCard} variants={cardVariants}>
                                             <div className={styles.cardHeader}>
                                                 <div className={styles.productInfo}>
                                                     <h3 className={styles.productTitle}>{product.title}</h3>
@@ -259,11 +317,11 @@ export default function MyAds() {
                                                     <FaTrash /> Delete
                                                 </button>
                                             </div>
-                                        </div>
+                                        </motion.div>
                                     );
                                 })
                             )}
-                        </div>
+                        </motion.div>
                     )}
                 </section>
 
@@ -304,6 +362,6 @@ export default function MyAds() {
                     daysUntilReset={daysUntilReset}
                 />
             </div>
-        </div>
+        </div >
     );
 }

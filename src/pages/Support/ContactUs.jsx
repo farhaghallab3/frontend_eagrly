@@ -26,7 +26,7 @@ const ContactUs = () => {
                                 <div className={styles.cardIcon}><MdEmail /></div>
                                 <div>
                                     <h4>Email</h4>
-                                    <p>support@eagrely.com</p>
+                                    <p>support@Stuplies.com</p>
                                 </div>
                             </div>
 

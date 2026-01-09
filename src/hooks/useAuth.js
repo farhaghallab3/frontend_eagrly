@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useCallback } from "react";
 import { loginUser, registerUser, registerRequest, verifyOTP, resendOTP, logout, clearError } from "../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { auth, facebookProvider, googleProvider } from "../utils/firebase";
@@ -10,7 +11,8 @@ export const useAuth = () => {
   const { user, loading, error, token, otpLoading, otpError, pendingEmail } = useSelector((state) => state.auth);
 
   // Login with email/password
-  const login = async (data) => {
+  // Login with email/password
+  const login = useCallback(async (data) => {
     const result = await dispatch(loginUser(data));
     if (loginUser.fulfilled.match(result)) {
       localStorage.setItem("token", result.payload.access);
@@ -19,47 +21,51 @@ export const useAuth = () => {
       return result.payload;
     }
     return null;
-  };
+  }, [dispatch, navigate]);
 
   // Register with OTP verification (new flow)
-  const registerWithOTP = async (data) => {
+  // Register with OTP verification (new flow)
+  const registerWithOTP = useCallback(async (data) => {
     const result = await dispatch(registerRequest(data));
     if (registerRequest.fulfilled.match(result)) {
       return result.payload;
     }
     return null;
-  };
+  }, [dispatch]);
 
   // Verify OTP code
-  const verifyOTPCode = async (email, otp) => {
+  // Verify OTP code
+  const verifyOTPCode = useCallback(async (email, otp) => {
     const result = await dispatch(verifyOTP({ email, otp }));
     if (verifyOTP.fulfilled.match(result)) {
       return result.payload;
     }
     return null;
-  };
+  }, [dispatch]);
 
   // Resend OTP code
-  const resendOTPCode = async (email) => {
+  // Resend OTP code
+  const resendOTPCode = useCallback(async (email) => {
     const result = await dispatch(resendOTP({ email }));
     if (resendOTP.fulfilled.match(result)) {
       return result.payload;
     }
     return null;
-  };
+  }, [dispatch]);
 
   // Clear all errors
-  const clearErrors = () => {
+  const clearErrors = useCallback(() => {
     dispatch(clearError());
-  };
+  }, [dispatch]);
 
   // Legacy register (kept for compatibility)
-  const register = async (data) => {
+  // Legacy register (kept for compatibility)
+  const register = useCallback(async (data) => {
     const result = await dispatch(registerUser(data));
     if (registerUser.fulfilled.match(result)) {
       navigate("/login");
     }
-  };
+  }, [dispatch, navigate]);
 
   // Helper: clean username to match backend pattern
   const sanitizeUsername = (name, email) => {
@@ -154,12 +160,13 @@ export const useAuth = () => {
   };
 
   // Logout
-  const logoutUser = () => {
+  // Logout
+  const logoutUser = useCallback(() => {
     dispatch(logout());
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
-  };
+  }, [dispatch, navigate]);
 
   return {
     user,

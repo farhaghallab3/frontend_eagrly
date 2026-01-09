@@ -41,7 +41,7 @@ const AuthModal = () => {
             setPendingEmail('');
             clearErrors();
         }
-    }, [isOpen]);
+    }, [isOpen, loginForm, registerForm, clearErrors]);
 
     const handleOverlayClick = (e) => {
         if (e.target === e.currentTarget) {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+// eslint-disable-next-line no-unused-vars
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "@components/ecommerce/Chat/Header";
 import ChatMessages from "@components/ecommerce/Chat/ChatMessage";
 import MessageInput from "@components/ecommerce/Chat/MessageInput";
@@ -141,9 +143,42 @@ const ChatApp = () => {
     );
   }
 
+  // Animation variants
+  const sidebarVariants = {
+    hidden: { x: -50, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
+    }
+  };
+
+  const mainVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }
+    }
+  };
+
+  const emptyStateVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+    }
+  };
+
   return (
     <div className={styles.chatContainer}>
-      <div className={`${styles.chatSidebar} ${sidebarCollapsed ? styles.collapsed : ''}`}>
+      <motion.div
+        className={`${styles.chatSidebar} ${sidebarCollapsed ? styles.collapsed : ''}`}
+        initial="hidden"
+        animate="visible"
+        variants={sidebarVariants}
+      >
         <div className={styles.sidebarHeader}>
           <h3 className={styles.sidebarTitle}>Conversations</h3>
           <button
@@ -156,35 +191,61 @@ const ChatApp = () => {
         <div className={styles.sidebarContent}>
           <ChatList chats={chats} onSelectChat={handleSelectChat} />
         </div>
-      </div>
+      </motion.div>
 
-      <div className={styles.chatMain}>
-        {selectedChatId ? (
-          <div className={styles.chatConversation}>
-            <Header chat={chat} />
-            <ChatMessages messages={formattedMessages} />
-            {sendError && (
-              <div className={styles.errorAlert}>
-                {sendError}
+      <motion.div
+        className={styles.chatMain}
+        initial="hidden"
+        animate="visible"
+        variants={mainVariants}
+      >
+        <AnimatePresence mode="wait">
+          {selectedChatId ? (
+            <motion.div
+              className={styles.chatConversation}
+              key="conversation"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Header chat={chat} />
+              <ChatMessages messages={formattedMessages} />
+              {sendError && (
+                <div className={styles.errorAlert}>
+                  {sendError}
+                </div>
+              )}
+              <MessageInput
+                input={input}
+                setInput={setInput}
+                handleSend={handleSend}
+                onPhotosSelect={handlePhotosSelect}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              className={styles.emptyState}
+              key="empty"
+              initial="hidden"
+              animate="visible"
+              variants={emptyStateVariants}
+            >
+              <div className={styles.emptyContent}>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                >
+                  <MdMessage size={80} className={styles.emptyIcon} />
+                </motion.div>
+                <h3>Welcome to Messages</h3>
+                <p>Select a conversation from the left to start chatting</p>
               </div>
-            )}
-            <MessageInput
-              input={input}
-              setInput={setInput}
-              handleSend={handleSend}
-              onPhotosSelect={handlePhotosSelect}
-            />
-          </div>
-        ) : (
-          <div className={styles.emptyState}>
-            <div className={styles.emptyContent}>
-              <MdMessage size={80} className={styles.emptyIcon} />
-              <h3>Welcome to Messages</h3>
-              <p>Select a conversation from the left to start chatting</p>
-            </div>
-          </div>
-        )}
-      </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 };

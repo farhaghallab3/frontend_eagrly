@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useCategories } from "../../../../hooks/useCategories";
 import { useProduct } from "../../../../hooks/useProducts";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { FaUpload, FaImage, FaTimes, FaCheck, FaExclamationTriangle, FaMapMarkerAlt } from "react-icons/fa";
 import SubscriptionModal from "../../../ecommerce/SubscriptionPlans/SubscriptionModal";
 
@@ -18,7 +17,6 @@ const EGYPT_GOVERNORATES = [
 ];
 
 export default function ProductForm({ product, onClose, onSuccess, isRepublishing = false }) {
-    const navigate = useNavigate();
     const { refetchMyProducts } = useProduct();
     const { categories } = useCategories();
     const { addProduct, editProduct } = useProduct();

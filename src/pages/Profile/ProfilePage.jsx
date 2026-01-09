@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import { getUserById, partialUpdateUser } from "../../services/userService";
 import { getUserIdFromToken } from "../../utils/auth";
 import { FaUser, FaPhone, FaCalendarAlt, FaEdit, FaSave, FaTimes, FaUserCircle, FaUniversity, FaBuilding, FaEnvelope, FaIdCard } from "react-icons/fa";
@@ -88,16 +90,47 @@ export default function UserProfile() {
             </div>
         );
     }
+    // Animation variants
+    const heroVariants = {
+        hidden: { opacity: 0, y: -40 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+    const panelVariants = {
+        hidden: { opacity: 0, y: 40, scale: 0.98 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }
+        }
+    };
+
+
 
     return (
         <div className={styles.profilePage}>
             <div className={styles.container}>
                 {/* Hero Section */}
-                <section className={styles.profileHero}>
+                <motion.section
+                    className={styles.profileHero}
+                    initial="hidden"
+                    animate="visible"
+                    variants={heroVariants}
+                >
                     <div className={styles.heroContent}>
-                        <div className={styles.profileAvatar}>
+                        <motion.div
+                            className={styles.profileAvatar}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.5, delay: 0.2, type: "spring", stiffness: 200 }}
+                        >
                             <FaUserCircle className={styles.avatarIcon} />
-                        </div>
+                        </motion.div>
                         <h1 className={styles.heroTitle}>
                             {user.first_name || 'User'} {user.last_name || 'Profile'}
                         </h1>
@@ -105,11 +138,16 @@ export default function UserProfile() {
                             {user.university || 'Marketplace Member'} {user.faculty ? `• ${user.faculty}` : ''}
                         </p>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Main Content */}
                 <section className={styles.profileContent}>
-                    <div className={styles.contentGrid}>
+                    <motion.div
+                        className={styles.contentGrid}
+                        initial="hidden"
+                        animate="visible"
+                        variants={panelVariants}
+                    >
                         <div className={styles.panel}>
                             <div className={styles.panelHeader}>
                                 <h3 className={styles.panelTitle}>
@@ -207,7 +245,7 @@ export default function UserProfile() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </section>
             </div>
         </div>

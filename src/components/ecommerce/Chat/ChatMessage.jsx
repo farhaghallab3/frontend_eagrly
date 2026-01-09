@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from "react";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import styles from "./ChatMessages.module.css";
 import { MdDoneAll } from "react-icons/md";
 
@@ -47,10 +49,32 @@ const ChatMessages = ({ messages }) => {
             const isReceived = msg.type === "received";
             const showAvatar = isReceived && (i === 0 || messages[i - 1].type !== "received");
 
+            // Animation variants for each message
+            const messageVariants = {
+              hidden: {
+                opacity: 0,
+                x: isSent ? 20 : -20,
+                y: 10
+              },
+              visible: {
+                opacity: 1,
+                x: 0,
+                y: 0,
+                transition: {
+                  duration: 0.3,
+                  ease: [0.25, 0.1, 0.25, 1],
+                  delay: i * 0.03 // Stagger effect
+                }
+              }
+            };
+
             return (
-              <div
+              <motion.div
                 key={i}
                 className={`${styles.messageWrapper} ${isSent ? styles.sent : styles.received}`}
+                initial="hidden"
+                animate="visible"
+                variants={messageVariants}
               >
                 <div className={styles.messageContainer}>
                   {isReceived && showAvatar && (
@@ -94,7 +118,7 @@ const ChatMessages = ({ messages }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })
         )}

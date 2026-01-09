@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Container, Row, Col, Spinner, Alert, Button } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FeaturedProducts from '@components/ecommerce/FeaturedProducts/FeaturedProducts';
 import ProductFilters from '@components/ecommerce/ProductFilters/ProductFilters';
@@ -8,7 +10,7 @@ import ProductsGrid from '@components/ecommerce/ProductsGrid/ProductsGrid';
 import { productService } from '../../services/productService.js';
 import { useCategories } from '../../hooks/useCategories.js';
 import styles from './ProductsPage.module.css';
-
+import SEO from "@components/common/SEO/SEO";
 // Egyptian Governorates
 const GOVERNORATES = [
   "Cairo", "Giza", "Alexandria", "Dakahlia", "Red Sea", "Beheira", "Fayoum",
@@ -38,7 +40,7 @@ const ProductsPage = () => {
   });
 
   // Fetch products from API
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -56,14 +58,11 @@ const ProductsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [categoryFromUrl]);
 
-  useEffect(() => { fetchProducts(); }, [categoryFromUrl]);
+  useEffect(() => { fetchProducts(); }, [categoryFromUrl, fetchProducts]);
 
-  // Featured products
-  const featuredProducts = Array.isArray(products)
-    ? products.filter(p => p.is_featured).slice(0, 6)
-    : [];
+
 
   // Filter products safely
   const filteredProducts = Array.isArray(products) ? products.filter(product => {
@@ -128,20 +127,55 @@ const ProductsPage = () => {
   const minPercent = (filters.priceMin / MAX_PRICE) * 100;
   const maxPercent = (filters.priceMax / MAX_PRICE) * 100;
 
+  // Animation variants
+  const headerVariants = {
+    hidden: { opacity: 0, y: -30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+    }
+  };
+
+  const filterVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }
+    }
+  };
+
   return (
     <div className={styles.marketplacePage}>
+      <SEO
+        title="Marketplace"
+        description="Browse thousands of student-listed items including textbooks, electronics, and art supplies."
+        keywords="marketplace, buy, sell, student, university, books, electronics"
+        url="/marketplace"
+      />
       {/* Hero Header */}
-      <header className={styles.marketplaceHeader}>
+      <motion.header
+        className={styles.marketplaceHeader}
+        initial="hidden"
+        animate="visible"
+        variants={headerVariants}
+      >
         <div className={styles.container}>
           <h1 className={styles.headerTitle}>Products</h1>
         </div>
-      </header>
+      </motion.header>
 
       {/* Main Content */}
       <section className={styles.marketplaceContent}>
         <div className={styles.container}>
           {/* Top Filter Bar */}
-          <div className={styles.filterBar}>
+          <motion.div
+            className={styles.filterBar}
+            initial="hidden"
+            animate="visible"
+            variants={filterVariants}
+          >
             <div className={styles.resultsCount}>
               {filteredProducts.length} Products
             </div>
@@ -237,7 +271,7 @@ const ProductsPage = () => {
                 </button>
               )}
             </div>
-          </div>
+          </motion.div>
 
           <div className={styles.mainContent}>
             {loading && (
