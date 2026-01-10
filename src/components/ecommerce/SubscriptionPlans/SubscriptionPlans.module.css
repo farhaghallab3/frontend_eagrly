@@ -12,19 +12,7 @@
   overflow: hidden;
 }
 
-/* Background decoration */
-.plansSection::before {
-  content: '';
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, var(--accent-primary-glow) 0%, transparent 70%);
-  top: -200px;
-  right: -100px;
-  opacity: 0.3;
-  filter: blur(100px);
-  pointer-events: none;
-}
+/* Background decoration removed - using global aurora */
 
 .sectionContainer {
   width: 100%;
@@ -36,6 +24,12 @@
   align-items: center;
   position: relative;
   z-index: 2;
+}
+
+/* SpotlightCard Wrapper */
+.spotlightWrapper {
+  height: 100%;
+  border-radius: 20px;
 }
 
 /* Modal Variants */
@@ -154,6 +148,10 @@
   gap: 32px;
   margin-bottom: 60px;
   width: 100%;
+  padding: 40px;
+  border: 1px solid var(--border-primary);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .modalGrid {

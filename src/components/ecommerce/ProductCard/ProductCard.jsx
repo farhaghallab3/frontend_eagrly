@@ -9,6 +9,7 @@ import { useAuthModal } from "../../../context/AuthModalContext";
 import styles from "./ProductCard.module.css";
 import ButtonPrimary from "@components/common/ButtonPrimary/ButtonPrimary";
 import SuccessAnimation from "../../common/feedback/SuccessAnimation";
+import { SpotlightCard } from "@components/common/reactbits";
 
 export default function ProductCard({ product }) {
     const { id, title, description, image, buttonText = "Overview", name } = product;
@@ -54,42 +55,48 @@ export default function ProductCard({ product }) {
     return (
         <>
             {showSuccessAnimation && <SuccessAnimation message="Added to Wishlist!" />}
-            <div
-                className={styles.card}
-                onClick={handleClick}
+            <SpotlightCard
+                className={styles.spotlightWrapper}
+                spotlightColor="rgba(255, 179, 0, 0.15)"
+                spotlightSize={350}
             >
-                <div className={styles.imageContainer}>
-                    <div
-                        className={styles.image}
-                        style={{ backgroundImage: `url(${image})` }}
-                    ></div>
-                    <button
-                        className={`${styles.wishlistButton} ${isInWishlist ? styles.wishlistActive : ''}`}
-                        onClick={handleWishlistToggle}
-                        title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-                    >
-                        <FaHeart />
-                    </button>
-                </div>
+                <div
+                    className={styles.card}
+                    onClick={handleClick}
+                >
+                    <div className={styles.imageContainer}>
+                        <div
+                            className={styles.image}
+                            style={{ backgroundImage: `url(${image})` }}
+                        ></div>
+                        <button
+                            className={`${styles.wishlistButton} ${isInWishlist ? styles.wishlistActive : ''}`}
+                            onClick={handleWishlistToggle}
+                            title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+                        >
+                            <FaHeart />
+                        </button>
+                    </div>
 
-                <div className={styles.cardContent}>
-                    <h3 className={styles.title}>{title || name}</h3>
-                    <p className={styles.desc}>{description}</p>
-                    {product.price && (
-                        <div className={styles.price}>
-                            {product.price} EGP
-                        </div>
-                    )}
-                </div>
+                    <div className={styles.cardContent}>
+                        <h3 className={styles.title}>{title || name}</h3>
+                        <p className={styles.desc}>{description}</p>
+                        {product.price && (
+                            <div className={styles.price}>
+                                {product.price} EGP
+                            </div>
+                        )}
+                    </div>
 
-                <ButtonPrimary
-                    text={buttonText}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        handleClick();
-                    }}
-                />
-            </div>
+                    <ButtonPrimary
+                        text={buttonText}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleClick();
+                        }}
+                    />
+                </div>
+            </SpotlightCard>
         </>
     );
 }

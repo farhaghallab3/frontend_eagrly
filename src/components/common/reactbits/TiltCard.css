@@ -1,0 +1,20 @@
+.tilt-card-container {
+    display: inline-block;
+}
+
+.tilt-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+    transform-style: preserve-3d;
+}
+
+.tilt-card-shine {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./HeroSection.module.css";
 import { Link } from 'react-router-dom';
-import { FaShieldAlt, FaBolt, FaHandshake, FaArrowRight } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { MdTrendingUp, MdVerified, MdSpeed } from "react-icons/md";
+
+// React Bits Components
+import { BlurText, ShinyText, Magnet, CountUp } from '@components/common/reactbits';
 
 export default function HeroSection() {
     const [isVisible, setIsVisible] = useState(false);
@@ -21,28 +24,40 @@ export default function HeroSection() {
 
     return (
         <section className={styles.heroSection}>
-            {/* Background Elements */}
-            <div className={styles.heroBackground}>
-                <div className={styles.gradientOrb1}></div>
-                <div className={styles.gradientOrb2}></div>
-                <div className={styles.gridPattern}></div>
-            </div>
+
 
             <div className={styles.heroContent}>
                 <div className={styles.container}>
                     {/* Left: Text & Actions */}
                     <div className={`${styles.heroLeft} ${isVisible ? styles.animate : ''}`}>
-                        {/* Badge */}
+                        {/* Badge with Shiny Text */}
                         <div className={styles.heroBadge}>
                             <span className={styles.badgeDot}></span>
-                            <span>Student Marketplace</span>
+                            <ShinyText
+                                text="Student Marketplace"
+                                speed={3}
+                                className={styles.badgeText}
+                            />
                         </div>
 
-                        {/* Title */}
+                        {/* Title with Blur Text Animation */}
                         <h1 className={styles.heroTitle}>
-                            <span className={styles.titleLine}>Quality is Good.</span>
+                            <BlurText
+                                text="Quality is Good."
+                                delay={80}
+                                animateBy="words"
+                                direction="top"
+                                className={styles.titleLine}
+                            />
                             <span className={styles.titleLine}>
-                                <span className={styles.highlight}>Stuplies</span> Makes it Better.
+                                <span className={styles.highlight}>Stuplies</span>
+                                <BlurText
+                                    text="Makes it Better."
+                                    delay={80}
+                                    animateBy="words"
+                                    direction="top"
+                                    className={styles.titleInline}
+                                />
                             </span>
                         </h1>
 
@@ -52,15 +67,19 @@ export default function HeroSection() {
                             pre-owned items. Join our growing community today.
                         </p>
 
-                        {/* CTAs */}
+                        {/* CTAs with Magnet Effect */}
                         <div className={styles.heroCtas}>
-                            <Link to="/marketplace" className={styles.ctaPrimary}>
-                                Explore Marketplace
-                                <FaArrowRight className={styles.ctaIcon} />
-                            </Link>
-                            <Link to="/register" className={styles.ctaSecondary}>
-                                Start Selling
-                            </Link>
+                            <Magnet padding={30} magnetStrength={0.3}>
+                                <Link to="/marketplace" className={styles.ctaPrimary}>
+                                    Explore Marketplace
+                                    <FaArrowRight className={styles.ctaIcon} />
+                                </Link>
+                            </Magnet>
+                            <Magnet padding={30} magnetStrength={0.3}>
+                                <Link to="/register" className={styles.ctaSecondary}>
+                                    Start Selling
+                                </Link>
+                            </Magnet>
                         </div>
 
                         {/* Features Row */}
@@ -110,15 +129,31 @@ export default function HeroSection() {
                                 <div className={styles.imageGlow}></div>
                             </div>
 
-                            {/* Stats Card */}
+                            {/* Stats Card with CountUp */}
                             <div className={styles.statsCard}>
                                 <div className={styles.statItem}>
-                                    <span className={styles.statNumber}>5K+</span>
+                                    <span className={styles.statNumber}>
+                                        <CountUp
+                                            from={0}
+                                            to={5}
+                                            duration={2}
+                                            delay={0.5}
+                                            suffix="K+"
+                                        />
+                                    </span>
                                     <span className={styles.statLabel}>Users</span>
                                 </div>
                                 <div className={styles.statDivider}></div>
                                 <div className={styles.statItem}>
-                                    <span className={styles.statNumber}>10K+</span>
+                                    <span className={styles.statNumber}>
+                                        <CountUp
+                                            from={0}
+                                            to={10}
+                                            duration={2.5}
+                                            delay={0.7}
+                                            suffix="K+"
+                                        />
+                                    </span>
                                     <span className={styles.statLabel}>Items</span>
                                 </div>
                             </div>

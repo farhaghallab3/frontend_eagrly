@@ -2,9 +2,15 @@
    PRODUCT CARD - Premium Design with Dark Mode
    =========================================== */
 
+.spotlightWrapper {
+  height: 100%;
+  border-radius: 16px;
+}
+
 .card {
   background: var(--surface-card);
   border-radius: 16px;
+  /* Border handled by spotlight or kept subtle */
   border: 1px solid var(--border-primary);
   padding: 20px;
   display: flex;

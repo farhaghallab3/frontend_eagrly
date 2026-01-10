@@ -4,9 +4,14 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import styles from "./Reviews.module.css";
 
 import { MdStar, MdStarBorder, MdFormatQuote } from "react-icons/md";
+
+// React Bits Components
+import { SplitText, ShinyText } from '@components/common/reactbits';
 
 const reviews = [
     {
@@ -51,35 +56,68 @@ const reviews = [
     },
 ];
 
+// Animation variants
+const headerVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+    }
+};
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { duration: 0.6, delay: 0.2 }
+    }
+};
+
 const Reviews = () => {
     return (
         <section className={styles.reviewsSection}>
-            <div className={styles.sectionBackground}>
-                <div className={styles.bgGlow1}></div>
-                <div className={styles.bgGlow2}></div>
-                <div className={styles.bgGlow3}></div>
-            </div>
-
-            <div className="container position-relative" style={{ zIndex: 2 }}>
-                <div className={styles.sectionHeader}>
+            <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+                <motion.div
+                    className={styles.sectionHeader}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={headerVariants}
+                >
                     <div className={styles.headerBadge}>
                         <span className={styles.badgeIcon}>💬</span>
-                        <span>Testimonials</span>
+                        <ShinyText text="Testimonials" speed={4} />
                     </div>
-                    <h2 className={styles.sectionTitle}>
-                        What Our Customers Say
-                    </h2>
+
+                    {/* SplitText Animation for Title */}
+                    <SplitText
+                        text="What Our Customers Say"
+                        className={styles.sectionTitle}
+                        delay={40}
+                        splitBy="letter"
+                        animationFrom={{ opacity: 0, transform: 'translate3d(0,30px,0)' }}
+                        animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                    />
+
                     <p className={styles.sectionSubtitle}>
                         Don't just take our word for it - hear from our satisfied customers
                     </p>
-                </div>
+                </motion.div>
 
-                <div className={styles.reviewsContainer}>
+                <motion.div
+                    className={styles.reviewsContainer}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    variants={containerVariants}
+                >
                     <Swiper
                         modules={[Navigation, Autoplay, Pagination]}
-                        spaceBetween={30}
+                        spaceBetween={24}
                         slidesPerView={1}
                         loop={true}
+                        centeredSlides={false}
                         autoplay={{
                             delay: 4000,
                             disableOnInteraction: false,
@@ -94,8 +132,14 @@ const Reviews = () => {
                             prevEl: '.reviews-prev',
                         }}
                         breakpoints={{
-                            768: { slidesPerView: 2 },
-                            1024: { slidesPerView: 3 },
+                            640: {
+                                slidesPerView: 2,
+                                spaceBetween: 24,
+                            },
+                            1024: {
+                                slidesPerView: 3,
+                                spaceBetween: 30,
+                            },
                         }}
                         className={styles.reviewsSwiper}
                     >
@@ -149,7 +193,7 @@ const Reviews = () => {
                             </svg>
                         </button>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

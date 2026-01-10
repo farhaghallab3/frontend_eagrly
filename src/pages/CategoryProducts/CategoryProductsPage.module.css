@@ -1,24 +1,62 @@
 .categoryPage {
-  background-color: #FFFFFF;
+  position: relative;
   min-height: 100vh;
+  /* Transparent to let aurora show */
+  background: transparent;
+  overflow-x: hidden;
+}
+
+.backgroundContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+.auroraBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+.gridPattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
 }
 
 .container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
+  position: relative;
+  z-index: 2;
 }
 
 .categoryHeader {
   padding: 100px 0 40px 0;
-  background-color: #FFFFFF;
+  background: transparent;
 }
 
 .headerTitle {
   font-size: 1.25rem;
   /* ~20px */
   font-weight: 500;
-  color: #111111;
+  color: var(--text-primary);
   text-transform: none;
   margin: 0;
 }
@@ -35,7 +73,7 @@
 .resultsCount {
   font-size: 1.25rem;
   font-weight: 500;
-  color: #111111;
+  color: var(--text-primary);
 }
 
 .filterActions {
@@ -53,22 +91,22 @@
 
 .filterLabel {
   font-size: 0.85rem;
-  color: #676D75;
+  color: var(--text-secondary);
   font-weight: 500;
   white-space: nowrap;
 }
 
 .filterSelect {
   border: none;
-  border-bottom: 1px solid #EEEEEE;
+  border-bottom: 1px solid var(--border-primary);
   background-color: transparent;
   padding: 4px 24px 4px 4px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #111111;
+  color: var(--text-primary);
   cursor: pointer;
   outline: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23111' d='M0 3l5 5 5-5z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23666' d='M0 3l5 5 5-5z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right center;
   appearance: none;
@@ -76,7 +114,7 @@
 }
 
 .filterSelect:focus {
-  border-bottom-color: #FFB300;
+  border-bottom-color: var(--accent-primary);
 }
 
 /* Main Content Area */

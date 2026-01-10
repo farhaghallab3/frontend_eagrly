@@ -11,6 +11,7 @@ import { productService } from '../../services/productService.js';
 import { useCategories } from '../../hooks/useCategories.js';
 import styles from './ProductsPage.module.css';
 import SEO from "@components/common/SEO/SEO";
+import { Aurora } from '@components/common/reactbits';
 // Egyptian Governorates
 const GOVERNORATES = [
   "Cairo", "Giza", "Alexandria", "Dakahlia", "Red Sea", "Beheira", "Fayoum",
@@ -148,6 +149,16 @@ const ProductsPage = () => {
 
   return (
     <div className={styles.marketplacePage}>
+      <div className={styles.backgroundContainer}>
+        <Aurora
+          colorStops={['#FFB300', '#FF8F00', '#FFC107']}
+          amplitude={1.0}
+          blend={0.5}
+          speed={0.5}
+          className={styles.auroraBackground}
+        />
+        <div className={styles.gridPattern}></div>
+      </div>
       <SEO
         title="Marketplace"
         description="Browse thousands of student-listed items including textbooks, electronics, and art supplies."

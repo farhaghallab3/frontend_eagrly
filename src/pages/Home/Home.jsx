@@ -8,6 +8,7 @@ import styles from './Home.module.css';
 
 import { useProduct } from './../../hooks/useProducts';
 import { useCategories } from './../../hooks/useCategories';
+import { Aurora } from '@components/common/reactbits';
 import SubscriptionPlans from '@components/ecommerce/SubscriptionPlans/SubscriptionPlans';
 import ChatbotWidget from '@components/ecommerce/chatbot/ChatbotWidget';
 
@@ -15,9 +16,8 @@ export default function Home() {
     const { products, loading: loadingProducts, error: errorProducts } = useProduct();
     const { categories, loading: loadingCategories, error: errorCategories } = useCategories();
 
-    if (loadingProducts || loadingCategories) return <p>Loading...</p>;
-    if (errorProducts) return <p>Error loading products: {errorProducts}</p>;
-    if (errorCategories) return <p>Error loading categories: {errorCategories}</p>;
+    // Show loading state only for data sections, not the entire page
+    const isLoading = loadingProducts || loadingCategories;
 
     return (
         <>
@@ -25,20 +25,46 @@ export default function Home() {
                 title="Home"
                 description="The premier marketplace for university students to buy, sell, and exchange pre-owned items."
             />
+
+            {/* HeroSection always renders - no dependency on API data */}
             <HeroSection />
 
             <div className={styles.contentWrapper}>
                 <div className={styles.backgroundContainer}>
-                    <div className={styles.bgGlow1}></div>
-                    <div className={styles.bgGlow2}></div>
-                    <div className={styles.bgGlow3}></div>
+                    <Aurora
+                        colorStops={['#FFB300', '#FF8F00', '#FFC107']}
+                        amplitude={1.0}
+                        blend={0.5}
+                        speed={0.5}
+                        className={styles.auroraBackground}
+                    />
+                    <div className={styles.gridPattern}></div>
                 </div>
-                <FeaturedProducts title="Featured Products" products={products} />
-                <CategoriesSection categories={categories} />
+
+                {/* Featured Products - gracefully handle loading/error */}
+                {isLoading ? (
+                    <div className={styles.loadingSection}>Loading products...</div>
+                ) : errorProducts ? (
+                    <div className={styles.errorSection}>Unable to load products</div>
+                ) : (
+                    <FeaturedProducts title="Featured Products" products={products} />
+                )}
+
+                {/* Categories - gracefully handle loading/error */}
+                {isLoading ? (
+                    <div className={styles.loadingSection}>Loading categories...</div>
+                ) : errorCategories ? (
+                    <div className={styles.errorSection}>Unable to load categories</div>
+                ) : (
+                    <CategoriesSection categories={categories} />
+                )}
+
                 <SubscriptionPlans />
+
+                {/* Reviews Section with React Bits animations */}
+                <Reviews />
             </div>
             <ChatbotWidget />
-
         </>
     );
 }

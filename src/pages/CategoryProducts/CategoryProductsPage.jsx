@@ -8,6 +8,8 @@ import { productService } from '../../services/productService.js';
 import { getCategory } from '../../services/api.js';
 import styles from './CategoryProductsPage.module.css';
 import { FaTag, FaBox, FaStar } from "react-icons/fa";
+import { Aurora } from '@components/common/reactbits';
+import SEO from "@components/common/SEO/SEO";
 
 const CategoryProductsPage = () => {
   const { categoryId } = useParams();
@@ -74,6 +76,22 @@ const CategoryProductsPage = () => {
 
   return (
     <div className={styles.categoryPage}>
+      <div className={styles.backgroundContainer}>
+        <Aurora
+          colorStops={['#FFB300', '#FF8F00', '#FFC107']}
+          amplitude={1.0}
+          blend={0.5}
+          speed={0.5}
+          className={styles.auroraBackground}
+        />
+        <div className={styles.gridPattern}></div>
+      </div>
+      <SEO
+        title={`${category?.name || 'Category'} Products`}
+        description={`Browse products in ${category?.name || 'various categories'}`}
+        url={`/categories/${categoryId}/products`}
+      />
+
       {/* Hero Header */}
       <header className={styles.categoryHeader}>
         <div className={styles.container}>

@@ -1,0 +1,29 @@
+.shiny-text {
+  background: linear-gradient(
+    120deg,
+    var(--text-primary, #111) 40%,
+    var(--accent-primary, #FFB300) 50%,
+    var(--text-primary, #111) 60%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shiny-text-shine var(--animation-duration, 5s) linear infinite;
+}
+
+.shiny-text.disabled {
+  animation: none;
+  background: var(--text-primary, #111);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes shiny-text-shine {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}

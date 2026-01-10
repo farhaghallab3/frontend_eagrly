@@ -1,10 +1,15 @@
 // components/ecommerce/FeaturedProducts/FeaturedProducts.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { MdShoppingBag, MdFavoriteBorder } from "react-icons/md";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import styles from "./FeaturedProducts.module.css";
+
+// React Bits Components
+import { SplitText, SpotlightCard, TiltCard } from '@components/common/reactbits';
+
+// Inline SVG placeholder for broken/missing product images
+const PLACEHOLDER_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect fill='%231a1a1a' width='300' height='300'/%3E%3Cpath d='M150 90c-33.1 0-60 26.9-60 60s26.9 60 60 60 60-26.9 60-60-26.9-60-60-60zm0 100c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z' fill='%23333'/%3E%3Cpath d='M150 110c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 60c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20z' fill='%23444'/%3E%3Ctext x='150' y='220' text-anchor='middle' fill='%23666' font-family='Arial' font-size='14'%3ENo Image%3C/text%3E%3C/svg%3E";
 
 export default function FeaturedProducts({ products = [] }) {
     const navigate = useNavigate();
@@ -15,9 +20,7 @@ export default function FeaturedProducts({ products = [] }) {
         desc: product.description ? `${product.description.substring(0, 100)}...` : 'No description available',
         image: product.image,
         buttonText: "View Details",
-        // Ensure seller property exists for navigation (ProductCard checks if product.seller exists)
-        seller: product.seller || product.seller_id || true, // Add seller property for navigation
-        // Add any other fields your ProductCard expects
+        seller: product.seller || product.seller_id || true,
         ...product
     }));
 
@@ -55,8 +58,6 @@ export default function FeaturedProducts({ products = [] }) {
 
     return (
         <section className={styles.featuredSection}>
-            {/* Background elements moved to Home wrapper */}
-
             <div className={styles.sectionContainer}>
                 <motion.div
                     className={styles.sectionHeader}
@@ -68,9 +69,17 @@ export default function FeaturedProducts({ products = [] }) {
                     <div className={styles.headerBadge}>
                         <span>Featured Collection</span>
                     </div>
-                    <h2 className={styles.sectionTitle}>
-                        Featured Products
-                    </h2>
+
+                    {/* SplitText Animation for Section Title */}
+                    <SplitText
+                        text="Featured Products"
+                        className={styles.sectionTitle}
+                        delay={40}
+                        splitBy="letter"
+                        animationFrom={{ opacity: 0, transform: 'translate3d(0,30px,0)' }}
+                        animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                    />
+
                     <p className={styles.sectionSubtitle}>
                         Discover our handpicked selection of premium products for your needs.
                     </p>
@@ -86,19 +95,25 @@ export default function FeaturedProducts({ products = [] }) {
                     {transformedProducts.map((product, index) => (
                         <motion.div key={product.id || index} variants={cardVariants}>
                             <div className={styles.productCard}>
-                                <div className={styles.cardImageContainer} onClick={() => navigate(`/product/${product.id || product._id}`)}>
+                                <div
+                                    className={styles.cardImageContainer}
+                                    onClick={() => navigate(`/product/${product.id || product._id}`)}
+                                >
                                     <img
-                                        src={product.image || '/placeholder-product.jpg'}
+                                        src={product.image || PLACEHOLDER_IMAGE}
                                         alt={product.title || product.name}
                                         className={styles.cardImage}
                                         onError={(e) => {
-                                            e.target.src = '/placeholder-product.jpg';
+                                            e.target.src = PLACEHOLDER_IMAGE;
                                         }}
                                     />
                                 </div>
 
                                 <div className={styles.cardContent}>
-                                    <h3 className={styles.productTitle} onClick={() => navigate(`/product/${product.id || product._id}`)}>
+                                    <h3
+                                        className={styles.productTitle}
+                                        onClick={() => navigate(`/product/${product.id || product._id}`)}
+                                    >
                                         {product.title || product.name}
                                     </h3>
 

@@ -1,0 +1,29 @@
+.infinite-scroll-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.infinite-scroll-container.horizontal {
+    width: 100%;
+}
+
+.infinite-scroll-container.vertical {
+    height: 100%;
+}
+
+.infinite-scroll-track {
+    display: flex;
+    will-change: transform;
+}
+
+.infinite-scroll-container.horizontal .infinite-scroll-track {
+    flex-direction: row;
+}
+
+.infinite-scroll-container.vertical .infinite-scroll-track {
+    flex-direction: column;
+}
+
+.infinite-scroll-item {
+    flex-shrink: 0;
+}

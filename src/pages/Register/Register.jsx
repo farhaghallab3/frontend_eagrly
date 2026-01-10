@@ -99,27 +99,55 @@ const Register = () => {
     const formatErrors = () => {
         if (!error) return null;
 
+        // Handle "Authentication credentials were not provided" - typically from misconfigured request
+        const errorStr = JSON.stringify(error).toLowerCase();
+        if (errorStr.includes("authentication credentials were not provided")) {
+            return (
+                <div className={styles.errorMessage}>
+                    Authentication failed. Please try again or use email/password signup.
+                </div>
+            );
+        }
+
+        // Handle "User already exists" scenario
+        if (errorStr.includes("already exists")) {
+            return (
+                <div className={styles.errorMessage}>
+                    An account with this email already exists. Please log in instead.
+                </div>
+            );
+        }
+
         if (typeof error === "object" && !Array.isArray(error)) {
             // Handle detail message
             if (error.detail) {
-                return <div className="errorMessage">{error.detail}</div>;
+                return <div className={styles.errorMessage}>{error.detail}</div>;
             }
 
-            return Object.entries(error).map(([field, messages]) => (
-                <div key={field} className="errorMessage">
-                    <strong>{field}:</strong> {Array.isArray(messages) ? messages.join(", ") : messages}
-                </div>
-            ));
+            return Object.entries(error).map(([field, messages]) => {
+                const msgContent = Array.isArray(messages) ? messages.join(", ") : messages;
+                const isNonField = field === 'non_field_errors' || field === 'detail';
+
+                return (
+                    <div key={field} className={styles.errorMessage}>
+                        {isNonField ? msgContent : (
+                            <>
+                                <strong style={{ textTransform: 'capitalize' }}>{field.replace('_', ' ')}:</strong> {msgContent}
+                            </>
+                        )}
+                    </div>
+                );
+            });
         }
 
         if (Array.isArray(error)) {
             return error.map((errMsg, index) => (
-                <div key={index} className="errorMessage">{errMsg}</div>
+                <div key={index} className={styles.errorMessage}>{errMsg}</div>
             ));
         }
 
         if (typeof error === "string") {
-            return <div className="errorMessage">{error}</div>;
+            return <div className={styles.errorMessage}>{error}</div>;
         }
 
         return null;
@@ -137,7 +165,7 @@ const Register = () => {
                 footerLinkTo="/login"
             >
                 {/* Error Messages */}
-                <div className="errorContainer">
+                <div className={styles.errorContainer}>
                     {formatErrors()}
                 </div>
 

@@ -18,56 +18,35 @@
     z-index: 0;
 }
 
-.bgGlow1,
-.bgGlow2,
-.bgGlow3 {
+.gridPattern {
     position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.15;
-    animation: bgFloat 20s ease-in-out infinite;
-    pointer-events: none;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--border-secondary) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-secondary) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.5;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    z-index: 1;
 }
 
-.bgGlow1 {
-    width: 800px;
-    height: 800px;
-    background: var(--accent-primary);
-    top: -200px;
-    left: -100px;
-    animation-delay: 0s;
+.auroraBackground {
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    z-index: 0;
 }
 
-.bgGlow2 {
-    width: 600px;
-    height: 600px;
-    background: var(--accent-secondary);
-    top: 30%;
-    right: -200px;
-    animation-delay: 5s;
+/* Loading and Error States */
+.loadingSection,
+.errorSection {
+    padding: 60px 24px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1rem;
 }
 
-.bgGlow3 {
-    width: 700px;
-    height: 700px;
-    background: var(--accent-primary);
-    bottom: -200px;
-    left: 20%;
-    animation-delay: 10s;
-}
-
-@keyframes bgFloat {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    33% {
-        transform: translate(30px, -50px) scale(1.1);
-    }
-
-    66% {
-        transform: translate(-20px, 20px) scale(0.9);
-    }
+.errorSection {
+    color: var(--text-tertiary);
 }

@@ -101,8 +101,8 @@ export default function Header({ links }) {
                     {/* Mobile Only Auth */}
                     {!token && (
                         <div className={styles.mobileAuth}>
-                            <Link to="/login" className={styles.mobileNavLink}>Log in</Link>
-                            <Link to="/register" className={styles.mobileCta}>Join Now</Link>
+                            {/* <Link to="/login" className={styles.mobileNavLink}>Log in</Link> */}
+                            {/* <Link to="/register" className={styles.mobileCta}>Join Now</Link> */}
                         </div>
                     )}
                 </nav>

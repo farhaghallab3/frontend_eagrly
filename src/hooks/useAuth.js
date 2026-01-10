@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useCallback } from "react";
-import { loginUser, registerUser, registerRequest, verifyOTP, resendOTP, logout, clearError } from "../store/slices/authSlice";
+import { loginUser, registerUser, registerRequest, verifyOTP, resendOTP, logout, clearError, googleLogin } from "../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { auth, facebookProvider, googleProvider } from "../utils/firebase";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
@@ -73,41 +73,22 @@ export const useAuth = () => {
     return name.replace(/\s+/g, "").replace(/[^\w.@+-]/g, "");
   };
 
-  // Google OAuth (updated to use email-based login)
+  // Google OAuth (updated to use backend verification)
   const loginWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      const username = sanitizeUsername(result.user.displayName, result.user.email);
+      // Get the Google OAuth credential (not Firebase token)
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const idToken = credential?.idToken;
 
-      const userData = {
-        email: result.user.email,
-        username,
-        password: result.user.uid, // temporary password
-        first_name: result.user.displayName?.split(" ")[0] || "",
-        last_name: result.user.displayName?.split(" ")[1] || "",
-      };
-
-      // Try login with email first
-      let loginRes = await dispatch(loginUser({ email: result.user.email, password: result.user.uid }));
-      if (!loginUser.fulfilled.match(loginRes)) {
-        // If login fails, register then login
-        const regResult = await dispatch(registerRequest(userData));
-        if (registerRequest.fulfilled.match(regResult)) {
-          // Auto-verify for OAuth users
-          // Note: For OAuth users, we skip OTP verification as they're verified via provider
-          loginRes = await dispatch(loginUser({ email: result.user.email, password: result.user.uid }));
-        }
+      if (!idToken) {
+        console.error("No ID token received from Google");
+        return false;
       }
 
-      if (loginUser.fulfilled.match(loginRes)) {
-        localStorage.setItem(
-          "token",
-          loginRes.payload.access
-        );
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...loginRes.payload.user, photoURL: result.user.photoURL })
-        );
+      const loginRes = await dispatch(googleLogin(idToken));
+
+      if (googleLogin.fulfilled.match(loginRes)) {
         navigate("/");
         return true;
       }

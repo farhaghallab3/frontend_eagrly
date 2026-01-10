@@ -3,19 +3,51 @@
    =========================================== */
 
 .marketplacePage {
-  background-color: var(--bg-primary);
+  background-color: transparent;
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundContainer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gridPattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border-secondary) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-secondary) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+  z-index: 1;
+}
+
+.auroraBackground {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  z-index: 0;
 }
 
 .container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
+  position: relative;
+  z-index: 2;
 }
 
 .marketplaceHeader {
   padding: 120px 0 40px 0;
-  background-color: var(--bg-primary);
+  background-color: transparent;
 }
 
 .headerTitle {

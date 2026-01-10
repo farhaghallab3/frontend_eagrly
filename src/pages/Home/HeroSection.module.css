@@ -15,50 +15,19 @@
 }
 
 /* Background Elements */
-.heroBackground {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
+
+
+/* Badge Text for ShinyText */
+.badgeText {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.gradientOrb1 {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, var(--accent-primary-glow) 0%, transparent 70%);
-  border-radius: 50%;
-  top: -200px;
-  right: -100px;
-  opacity: 0.5;
-  animation: floatOrb 15s ease-in-out infinite;
-  filter: blur(60px);
-}
-
-.gradientOrb2 {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255, 143, 0, 0.2) 0%, transparent 70%);
-  border-radius: 50%;
-  /* Extend this orb further down to blend into content sections */
-  bottom: -400px;
-  left: -100px;
-  opacity: 0.4;
-  animation: floatOrb 12s ease-in-out infinite reverse;
-  filter: blur(80px);
-}
-
-.gridPattern {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--border-secondary) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-secondary) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.5;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+/* Inline title text for BlurText */
+.titleInline {
+  display: inline;
 }
 
 @keyframes floatOrb {
