@@ -3,12 +3,14 @@ import styles from "./HeroSection.module.css";
 import { Link } from 'react-router-dom';
 import { FaArrowRight } from "react-icons/fa";
 import { MdTrendingUp, MdVerified, MdSpeed } from "react-icons/md";
+import { useAuth } from "../../hooks/useAuth";
 
 // React Bits Components
 import { BlurText, ShinyText, Magnet, CountUp } from '@components/common/reactbits';
 
 export default function HeroSection() {
     const [isVisible, setIsVisible] = useState(false);
+    const { user, token } = useAuth();
 
     useEffect(() => {
         // Trigger entrance animations after mount
@@ -76,7 +78,7 @@ export default function HeroSection() {
                                 </Link>
                             </Magnet>
                             <Magnet padding={30} magnetStrength={0.3}>
-                                <Link to="/register" className={styles.ctaSecondary}>
+                                <Link to={user || token ? "/my-ads" : "/register"} className={styles.ctaSecondary}>
                                     Start Selling
                                 </Link>
                             </Magnet>
