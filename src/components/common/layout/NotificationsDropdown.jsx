@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MdCheckCircle, MdError, MdInfo, MdMessage } from "react-icons/md";
+import { MdCheckCircle, MdError, MdInfo, MdMessage, MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { fetchNotifications, markNotificationRead, markAllNotificationsRead } from "../../../store/slices/notificationSlice";
 import styles from "./Header/Header.module.css";
@@ -9,6 +9,7 @@ const NotificationsDropdown = ({ show, onToggle }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { notifications, loading } = useSelector((state) => state.notifications);
+  const [hiddenNotifications, setHiddenNotifications] = React.useState([]);
 
   useEffect(() => {
     if (show) {
@@ -30,6 +31,12 @@ const NotificationsDropdown = ({ show, onToggle }) => {
   const handleMarkAllRead = (e) => {
     e.stopPropagation();
     dispatch(markAllNotificationsRead());
+  };
+
+  const handleDismiss = (e, notificationId) => {
+    e.stopPropagation();
+    dispatch(markNotificationRead(notificationId));
+    setHiddenNotifications(prev => [...prev, notificationId]);
   };
 
   const getNotificationIcon = (type) => {
@@ -87,7 +94,10 @@ const NotificationsDropdown = ({ show, onToggle }) => {
         ) : (
           <>
             <div className={styles.dropdownList}>
-              {notifications.slice(0, 10).map((notification) => (
+              {notifications
+                .filter(n => !hiddenNotifications.includes(n.id))
+                .slice(0, 10)
+                .map((notification) => (
                 <div
                   key={notification.id}
                   className={`${styles.notificationItem} ${!notification.is_read ? styles.unreadItem : ''}`}
@@ -112,6 +122,14 @@ const NotificationsDropdown = ({ show, onToggle }) => {
                   {!notification.is_read && (
                     <div className={styles.unreadDot}></div>
                   )}
+
+                  <button 
+                    className={styles.closeBtn}
+                    onClick={(e) => handleDismiss(e, notification.id)}
+                    aria-label="Dismiss notification"
+                  >
+                    <MdClose size={16} />
+                  </button>
                 </div>
               ))}
             </div>

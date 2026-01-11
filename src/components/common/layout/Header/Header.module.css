@@ -53,6 +53,12 @@
   text-transform: uppercase;
 }
 
+.logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
 /* Desktop Navigation */
 .navCenter {
   display: flex;
@@ -241,6 +247,34 @@
   cursor: pointer;
   transition: background var(--transition-fast);
   border-bottom: 1px solid var(--border-secondary);
+  position: relative;
+  padding-right: 32px; /* Make space for close button */
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all var(--transition-fast);
+}
+
+.notificationItem:hover .closeBtn {
+  opacity: 1;
+}
+
+.closeBtn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 
 .chatItem:hover,

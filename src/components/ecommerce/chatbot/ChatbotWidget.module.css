@@ -109,6 +109,7 @@
   line-height: 1.4;
   max-width: 85%;
   position: relative;
+  overflow-wrap: anywhere;
 }
 
 .message.user {
