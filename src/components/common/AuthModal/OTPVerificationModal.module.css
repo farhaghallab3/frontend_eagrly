@@ -80,7 +80,7 @@
 .iconWrapper {
     width: 80px;
     height: 80px;
-    background: var(--surface-input);
+    background-color: var(--surface-input);
     color: var(--accent-primary);
     border-radius: 50%;
     display: flex;
@@ -124,7 +124,7 @@
 .otpInput {
     width: 64px;
     height: 72px;
-    background: var(--surface-input);
+    background-color: var(--surface-input);
     border: 1px solid var(--border-primary);
     border-radius: 12px;
     font-size: 1.8rem;

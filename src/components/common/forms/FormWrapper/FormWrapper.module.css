@@ -70,7 +70,7 @@
   padding: 14px;
   border: 1px solid var(--border-primary);
   border-radius: 10px;
-  background: var(--surface-input);
+  background-color: var(--surface-input);
   color: var(--text-primary);
   font-weight: 500;
   font-size: 0.9rem;

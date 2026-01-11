@@ -12,6 +12,7 @@ import { useCategories } from '../../hooks/useCategories.js';
 import styles from './ProductsPage.module.css';
 import SEO from "@components/common/SEO/SEO";
 import { Aurora } from '@components/common/reactbits';
+import CustomSelect from '@components/common/CustomSelect/CustomSelect';
 // Egyptian Governorates
 const GOVERNORATES = [
   "Cairo", "Giza", "Alexandria", "Dakahlia", "Red Sea", "Beheira", "Fayoum",
@@ -194,47 +195,41 @@ const ProductsPage = () => {
             <div className={styles.filterActions}>
               {/* Category Filter */}
               <div className={styles.filterItem}>
-                <span className={styles.filterLabel}>Category</span>
-                <select
-                  className={styles.filterSelect}
+                <CustomSelect
+                  options={[
+                    { value: '', label: 'All Categories' },
+                    ...categories.map(cat => ({ value: cat.name, label: cat.name }))
+                  ]}
                   value={filters.category}
-                  onChange={(e) => handleFilterChange('category', e.target.value)}
-                >
-                  <option value="">All Categories</option>
-                  {categories.map(cat => (
-                    <option key={cat.id} value={cat.name}>{cat.name}</option>
-                  ))}
-                </select>
+                  onChange={(val) => handleFilterChange('category', val)}
+                  placeholder="All Categories"
+                />
               </div>
 
               {/* Governorate Filter */}
               <div className={styles.filterItem}>
-                <span className={styles.filterLabel}>Governorate</span>
-                <select
-                  className={styles.filterSelect}
+                <CustomSelect
+                  options={[
+                    { value: '', label: 'All Governorates' },
+                    ...GOVERNORATES.map(gov => ({ value: gov, label: gov }))
+                  ]}
                   value={filters.governorate}
-                  onChange={(e) => handleFilterChange('governorate', e.target.value)}
-                >
-                  <option value="">All Governorates</option>
-                  {GOVERNORATES.map(gov => (
-                    <option key={gov} value={gov}>{gov}</option>
-                  ))}
-                </select>
+                  onChange={(val) => handleFilterChange('governorate', val)}
+                  placeholder="All Governorates"
+                />
               </div>
 
               {/* Faculty Filter */}
               <div className={styles.filterItem}>
-                <span className={styles.filterLabel}>Faculty</span>
-                <select
-                  className={styles.filterSelect}
+                <CustomSelect
+                  options={[
+                    { value: '', label: 'All Faculties' },
+                    ...faculties.map(fac => ({ value: fac, label: fac }))
+                  ]}
                   value={filters.faculty}
-                  onChange={(e) => handleFilterChange('faculty', e.target.value)}
-                >
-                  <option value="">All Faculties</option>
-                  {faculties.map(fac => (
-                    <option key={fac} value={fac}>{fac}</option>
-                  ))}
-                </select>
+                  onChange={(val) => handleFilterChange('faculty', val)}
+                  placeholder="All Faculties"
+                />
               </div>
 
               {/* Inline Price Slider */}

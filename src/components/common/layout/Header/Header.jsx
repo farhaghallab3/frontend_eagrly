@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MdMenu, MdNotifications, MdChat, MdFavorite, MdPerson, MdClose } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../../hooks/useAuth";
 import { useAuthModal } from "../../../../context/AuthModalContext";
@@ -18,6 +18,7 @@ export default function Header({ links }) {
     const { openAuthModal } = useAuthModal();
     const dispatch = useDispatch();
     const location = useLocation();
+    const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const { unreadCount } = useSelector((state) => state.chat);
@@ -145,12 +146,18 @@ export default function Header({ links }) {
                             {token && <ChatDropdown show={showChatDropdown} onToggle={setShowChatDropdown} />}
                         </div>
 
-                        <Link to="/wishlist" className={styles.iconBtn}>
+                        <button
+                            className={styles.iconBtn}
+                            onClick={() => {
+                                if (!token) return openAuthModal();
+                                navigate('/wishlist');
+                            }}
+                        >
                             <MdFavorite size={22} />
                             {token && safeWishlistItems.length > 0 && (
                                 <span className={styles.badge}>{safeWishlistItems.length > 99 ? '99+' : safeWishlistItems.length}</span>
                             )}
-                        </Link>
+                        </button>
 
                         <ThemeToggle />
                     </div>

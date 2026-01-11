@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaHeart, FaTrash, FaCheck } from "react-icons/fa";
 import { fetchWishlist, removeFromWishlist, clearLastAction } from "../../store/slices/wishlistSlice";
+import { useAuth } from "../../hooks/useAuth";
+import { useAuthModal } from "../../context/AuthModalContext";
 import styles from "./Wishlist.module.css";
 
 export default function Wishlist() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { token } = useAuth();
+    const { openAuthModal } = useAuthModal();
     const wishlistState = useSelector((state) => state.wishlist);
     const wishlistItems = wishlistState?.items?.results || [];
     const { loading, lastAction } = wishlistState || {};
@@ -14,10 +19,20 @@ export default function Wishlist() {
     const [removingId, setRemovingId] = useState(null);
     const [showFeedback, setShowFeedback] = useState(false);
 
+    // Redirect to home and show auth modal if not logged in
     useEffect(() => {
-        window.scrollTo(0, 0);
-        dispatch(fetchWishlist());
-    }, [dispatch]);
+        if (!token) {
+            openAuthModal();
+            navigate('/');
+        }
+    }, [token, openAuthModal, navigate]);
+
+    useEffect(() => {
+        if (token) {
+            window.scrollTo(0, 0);
+            dispatch(fetchWishlist());
+        }
+    }, [dispatch, token]);
 
     useEffect(() => {
         if (lastAction?.type === 'removed') {
@@ -36,6 +51,11 @@ export default function Wishlist() {
             setRemovingId(null);
         }, 300);
     };
+
+    // Don't render content if not authenticated
+    if (!token) {
+        return null;
+    }
 
     if (loading && safeWishlistItems.length === 0) {
         return (

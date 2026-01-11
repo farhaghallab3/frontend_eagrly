@@ -106,7 +106,7 @@
   width: 100%;
   padding: 16px;
   font-size: 1rem;
-  background: var(--surface-input);
+  background-color: var(--surface-input);
   border: 1px solid var(--border-primary);
   border-radius: 12px;
   color: var(--text-primary);

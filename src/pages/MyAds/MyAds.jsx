@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { FaPlusCircle, FaEdit, FaTrash, FaBox, FaEye, FaCalendarAlt, FaRedo, FaClock, FaExclamationTriangle } from "react-icons/fa";
+import { FaPlusCircle, FaEdit, FaTrash, FaBox, FaEye, FaCalendarAlt, FaRedo, FaClock, FaExclamationTriangle, FaStar } from "react-icons/fa";
 import styles from "./MyAds.module.css";
 import ProductForm from "../../components/common/forms/ProductForm/ProductForm";
 import { useProduct } from "../../hooks/useProducts";
@@ -20,6 +20,9 @@ export default function MyAds() {
     const [daysUntilReset, setDaysUntilReset] = useState(30);
     const [isRepublishing, setIsRepublishing] = useState(false);
     const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+    const [featuringProductId, setFeaturingProductId] = useState(null);
+    const [featuredError, setFeaturedError] = useState(null);
+    const [subscriptionModalMode, setSubscriptionModalMode] = useState('adLimit');
 
     const formatDate = (dateString) => {
         if (!dateString) return '—';
@@ -103,6 +106,42 @@ export default function MyAds() {
         setShowSuccessAnimation(true);
         setTimeout(() => setShowSuccessAnimation(false), 2000);
         fetchProducts();
+    };
+
+    const handleMakeFeatured = async (product) => {
+        setFeaturingProductId(product.id);
+        setFeaturedError(null);
+        try {
+            // Check eligibility first
+            const eligibility = await productService.checkFeaturedEligibility();
+
+            if (!eligibility.eligible) {
+                if (eligibility.reason === 'no_subscription' || eligibility.reason === 'no_auth') {
+                    // Show subscription modal with featured mode
+                    setSubscriptionModalMode('featured');
+                    setShowSubscriptionModal(true);
+                } else {
+                    // Show error message (limit reached or plan_no_featured)
+                    setFeaturedError(eligibility.message || 'Unable to feature this ad.');
+                    setTimeout(() => setFeaturedError(null), 5000);
+                }
+                setFeaturingProductId(null);
+                return;
+            }
+
+            // User is eligible, request featured
+            await productService.requestFeatured(product.id);
+            setShowSuccessAnimation(true);
+            setTimeout(() => setShowSuccessAnimation(false), 2000);
+            fetchProducts();
+        } catch (error) {
+            console.error('Failed to make ad featured:', error);
+            const errMsg = error.response?.data?.error || error.message || 'Failed to feature ad';
+            setFeaturedError(errMsg);
+            setTimeout(() => setFeaturedError(null), 5000);
+        } finally {
+            setFeaturingProductId(null);
+        }
     };
 
     // Animation variants
@@ -190,7 +229,7 @@ export default function MyAds() {
                             <div className={styles.statIcon}><FaEye /></div>
                             <div className={styles.statContent}>
                                 <span className={styles.statNumber}>
-                                    {myProducts.filter(p => p.status === 'active').length}
+                                    {myProducts.filter(p => p.is_active || p.status === 'active').length}
                                 </span>
                                 <span className={styles.statLabel}>Active Listings</span>
                             </div>
@@ -230,7 +269,12 @@ export default function MyAds() {
                             <p>{error}</p>
                             <button className={styles.primaryButton} onClick={fetchProducts}>Retry</button>
                         </div>
-                    ) : (
+                    ) : featuredError ? (
+                        <div className={styles.errorBanner}>
+                            <FaExclamationTriangle /> {featuredError}
+                        </div>
+                    ) : null}
+                    {!loading && !error && (
                         <motion.div
                             className={styles.productsGrid}
                             initial="hidden"
@@ -271,6 +315,11 @@ export default function MyAds() {
                                                     </span>
                                                 </div>
                                                 <div className={styles.productStatus}>
+                                                    {product.is_featured && (
+                                                        <span className={`${styles.statusBadge} ${styles.statusFeatured}`}>
+                                                            <FaStar /> Featured
+                                                        </span>
+                                                    )}
                                                     {isExpired ? (
                                                         <span className={`${styles.statusBadge} ${styles.statusExpired}`}>Expired</span>
                                                     ) : product.is_active ? (
@@ -309,9 +358,24 @@ export default function MyAds() {
                                                         <FaRedo /> Republish
                                                     </button>
                                                 ) : (
-                                                    <button className={styles.editButton} onClick={() => handleEdit(product)}>
-                                                        <FaEdit /> Edit
-                                                    </button>
+                                                    <>
+                                                        <button className={styles.editButton} onClick={() => handleEdit(product)}>
+                                                            <FaEdit /> Edit
+                                                        </button>
+                                                        {product.is_active && !product.is_featured && (
+                                                            <button
+                                                                className={styles.featureButton}
+                                                                onClick={() => handleMakeFeatured(product)}
+                                                                disabled={featuringProductId === product.id}
+                                                            >
+                                                                {featuringProductId === product.id ? (
+                                                                    <><span className={styles.loadingSpinner}></span> Featuring...</>
+                                                                ) : (
+                                                                    <><FaStar /> Make Featured</>
+                                                                )}
+                                                            </button>
+                                                        )}
+                                                    </>
                                                 )}
                                                 <button className={styles.deleteButton} onClick={() => handleDeleteClick(product)}>
                                                     <FaTrash /> Delete
@@ -358,8 +422,12 @@ export default function MyAds() {
 
                 <SubscriptionRequiredModal
                     show={showSubscriptionModal}
-                    onClose={() => setShowSubscriptionModal(false)}
+                    onClose={() => {
+                        setShowSubscriptionModal(false);
+                        setSubscriptionModalMode('adLimit');
+                    }}
                     daysUntilReset={daysUntilReset}
+                    mode={subscriptionModalMode}
                 />
             </div>
         </div >

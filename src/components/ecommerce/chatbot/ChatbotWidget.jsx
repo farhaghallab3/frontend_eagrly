@@ -203,8 +203,17 @@ const ChatbotWidget = () => {
       hasImage: !!selectedImage,
       imagePreview: imagePreview
     };
+
+    // Capture image before clearing for API call
+    const imageToSend = selectedImage;
+
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
+
+    // Clear image preview immediately after message is displayed
+    setSelectedImage(null);
+    setImagePreview(null);
+
     setLoading(true);
 
     try {
@@ -213,11 +222,11 @@ const ChatbotWidget = () => {
 
       let response;
 
-      if (selectedImage) {
+      if (imageToSend) {
         // Send with image
         const formData = new FormData();
         formData.append('message', messageText.trim());
-        formData.append('image', selectedImage);
+        formData.append('image', imageToSend);
 
         const headers = {
           'Content-Type': 'multipart/form-data',
@@ -226,10 +235,6 @@ const ChatbotWidget = () => {
 
         const res = await axios.post(`${API_URL}/chatbot/`, formData, { headers });
         response = res.data;
-
-        // Clear image after sending
-        setSelectedImage(null);
-        setImagePreview(null);
       } else {
         // Send text only
         response = await sendMessageToBot(messageText.trim());

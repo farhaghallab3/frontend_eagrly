@@ -114,4 +114,26 @@ export const productService = {
     const res = await axiosInstance.post(`${API_URL}${id}/republish/`, {}, config);
     return res.data;
   },
+
+  checkFeaturedEligibility: async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return { eligible: false, reason: 'no_auth', message: 'Please login' };
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const res = await axios.get(`${API_URL}check_featured_eligibility/`, config);
+    return res.data;
+  },
+
+  requestFeatured: async (id) => {
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error('Please login');
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const res = await axios.post(`${API_URL}${id}/request_featured/`, {}, config);
+    return res.data;
+  },
 };

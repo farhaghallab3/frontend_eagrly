@@ -47,7 +47,7 @@ export default function Home() {
                 ) : errorProducts ? (
                     <div className={styles.errorSection}>Unable to load products</div>
                 ) : (
-                    <FeaturedProducts title="Featured Products" products={products} />
+                    <FeaturedProducts title="Featured Products" products={products.filter(p => p.is_featured)} />
                 )}
 
                 {/* Categories - gracefully handle loading/error */}

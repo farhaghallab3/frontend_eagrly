@@ -115,7 +115,7 @@ const CategoryProductsPage = () => {
               <div className={styles.filterItem}>
                 <span className={styles.filterLabel}>University</span>
                 <select
-                  className={styles.filterSelect}
+                  className={`${styles.filterSelect} ${!selectedUniversity ? "placeholder-selected" : ""}`}
                   value={selectedUniversity}
                   onChange={(e) => setSelectedUniversity(e.target.value)}
                 >
@@ -130,7 +130,7 @@ const CategoryProductsPage = () => {
               <div className={styles.filterItem}>
                 <span className={styles.filterLabel}>Faculty</span>
                 <select
-                  className={styles.filterSelect}
+                  className={`${styles.filterSelect} ${!selectedFaculty ? "placeholder-selected" : ""}`}
                   value={selectedFaculty}
                   onChange={(e) => setSelectedFaculty(e.target.value)}
                 >

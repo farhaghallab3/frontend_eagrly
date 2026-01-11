@@ -27,6 +27,7 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
         register,
         handleSubmit,
         setValue,
+        watch,
         formState: { errors },
     } = useForm({
         defaultValues: {
@@ -108,6 +109,11 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
         }
     };
 
+    // Watch for values to control placeholder styling
+    const categoryValue = watch("category");
+    const conditionValue = watch("condition");
+    const governorateValue = watch("governorate");
+
     return (
         <div className={styles.formContainer}>
             <h1 className={styles.formTitle}>
@@ -173,7 +179,7 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                                 required: "Please select a category",
                                 validate: (value) => value !== "" || "Please select a category"
                             })}
-                            className={styles.select}
+                            className={`${styles.select} ${!categoryValue ? "placeholder-selected" : ""}`}
                         >
                             <option value="">Select a category</option>
                             {categories.map((cat) => (
@@ -191,7 +197,7 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                         <label>Product Condition</label>
                         <select
                             {...register("condition", { required: "Please select product condition" })}
-                            className={styles.select}
+                            className={`${styles.select} ${!conditionValue ? "placeholder-selected" : ""}`}
                         >
                             <option value="">Select Condition</option>
                             <option value="new">New</option>
@@ -249,7 +255,7 @@ export default function ProductForm({ product, onClose, onSuccess, isRepublishin
                                 required: "Please select a governorate",
                                 validate: (value) => value !== "" || "Please select a governorate"
                             })}
-                            className={styles.select}
+                            className={`${styles.select} ${!governorateValue ? "placeholder-selected" : ""}`}
                         >
                             <option value="">Select your governorate</option>
                             {EGYPT_GOVERNORATES.map((gov) => (

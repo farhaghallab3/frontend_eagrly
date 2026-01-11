@@ -1,12 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from 'react-bootstrap';
-import { FaTimes, FaClock, FaCrown } from 'react-icons/fa';
+import { FaTimes, FaClock, FaCrown, FaStar } from 'react-icons/fa';
 import SubscriptionPlans from './SubscriptionPlans';
 import styles from './SubscriptionRequiredModal.module.css';
 
-const SubscriptionRequiredModal = ({ show, onClose, daysUntilReset = 30 }) => {
+const SubscriptionRequiredModal = ({
+    show,
+    onClose,
+    daysUntilReset = 30,
+    mode = 'adLimit' // 'adLimit' | 'featured'
+}) => {
     if (!show) return null;
+
+    const isFeaturedMode = mode === 'featured';
 
     return ReactDOM.createPortal(
         <div className={styles.overlay}>
@@ -17,23 +24,34 @@ const SubscriptionRequiredModal = ({ show, onClose, daysUntilReset = 30 }) => {
 
                 <div className={styles.header}>
                     <div className={styles.iconWrapper}>
-                        <FaClock className={styles.clockIcon} />
+                        {isFeaturedMode ? (
+                            <FaStar className={styles.clockIcon} style={{ color: '#fbbf24' }} />
+                        ) : (
+                            <FaClock className={styles.clockIcon} />
+                        )}
                     </div>
-                    <h2 className={styles.title}>Free Ad Limit Reached</h2>
+                    <h2 className={styles.title}>
+                        {isFeaturedMode ? 'Premium Feature' : 'Free Ad Limit Reached'}
+                    </h2>
                     <p className={styles.message}>
-                        You have used your 2 free ads for this period.
+                        {isFeaturedMode
+                            ? 'Featured Ads are exclusive to our Plus, Premium, and VIP subscribers. Get your ads to the top of the marketplace!'
+                            : 'You have used your 2 free ads for this period.'
+                        }
                     </p>
-                    <div className={styles.countdown}>
-                        <span className={styles.days}>{daysUntilReset}</span>
-                        <span className={styles.daysLabel}>days until your free ads reset</span>
-                    </div>
+                    {!isFeaturedMode && (
+                        <div className={styles.countdown}>
+                            <span className={styles.days}>{daysUntilReset}</span>
+                            <span className={styles.daysLabel}>days until your free ads reset</span>
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.divider}>
-                    <span className={styles.orText}>or</span>
+                    <span className={styles.orText}>
+                        {isFeaturedMode ? 'Subscribe to unlock' : 'or'}
+                    </span>
                 </div>
-
-
 
                 <div className={styles.modalBody}>
                     <SubscriptionPlans isModal={true} onClose={onClose} />

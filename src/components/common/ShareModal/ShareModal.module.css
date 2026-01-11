@@ -161,7 +161,7 @@
 }
 
 .copySection {
-    background: var(--surface-input);
+    background-color: var(--surface-input);
     border: 1px solid var(--border-primary);
     border-radius: 16px;
     padding: 0;
