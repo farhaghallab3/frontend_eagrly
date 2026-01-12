@@ -21,6 +21,7 @@ import PrivacyPage from "@pages/Support/PrivacyPage";
 import TermsOfService from "@pages/Support/TermsOfService";
 import Packages from "@pages/Packages/Packages";
 import Wishlist from "@pages/Wishlist/Wishlist";
+import AdminDashboard from "@pages/Admin/AdminDashboard";
 import AuthModal from "@components/common/AuthModal/AuthModal";
 import ScrollToTop from "@components/common/ScrollToTop";
 
@@ -52,6 +53,7 @@ export default function AppRoutes() {
                     <Route path="/terms" element={<TermsOfService />} />
                     <Route path="/report" element={<ContactUs />} />
                     <Route path="/my-ads" element={<MyAds />} />
+                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
 

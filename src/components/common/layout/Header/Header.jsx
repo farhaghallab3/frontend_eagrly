@@ -34,6 +34,8 @@ export default function Header({ links }) {
         { label: "Home", path: "/" },
         { label: "Marketplace", path: "/marketplace" },
         { label: "About Us", path: "/aboutus" },
+        { label: "Contact Us", path: "/contact" },
+        ...(user?.is_superuser ? [{ label: "Admin", path: "/admin-dashboard" }] : []),
     ];
 
     useEffect(() => {
@@ -98,6 +100,8 @@ export default function Header({ links }) {
                             {link.label}
                         </Link>
                     ))}
+
+
 
                     {/* Mobile Only Auth */}
                     {!token && (
@@ -176,6 +180,7 @@ export default function Header({ links }) {
                             <div className={styles.userDropdown}>
                                 <Link to="/my-ads">My Ads</Link>
                                 <Link to="/dashboard/profile">Profile</Link>
+                                {user?.is_superuser && <Link to="/admin-dashboard">Admin Dashboard</Link>}
 
                                 <button onClick={logoutUser} className={styles.logoutBtn}>Logout</button>
                             </div>

@@ -1,0 +1,204 @@
+/* Inherit Home Page Base Styles */
+.contentWrapper {
+    position: relative;
+    background: transparent;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.backgroundContainer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.gridPattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(100, 255, 218, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 255, 218, 0.1) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    z-index: 1;
+}
+
+.auroraBackground {
+    position: absolute;
+    inset: 0;
+    opacity: 0.4;
+    z-index: 0;
+}
+
+.contactPage {
+    position: relative;
+    z-index: 2; /* Sit above the background */
+    padding-top: 80px; /* Increased from 40px */
+    padding-bottom: 80px;
+}
+
+/* Hero Section specialized for Contact Us */
+.hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    /* Default (Light Mode) - Use Brand Gradient for Contrast */
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px var(--accent-primary-glow);
+}
+
+/* Dark Mode Override - Keep original look */
+:global([data-theme="dark"]) .hero h1 {
+    background: linear-gradient(135deg, #ffffff 0%, #64ffda 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(100, 255, 218, 0.3);
+}
+
+.hero p {
+    color: #8892b0;
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Contact Cards and Form Container */
+.section {
+    position: relative;
+}
+
+.contactInfoCard {
+    background: var(--surface-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-primary);
+    border-radius: 20px;
+    padding: 2rem;
+    height: 100%;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+}
+
+.contactInfoCard:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-5px);
+}
+
+.sectionTitle {
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.contactsList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.contactItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.iconBox {
+    width: 50px;
+    height: 50px;
+    background: var(--accent-primary-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--accent-primary);
+    flex-shrink: 0;
+}
+
+.contactDetails h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.contactDetails p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Form Styles */
+.formCard {
+    background: var(--surface-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-primary);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.formGroup {
+    margin-bottom: 1.5rem;
+}
+
+.formLabel {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.formInput {
+    background: var(--surface-input) !important;
+    border: 1px solid var(--border-primary) !important;
+    color: var(--text-primary) !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.formInput:focus {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 0 2px var(--accent-primary-light) !important;
+    background: var(--surface-hover) !important;
+}
+
+.submitBtn {
+    background: var(--accent-gradient);
+    border: none;
+    color: #111; /* Ensure dark text on bright branding button */
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.submitBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+.submitBtn:active {
+    transform: translateY(0);
+}
