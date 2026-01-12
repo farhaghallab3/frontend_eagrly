@@ -859,6 +859,11 @@ textarea:focus {
   opacity: 1;
 }
 
+[data-theme="dark"] ::placeholder {
+  color: #FFFFFF;
+  opacity: 1;
+}
+
 /* Utility class for select placeholders controlled by React */
 .placeholder-selected {
   color: var(--text-muted) !important;

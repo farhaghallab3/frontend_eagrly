@@ -3,9 +3,10 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { productService } from "../../services/productService";
-import { FaUser, FaMapMarkerAlt, FaPhone, FaEnvelope, FaTag, FaBuilding, FaGraduationCap, FaHeart, FaShare, FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import { FaUser, FaMapMarkerAlt, FaPhone, FaEnvelope, FaTag, FaBuilding, FaGraduationCap, FaHeart, FaShare, FaChevronRight, FaChevronLeft, FaFlag } from "react-icons/fa";
 import styles from "./ProductDetails.module.css";
 import ShareModal from "@components/common/ShareModal/ShareModal";
+import ReportModal from "@components/common/ReportModal/ReportModal";
 import SEO from "@components/common/SEO/SEO";
 
 import { useAuth } from "../../hooks/useAuth";
@@ -17,9 +18,11 @@ import { toggleWishlist } from "../../store/slices/wishlistSlice";
 
 export default function ProductDetails() {
     const { id } = useParams();
+    console.log('ProductDetails ID:', id);
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showShareModal, setShowShareModal] = useState(false);
+    const [showReportModal, setShowReportModal] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -69,12 +72,14 @@ export default function ProductDetails() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
+                console.log('Fetching product details for ID:', id);
                 const data = await productService.getProductDetails(id);
+                console.log('Fetched product data:', data);
                 setProduct(data);
                 // Reset image index when product changes
                 setCurrentImageIndex(0);
             } catch (error) {
-                console.error(error);
+                console.error('Error fetching product:', error);
             } finally {
                 setLoading(false);
             }
@@ -230,6 +235,14 @@ export default function ProductDetails() {
                             >
                                 <FaShare />
                             </button>
+                            <button
+                                className={styles.shareBtn}
+                                onClick={() => setShowReportModal(true)}
+                                title="Report Product"
+                                style={{ color: 'var(--error)' }}
+                            >
+                                <FaFlag />
+                            </button>
                         </div>
 
                         {/* Seller Information (Moved to Left) */}
@@ -318,6 +331,11 @@ export default function ProductDetails() {
                 onHide={() => setShowShareModal(false)}
                 productUrl={window.location.href}
                 productName={product.title}
+            />
+             <ReportModal
+                show={showReportModal}
+                onHide={() => setShowReportModal(false)}
+                productId={product.id}
             />
         </div>
     );
