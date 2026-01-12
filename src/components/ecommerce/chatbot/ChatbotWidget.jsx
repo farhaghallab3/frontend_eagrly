@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRobot, FaTimes, FaPaperPlane, FaMicrophone, FaStop, FaSpinner, FaPlay, FaPause, FaImage, FaCheck } from "react-icons/fa";
 import { MdSmartToy } from "react-icons/md";
+import ReactMarkdown from "react-markdown";
 import { sendMessageToBot } from "../../../services/chatService";
 
 import styles from "./ChatbotWidget.module.css";
@@ -329,7 +330,23 @@ const ChatbotWidget = () => {
     return (
       <div>
         {/* Show text content if exists */}
-        {msg.content && <div className={styles.botText}>{msg.content}</div>}
+        {msg.content && (
+          <div className={styles.botText}>
+            <ReactMarkdown
+              components={{
+                strong: ({ children }) => <strong style={{ fontWeight: 600 }}>{children}</strong>,
+                a: ({ href, children }) => (
+                  <a href={href} style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>
+                    {children}
+                  </a>
+                ),
+                p: ({ children }) => <span>{children}</span>
+              }}
+            >
+              {msg.content}
+            </ReactMarkdown>
+          </div>
+        )}
 
         {/* Show products if exist */}
         {hasProducts && (

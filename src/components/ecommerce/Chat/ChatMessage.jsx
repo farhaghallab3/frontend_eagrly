@@ -47,7 +47,18 @@ const ChatMessages = ({ messages }) => {
           messages.map((msg, i) => {
             const isSent = msg.type === "sent";
             const isReceived = msg.type === "received";
-            const showAvatar = isReceived && (i === 0 || messages[i - 1].type !== "received");
+
+            // Check if this is a continuation from the same sender
+            const prevMsg = messages[i - 1];
+            const nextMsg = messages[i + 1];
+            const isSameSenderAsPrev = prevMsg && prevMsg.type === msg.type;
+            const isSameSenderAsNext = nextMsg && nextMsg.type === msg.type;
+
+            // Only show avatar/name on first message in a group
+            const showSenderInfo = !isSameSenderAsPrev;
+            // Check if this is the last message in a group (for bubble styling)
+            const isLastInGroup = !isSameSenderAsNext;
+            const isFirstInGroup = !isSameSenderAsPrev;
 
             // Animation variants for each message
             const messageVariants = {
@@ -71,14 +82,14 @@ const ChatMessages = ({ messages }) => {
             return (
               <motion.div
                 key={i}
-                className={`${styles.messageWrapper} ${isSent ? styles.sent : styles.received}`}
+                className={`${styles.messageWrapper} ${isSent ? styles.sent : styles.received} ${isSameSenderAsPrev ? styles.grouped : ''}`}
                 initial="hidden"
                 animate="visible"
                 variants={messageVariants}
               >
                 <div className={styles.messageContainer}>
-                  {isReceived && showAvatar && (
-                    <div className={styles.messageAvatar}>
+                  {isReceived && (
+                    <div className={styles.messageAvatar} style={{ visibility: showSenderInfo ? 'visible' : 'hidden' }}>
                       <img
                         src="https://i.pinimg.com/1200x/88/68/d7/8868d7b09e6eff73db538eee5e077816.jpg"
                         alt="User"
@@ -88,7 +99,7 @@ const ChatMessages = ({ messages }) => {
                   )}
 
                   <div className={styles.messageContent}>
-                    {isReceived && showAvatar && (
+                    {isReceived && showSenderInfo && (
                       <span className={styles.senderName}>{msg.sender}</span>
                     )}
                     <div className={`${styles.messageBubble} ${isSent ? styles.sentBubble : styles.receivedBubble}`}>

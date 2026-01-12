@@ -237,7 +237,13 @@ export default function ProductDetails() {
                             </button>
                             <button
                                 className={styles.shareBtn}
-                                onClick={() => setShowReportModal(true)}
+                                onClick={() => {
+                                    if (!user) {
+                                        openAuthModal();
+                                        return;
+                                    }
+                                    setShowReportModal(true);
+                                }}
                                 title="Report Product"
                                 style={{ color: 'var(--error)' }}
                             >
@@ -332,7 +338,7 @@ export default function ProductDetails() {
                 productUrl={window.location.href}
                 productName={product.title}
             />
-             <ReportModal
+            <ReportModal
                 show={showReportModal}
                 onHide={() => setShowReportModal(false)}
                 productId={product.id}

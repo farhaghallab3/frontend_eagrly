@@ -15,7 +15,7 @@ export default function FeaturedProducts({ products = [] }) {
     const navigate = useNavigate();
 
     // Transform API products to match ProductCard expected format
-    const transformedProducts = products.slice(0, 4).map(product => ({
+    const transformedProducts = products.map(product => ({
         title: product.title || product.name,
         desc: product.description ? `${product.description.substring(0, 100)}...` : 'No description available',
         image: product.image,
