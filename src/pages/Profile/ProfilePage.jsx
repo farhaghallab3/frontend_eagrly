@@ -236,11 +236,21 @@ export default function UserProfile() {
                                 {/* Account Metadata */}
                                 <div className={styles.infoSection}>
                                     <span className={styles.sectionTitle}>Account Status</span>
-                                    <div className={styles.infoGrid}>
+                            <div className={styles.infoGrid}>
                                         <div className={styles.infoField}>
                                             <label className={styles.fieldLabel}><FaCalendarAlt className={styles.fieldIcon} /> Verification</label>
                                             <span className={styles.fieldValue} style={{ color: '#FFB300' }}>✓ Verified Account</span>
                                         </div>
+                                        <div className={styles.infoField}>
+                                            <label className={styles.fieldLabel}><FaIdCard className={styles.fieldIcon} /> Current Plan</label>
+                                            <span className={styles.fieldValue}>{user.active_package_name || 'Free Plan'}</span>
+                                        </div>
+                                        {user.active_package_name && (
+                                            <div className={styles.infoField}>
+                                                <label className={styles.fieldLabel}><FaCalendarAlt className={styles.fieldIcon} /> Plan Expiry</label>
+                                                <span className={styles.fieldValue}>{user.package_expiry || '—'}</span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
